@@ -52,7 +52,7 @@ Al final, dame 3 acciones concretas y no obvias que puedo tomar para desplazar a
 - Incluir un dato específico, precio, dato local o número cuando aplique.
 - Terminar con un cierre de acción o próximo paso.
 
-Devuelve en formato JSON válido de FAQPage schema.org, listo para pegar en un `<script type="application/ld+json">`.
+Devuelve en formato JSON válido de FAQPage schema.org, listo para pegar en un bloque <script type="application/ld+json">.
 
 Negocio: [NOMBRE]
 Rubro: [RUBRO]
