@@ -3,7 +3,7 @@
 > El método, la comunidad y el auditor para que ChatGPT, Claude, Gemini, Perplexity y Copilot recomienden tu negocio.
 
 **Live:** https://portalia.com.co
-**Autor:** Leonardo Rojas Cortés — Bogotá, Colombia.
+**Autor:** el equipo Portalia
 **Stack:** Astro 4 (SSR híbrido) · Cloudflare Pages · Supabase · Drizzle · Tailwind · React islands.
 
 ## Quick start
@@ -45,4 +45,4 @@ Ver [docs/SALES-STRATEGY.md](./docs/SALES-STRATEGY.md).
 
 ## Licencia
 
-Código propietario. © 2026 Leonardo Rojas Cortés. Todos los derechos reservados.
+Código propietario. © 2026 el equipo Portalia. Todos los derechos reservados.

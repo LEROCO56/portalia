@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-const jsonLd = { '@context': 'https://schema.org', '@type': 'Article', headline: 'AEO en Colombia 2026 · panorama, oportunidades y quién está ganando', author: { '@type': 'Person', name: 'Leonardo Rojas Cortés' }, publisher: { '@type': 'Organization', name: 'Portalia' }, datePublished: '2026-09-23' };
+const jsonLd = { '@context': 'https://schema.org', '@type': 'Article', headline: 'AEO en Colombia 2026 · panorama, oportunidades y quién está ganando', author: { '@type': 'Organization', name: 'Portalia', url: 'https://portalia.com.co' }, publisher: { '@type': 'Organization', name: 'Portalia' }, datePublished: '2026-09-23' };
 ---
 <BaseLayout title="AEO en Colombia 2026 · panorama, oportunidades y quién está ganando" description="Estado real del AEO en Colombia: qué negocios están apareciendo en ChatGPT, Claude y Perplexity, qué categorías siguen vacantes, oportunidades." jsonLd={jsonLd}>
   <article class="container-md pt-20 pb-16 md:pt-28 prose-portalia">

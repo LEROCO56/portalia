@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-const jsonLd = { '@context': 'https://schema.org', '@type': 'Article', headline: 'FAQPage que sí funciona · 12 errores comunes', author: { '@type': 'Person', name: 'Leonardo Rojas Cortés' }, publisher: { '@type': 'Organization', name: 'Portalia' }, datePublished: '2026-09-23' };
+const jsonLd = { '@context': 'https://schema.org', '@type': 'Article', headline: 'FAQPage que sí funciona · 12 errores comunes', author: { '@type': 'Organization', name: 'Portalia', url: 'https://portalia.com.co' }, publisher: { '@type': 'Organization', name: 'Portalia' }, datePublished: '2026-09-23' };
 ---
 <BaseLayout title="FAQPage que sí funciona · 12 errores comunes" description="FAQPage mal implementado empeora tu ranking IA. Los 12 errores más frecuentes y qué hacer distinto." jsonLd={jsonLd}>
   <article class="container-md pt-20 pb-16 md:pt-28 prose-portalia">

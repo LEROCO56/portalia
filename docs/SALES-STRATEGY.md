@@ -199,4 +199,4 @@ Guion tipo "60 seg":
 
 ---
 
-**Autor:** Leonardo Rojas Cortés · **Portal IA · Portalia**
+**Autor:** el equipo Portalia

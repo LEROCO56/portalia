@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-const jsonLd = { '@context': 'https://schema.org', '@type': 'Article', headline: 'Cómo funciona un auditor AEO por dentro', author: { '@type': 'Person', name: 'Leonardo Rojas Cortés' }, publisher: { '@type': 'Organization', name: 'Portalia' }, datePublished: '2026-09-23' };
+const jsonLd = { '@context': 'https://schema.org', '@type': 'Article', headline: 'Cómo funciona un auditor AEO por dentro', author: { '@type': 'Organization', name: 'Portalia', url: 'https://portalia.com.co' }, publisher: { '@type': 'Organization', name: 'Portalia' }, datePublished: '2026-09-23' };
 ---
 <BaseLayout title="Cómo funciona un auditor AEO por dentro" description="Qué señales lee, cómo puntúa y qué no puede medir todavía un auditor AEO. Transparencia técnica." jsonLd={jsonLd}>
   <article class="container-md pt-20 pb-16 md:pt-28 prose-portalia">

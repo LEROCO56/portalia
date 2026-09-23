@@ -168,4 +168,4 @@ Vamos a construir tu declaración de entidad. Cómo escribir el `Organization` s
 
 ---
 
-**Autor:** Leonardo Rojas Cortés · Portalia
+**Autor:** el equipo Portalia

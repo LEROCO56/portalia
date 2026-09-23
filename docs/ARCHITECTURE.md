@@ -1,7 +1,7 @@
 # Arquitectura de Portalia
 
 **Última revisión:** 2026-09-22
-**Autor:** Leonardo Rojas Cortés + asistente
+**Autor:** el equipo Portalia
 
 ---
 
