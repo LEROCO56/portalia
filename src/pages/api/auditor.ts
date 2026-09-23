@@ -1,54 +1,54 @@
-// Auditor Pro — endpoint que llama a Claude API para miembros con role=buyer/admin.
-// Free tier: heurístico en cliente (islands/AuditorForm.tsx). Este endpoint requiere autenticación.
+// Auditor Portal IA — endpoint real.
+// - Invitados: auditoría por señales medidas (sin Claude, no se guarda).
+// - Usuarios free: igual, máximo 3 al día, se guarda en historial.
+// - Miembros (buyer/affiliate/admin): señales + resumen y plan de 30 días con Claude, ilimitado, se guarda.
 
 import type { APIRoute } from 'astro';
 import { createSupabaseServerClient } from '@/lib/supabase';
+import { runAudit } from '@/lib/aeo-audit';
 
-export const POST: APIRoute = async ({ request, cookies }) => {
-  const supabase = createSupabaseServerClient(cookies);
-  const { data: { user } } = await supabase.auth.getUser();
+const json = (body: unknown, status = 200) =>
+  new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' } });
 
-  if (!user) return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401 });
+export const POST: APIRoute = async ({ request, cookies, locals }) => {
+  const body = (await request.json().catch(() => ({}))) as { domain?: string; business?: string; query?: string };
+  const domain = (body.domain ?? '').toString().slice(0, 300);
+  const business = (body.business ?? '').toString().slice(0, 120);
+  const query = (body.query ?? '').toString().slice(0, 200);
+  if (!domain || !business) return json({ error: 'missing_fields' }, 400);
 
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('role')
-    .eq('id', user.id)
-    .single();
+  const user = locals.user;
+  const isMember = !!user && ['buyer', 'affiliate', 'admin'].includes(user.role);
+  const supabase = user ? createSupabaseServerClient(cookies) : null;
 
-  if (!profile || (profile.role !== 'buyer' && profile.role !== 'admin' && profile.role !== 'affiliate')) {
-    return new Response(JSON.stringify({ error: 'forbidden', reason: 'membership_required' }), { status: 403 });
+  if (user && !isMember && supabase) {
+    const since = new Date(Date.now() - 24 * 3600 * 1000).toISOString();
+    const { count } = await supabase.from('audits').select('id', { count: 'exact', head: true }).eq('user_id', user.id).gte('created_at', since);
+    if ((count ?? 0) >= 3) return json({ error: 'limit_reached', reason: 'Llegaste a 3 auditorías en 24 horas. Los miembros del método tienen auditorías ilimitadas.' }, 429);
   }
 
-  const body = await request.json().catch(() => ({}));
-  const { domain, business, query } = body ?? {};
-  if (!domain || !business) {
-    return new Response(JSON.stringify({ error: 'missing_fields' }), { status: 400 });
+  const env = (locals as any).runtime?.env ?? {};
+  const apiKey: string | undefined = isMember ? env.ANTHROPIC_API_KEY ?? import.meta.env.ANTHROPIC_API_KEY : undefined;
+  const model: string | undefined = env.ANTHROPIC_MODEL ?? import.meta.env.ANTHROPIC_MODEL;
+
+  let result;
+  try {
+    result = await runAudit({ url: domain, business, query, apiKey, model });
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : 'error';
+    return json({ error: 'invalid_url', reason: msg === 'host_no_permitido' ? 'Esa dirección no es un sitio público.' : 'La URL no es válida.' }, 400);
   }
 
-  // TODO Fase 2: llamar a Claude API con la URL y devolver JSON estructurado.
-  // Por ahora responder con placeholder estructurado.
-  const result = {
-    score: 62,
-    gaps: [
-      { title: 'JSON-LD Organization ausente', detail: 'Añadir schema.org/Organization con nombre, url, sameAs.', severity: 'high' },
-      { title: 'FAQPage no detectada', detail: 'Las IAs priorizan páginas con FAQPage schema para citar respuestas.', severity: 'high' },
-    ],
-    wins: ['HTTPS activo', 'Meta description presente'],
-    savedAt: new Date().toISOString(),
-  };
+  if (user && supabase) {
+    await supabase.from('audits').insert({
+      user_id: user.id,
+      domain: result.signals.finalUrl,
+      business_name: business,
+      query,
+      score: result.score,
+      gaps: { gaps: result.gaps, wins: result.wins, plan: result.plan ?? null, summary: result.summary ?? null, engine: result.engine },
+    });
+  }
 
-  await supabase.from('audits').insert({
-    user_id: user.id,
-    domain,
-    business_name: business,
-    query,
-    score: result.score,
-    gaps: result.gaps,
-  });
-
-  return new Response(JSON.stringify(result), {
-    status: 200,
-    headers: { 'content-type': 'application/json' },
-  });
+  return json({ ...result, tier: isMember ? 'pro' : user ? 'free' : 'guest' });
 };
