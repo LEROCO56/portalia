@@ -1,0 +1,71 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Sparkle from '@/components/Sparkle.astro';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Comparador de métodos AEO en español · Portalia vs alternativas',
+  author: { '@type': 'Person', name: 'Leonardo Rojas Cortés' },
+  publisher: { '@type': 'Organization', name: 'Portalia' },
+  datePublished: '2026-09-23',
+};
+
+const items = [
+  { name: 'Portalia · Método CITAR', price: 'COP 39.900 (~USD 10)', pros: ['Ecosistema completo (método + comunidad + auditor + Prime tools)', 'Autor con 12 años en TI', 'Casos reales colombianos', 'Comunidad en español activa', 'Auditor Pro con Claude API', 'Garantía 7 días Hotmart'], cons: ['Producto joven (lanzado 2026)'] },
+  { name: 'esGEO (España)', price: 'USD 180+', pros: ['Contenido español europeo', 'Curso estructurado por videos'], cons: ['Precio alto para LatAm', 'Sin comunidad activa', 'Sin auditor incluido', 'Enfoque España, no LatAm'] },
+  { name: 'Rand Fishkin newsletter', price: 'Gratis + productos USD 50+', pros: ['Autoridad global', 'Contenido gratis abundante'], cons: ['En inglés', 'Sin método unificado', 'Sin comunidad LatAm', 'Sin herramientas listas'] },
+  { name: 'Cursos AEO en Udemy', price: 'USD 15-40', pros: ['Baratos', 'Certificado'], cons: ['Contenido genérico y desactualizado', 'Sin comunidad', 'Sin autor especialista', 'Cero casos reales LatAm'] },
+  { name: 'Aprender AEO por tu cuenta', price: 'USD 0', pros: ['Sin costo', 'Ritmo propio'], cons: ['Curva de aprendizaje larga (6-12 meses)', 'Errores costosos por experimentación', 'Sin comunidad para consultar', 'Información dispersa'] },
+];
+---
+<BaseLayout title="Comparador de métodos AEO · Portalia vs alternativas" description="Cómo se compara Portalia (método CITAR + comunidad + auditor + Prime tools) contra otras opciones para aprender AEO en español." jsonLd={jsonLd}>
+  <section class="container-lg pt-20 pb-6 md:pt-28">
+    <p class="kicker mb-6 flex items-center gap-2">
+      <Sparkle size={14} class="text-aurora-violet2" /> Comparador honesto
+    </p>
+    <h1 class="font-display text-3xl md:text-5xl font-semibold leading-[1.05] tracking-tight max-w-3xl">
+      ¿Portalia vs las alternativas? <span class="text-grad-vc">La comparación sin humo.</span>
+    </h1>
+    <p class="mt-6 max-w-2xl text-lg text-text-soft">
+      Preferimos que nos compares. Aquí las opciones reales de aprender AEO en español, con lo bueno y lo malo de cada una.
+    </p>
+  </section>
+
+  <section class="container-lg py-12">
+    <div class="grid gap-4">
+      {items.map((it, i) => (
+        <article class={`glass rounded-2xl p-6 ${i === 0 ? 'border-2 border-aurora-violet/40' : ''}`}>
+          <div class="flex items-baseline justify-between gap-4 flex-wrap">
+            <h2 class="font-display text-xl font-semibold">{it.name}</h2>
+            <span class="chip">{it.price}</span>
+          </div>
+          <div class="mt-4 grid gap-4 md:grid-cols-2">
+            <div>
+              <p class="text-xs uppercase tracking-widest text-aurora-cyan mb-2">A favor</p>
+              <ul class="space-y-1.5 text-sm text-text-soft">
+                {it.pros.map(p => <li class="flex gap-2"><span class="text-emerald-400 shrink-0">+</span>{p}</li>)}
+              </ul>
+            </div>
+            <div>
+              <p class="text-xs uppercase tracking-widest text-red-300/70 mb-2">En contra</p>
+              <ul class="space-y-1.5 text-sm text-text-soft">
+                {it.cons.map(p => <li class="flex gap-2"><span class="text-red-400 shrink-0">−</span>{p}</li>)}
+              </ul>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-md py-16">
+    <div class="glass-strong rounded-3xl p-8 text-center">
+      <h2 class="font-display text-2xl md:text-3xl font-semibold">¿Y si te equivocas comprando Portalia?</h2>
+      <p class="mt-3 text-text-soft max-w-xl mx-auto">
+        7 días de garantía Hotmart. Reembolso completo con 1 click desde su plataforma. Sin preguntas, sin trámites.
+      </p>
+      <a href="/metodo" class="btn-primary text-base px-7 py-3 mt-6 inline-flex">Ver el método</a>
+    </div>
+  </section>
+</BaseLayout>

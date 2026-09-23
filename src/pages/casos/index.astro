@@ -1,0 +1,32 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Sparkle from '@/components/Sparkle.astro';
+
+const casos = [
+  { slug: 'serenity', titulo: 'Serenity Spa · negocio local (Bogotá)', resumen: 'De cero menciones IA a top-3 en ChatGPT y Perplexity en 8 semanas. +40% facturación.', tags: ['LocalBusiness', 'Bienestar', 'Bogotá'] },
+];
+---
+<BaseLayout title="Casos de estudio · Portalia" description="Casos reales de negocios que aplicaron CITAR y cómo cambió su presencia en IAs.">
+  <section class="container-lg pt-20 pb-6 md:pt-28">
+    <p class="kicker mb-6 flex items-center gap-2">
+      <Sparkle size={14} class="text-aurora-violet2" /> Casos de estudio
+    </p>
+    <h1 class="font-display text-4xl md:text-5xl font-semibold leading-[1.05] tracking-tight max-w-3xl">
+      Negocios reales, resultados reales.
+    </h1>
+  </section>
+
+  <section class="container-lg pb-24">
+    <div class="grid gap-6 md:grid-cols-2">
+      {casos.map(c => (
+        <a href={`/casos/${c.slug}`} class="glass rounded-2xl p-6 hover:-translate-y-1 transition">
+          <h2 class="font-display text-xl font-semibold">{c.titulo}</h2>
+          <p class="mt-2 text-sm text-text-soft">{c.resumen}</p>
+          <div class="mt-4 flex gap-1 flex-wrap">
+            {c.tags.map(t => <span class="chip">{t}</span>)}
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
