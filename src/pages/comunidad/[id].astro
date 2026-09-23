@@ -25,22 +25,31 @@ if (Astro.request.method === 'POST') {
   }
 }
 
-const { data: thread } = await supabase
-  .from('threads')
-  .select('id, title, body, category, created_at, author_name')
-  .eq('id', id!)
-  .maybeSingle();
+let thread: any = null;
+let rows: any[] | null = null;
+try {
+  const r1 = await supabase
+    .from('threads')
+    .select('id, title, body, category, created_at, author_name')
+    .eq('id', id!)
+    .maybeSingle();
+  thread = r1.data;
+  if (thread) {
+    const r2 = await supabase
+      .from('replies')
+      .select('id, body, created_at, author_name')
+      .eq('thread_id', id!)
+      .order('created_at', { ascending: true })
+      .limit(200);
+    rows = r2.data;
+  }
+} catch (e) {
+  console.error('comunidad/[id] error', e);
+  return new Response(`Error cargando el hilo: ${e instanceof Error ? e.message : String(e)}`, { status: 503, headers: { 'content-type': 'text/plain; charset=utf-8' } });
+}
 if (!thread) {
-  // Evitamos devolver un Response vacío (en Cloudflare producía 500): redirigimos al foro.
   return Astro.redirect('/comunidad?hilo=no-encontrado', 302);
 }
-
-const { data: rows } = await supabase
-  .from('replies')
-  .select('id, body, created_at, author_name')
-  .eq('thread_id', id!)
-  .order('created_at', { ascending: true })
-  .limit(200);
 
 const replies = (rows ?? []).map((r: any) => ({ id: r.id, body: r.body, created_at: r.created_at, author: r.author_name || 'Miembro' }));
 const t = thread as any;
