@@ -2,3 +2,13 @@ name = "portalia"
 pages_build_output_dir = "./dist"
 compatibility_date = "2025-01-01"
 compatibility_flags = ["nodejs_compat"]
+
+# Variables públicas (no son secretos: van al navegador). Con wrangler.toml presente,
+# Cloudflare Pages ignora las variables de texto del dashboard: deben vivir aquí.
+# Los secretos (SUPABASE_SERVICE_ROLE_KEY, HOTMART_WEBHOOK_SECRET, ANTHROPIC_API_KEY)
+# se cargan en el dashboard como "Secret".
+[vars]
+PUBLIC_SUPABASE_URL = "https://rgmdymzxapkjkomfllok.supabase.co"
+PUBLIC_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJnbWR5bXp4YXBramtvbWZsbG9rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxMjg2OTQsImV4cCI6MjEwNTcwNDY5NH0.IoJbn189ExIP_9b3iKUJSwueclkF7pRfoasJbp3T6t0"
+PUBLIC_SITE_URL = "https://portalia.com.co"
+PUBLIC_HOTMART_CHECKOUT_URL = "https://pay.hotmart.com/W107728674K?off=92xsf4mj"
