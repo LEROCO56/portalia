@@ -1,0 +1,83 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+const jsonLd = { '@context': 'https://schema.org', '@type': 'Article', headline: 'robots.txt para IAs — cómo permitir GPTBot, ClaudeBot, PerplexityBot', author: { '@type': 'Person', name: 'Leonardo Rojas Cortés' }, publisher: { '@type': 'Organization', name: 'Portalia' }, datePublished: '2026-09-23' };
+---
+<BaseLayout title="robots.txt para IAs · deja que ChatGPT, Claude y Perplexity te crawleen" description="Cómo configurar robots.txt para dar bienvenida explícita a los crawlers de IA. Con plantilla lista." jsonLd={jsonLd}>
+  <article class="container-md pt-20 pb-16 md:pt-28 prose-portalia">
+    <p class="kicker">Técnico · 4 min</p>
+    <h1>robots.txt para IAs · cómo permitir GPTBot, ClaudeBot, PerplexityBot</h1>
+    <p class="text-lg text-text-soft">Si tu robots.txt bloquea a los crawlers de IA (a veces por defecto), no importa cuánto AEO hagas: ninguna IA va a encontrarte.</p>
+
+    <h2>Los crawlers de IA que importan hoy</h2>
+    <ul>
+      <li><strong>GPTBot</strong> — OpenAI, para ChatGPT y Copilot enterprise.</li>
+      <li><strong>ChatGPT-User</strong> — cuando ChatGPT hace live browsing.</li>
+      <li><strong>OAI-SearchBot</strong> — el nuevo bot del search de OpenAI.</li>
+      <li><strong>ClaudeBot</strong> — Anthropic, entrenamiento.</li>
+      <li><strong>Claude-Web</strong> — cuando Claude hace live web.</li>
+      <li><strong>PerplexityBot</strong> — Perplexity search.</li>
+      <li><strong>Perplexity-User</strong> — live browsing de Perplexity.</li>
+      <li><strong>Google-Extended</strong> — controla si Gemini usa tu contenido.</li>
+      <li><strong>CCBot</strong> — Common Crawl (base de muchos LLMs).</li>
+      <li><strong>Applebot-Extended</strong> — Apple Intelligence.</li>
+    </ul>
+
+    <h2>Plantilla mínima recomendada</h2>
+    <pre><code>{`User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /panel/
+Disallow: /api/
+
+# AEO crawlers — bienvenidos explícitamente
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://tunegocio.com/sitemap.xml`}</code></pre>
+
+    <h2>Errores que hunden tu AEO</h2>
+    <ol>
+      <li><code>Disallow: /</code> global para User-agent: *. Suena obvio pero pasa cuando migras hostings.</li>
+      <li>WordPress con plugin de "SEO" que bloquea GPTBot por defecto.</li>
+      <li>Cloudflare con "Bot Fight Mode" agresivo que devuelve 403 a los crawlers IA.</li>
+      <li>robots.txt en un subdominio distinto al que quieres crawlear.</li>
+    </ol>
+
+    <h2>Cómo verificar que sí funciona</h2>
+    <pre><code>curl -A "GPTBot" -I https://tunegocio.com/</code></pre>
+    <p>Si devuelve 200 OK, GPTBot te puede leer. Si devuelve 403 o error, tienes un bloqueador en algún lugar del stack.</p>
+
+    <h2>¿Y si NO quiero que las IAs se entrenen con mi contenido?</h2>
+    <p>
+      Puedes bloquear entrenamiento y permitir búsqueda por separado. GPTBot es para training; ChatGPT-User es
+      para live browsing. Bloquea el primero, permite el segundo. Similar para Claude y otros.
+    </p>
+  </article>
+</BaseLayout>

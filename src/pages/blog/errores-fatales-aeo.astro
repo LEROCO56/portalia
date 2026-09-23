@@ -1,0 +1,47 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+const jsonLd = { '@context': 'https://schema.org', '@type': 'Article', headline: '10 errores fatales AEO que las webs LatAm siguen cometiendo en 2026', author: { '@type': 'Person', name: 'Leonardo Rojas Cortés' }, publisher: { '@type': 'Organization', name: 'Portalia' }, datePublished: '2026-09-23' };
+---
+<BaseLayout title="10 errores fatales AEO que las webs LatAm cometen en 2026" description="Los errores más frecuentes que hacen invisible tu negocio para ChatGPT, Claude y Perplexity. Con cómo arreglar cada uno." jsonLd={jsonLd}>
+  <article class="container-md pt-20 pb-16 md:pt-28 prose-portalia">
+    <p class="kicker">Auditoría · 7 min</p>
+    <h1>10 errores fatales AEO que las webs LatAm siguen cometiendo en 2026</h1>
+    <p class="text-lg text-text-soft">Audité 200 webs LatAm en septiembre 2026. Aquí los 10 errores más frecuentes que las hacen invisibles para las IAs.</p>
+
+    <h2>1. Cero Schema.org</h2>
+    <p>92% no tiene ni una línea de JSON-LD. Corrección: mínimo Organization o LocalBusiness. 30 minutos de trabajo.</p>
+
+    <h2>2. Contenido en imagen</h2>
+    <p>Precios, horarios, descripciones dentro de imágenes JPG. Las IAs no leen imagen bien. Corrección: texto HTML plano + alt descriptivos.</p>
+
+    <h2>3. Título de página genérico</h2>
+    <p>"Inicio - Mi empresa" es inútil. Corrección: título por página con la consulta objetivo.</p>
+
+    <h2>4. Meta description ausente o duplicada</h2>
+    <p>Google la genera si falta pero pierdes control. Corrección: una única meta description específica por página, 140-160 caracteres.</p>
+
+    <h2>5. Contenido con "Lorem ipsum" en producción</h2>
+    <p>Suena chiste, pasa. Corrección: revisa cada 90 días con Ctrl+F "lorem" en tu sitio.</p>
+
+    <h2>6. Bloque About/Nosotros lleno de humo</h2>
+    <p>"Somos líderes en innovación" no dice nada a la IA. Corrección: datos concretos — año de fundación, número empleados, servicios específicos, ciudades donde operas.</p>
+
+    <h2>7. Nombre de negocio inconsistente</h2>
+    <p>Google Business dice "Tienda XYZ", tu web dice "XYZ Store", Instagram dice "@xyz.tienda". Corrección: elige uno y unifica.</p>
+
+    <h2>8. Sin autor visible</h2>
+    <p>Ningún post tiene autor identificable. Claude y Perplexity penalizan. Corrección: crea Person schema por autor, añade byline visible.</p>
+
+    <h2>9. Blog abandonado</h2>
+    <p>Último post hace 3 años. Las IAs detectan freshness. Corrección: mínimo 1 post/mes con dateModified real.</p>
+
+    <h2>10. URL con parámetros de tracking</h2>
+    <p>Sitemap con URLs tipo <code>/pagina?utm_source=x</code>. Las IAs las tratan como duplicados. Corrección: canonical apuntando a la URL limpia.</p>
+
+    <h2>Cómo auditarte tú mismo</h2>
+    <p>
+      Prueba nuestro <a href="/auditor">auditor gratuito</a> (30 segundos, sin correo). O si eres miembro,
+      el Auditor Pro usa Claude API para diagnóstico personalizado.
+    </p>
+  </article>
+</BaseLayout>
