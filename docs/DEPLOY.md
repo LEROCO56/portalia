@@ -27,7 +27,7 @@ Guía end-to-end desde repo vacío a producción viva. Tiempo estimado: 45–60 
    - Build command: `npm run build`
    - Output directory: `dist`
    - Root directory: (dejar vacío)
-5. **Environment variables** (Production + Preview):
+5. **Environment variables** — IMPORTANTE: como el repo tiene `wrangler.toml`, Pages ignora las variables de texto del dashboard. Las públicas (`PUBLIC_*`) viven en `[vars]` de `wrangler.toml`; en el dashboard solo se cargan **Secrets** (`SUPABASE_SERVICE_ROLE_KEY`, `HOTMART_WEBHOOK_SECRET`, `ANTHROPIC_API_KEY`). El código las lee en tiempo de ejecución con `src/lib/env.ts`. Lista completa:
    - `PUBLIC_SUPABASE_URL` = (Supabase Project URL)
    - `PUBLIC_SUPABASE_ANON_KEY` = (Supabase anon key)
    - `SUPABASE_SERVICE_ROLE_KEY` = (Supabase service role)
