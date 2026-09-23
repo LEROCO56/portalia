@@ -1,0 +1,78 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { LESSONS, canAccessCourse, lessonBySlug, signedVideoUrl } from '@/lib/course';
+import { createSupabaseServerClient } from '@/lib/supabase';
+
+const lesson = lessonBySlug(Astro.params.leccion);
+if (!lesson) return new Response(null, { status: 404 });
+
+const user = Astro.locals.user;
+if (!user) return Astro.redirect(`/login?next=/curso/${lesson.slug}`);
+if (!canAccessCourse(user.role)) return Astro.redirect('/curso/bloqueado');
+
+// Guías escritas compiladas en el build desde content/lecciones (fuente única del contenido).
+const files = import.meta.glob<{ Content: any }>('/content/lecciones/*.md', { eager: true });
+const entry = Object.entries(files).find(([p]) => p.endsWith(`/${lesson.slug}.md`));
+if (!entry) return new Response(null, { status: 404 });
+const { Content } = entry[1];
+
+const supabase = createSupabaseServerClient(Astro.cookies);
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  if (form.get('action') === 'completar') {
+    await supabase.from('course_progress').upsert({ user_id: user.id, lesson_id: lesson.id }, { onConflict: 'user_id,lesson_id' });
+  } else if (form.get('action') === 'desmarcar') {
+    await supabase.from('course_progress').delete().eq('user_id', user.id).eq('lesson_id', lesson.id);
+  }
+  return Astro.redirect(`/curso/${lesson.slug}${form.get('action') === 'completar' ? '#siguiente' : ''}`, 303);
+}
+
+const { data: prog } = await supabase
+  .from('course_progress').select('lesson_id').eq('user_id', user.id).eq('lesson_id', lesson.id).maybeSingle();
+const isDone = !!prog;
+const video = await signedVideoUrl(lesson.id);
+const idx = LESSONS.indexOf(lesson);
+const prev = LESSONS[idx - 1];
+const next = LESSONS[idx + 1];
+---
+<BaseLayout title={`Lección ${lesson.n}: ${lesson.title} — Curso Portalia`} noindex>
+  <section class="container-md pt-16 md:pt-24">
+    <a href="/curso" class="text-xs text-aurora-cyan">← Todas las lecciones</a>
+    <p class="mt-6 text-xs text-text-mute">Lección {lesson.n} de {LESSONS.length} · {lesson.duration}</p>
+    {video && (
+      <div class="mt-6 relative w-full overflow-hidden rounded-2xl" style="padding-top:56.25%">
+        <iframe
+          src={video}
+          title={`Video lección ${lesson.n}`}
+          loading="lazy"
+          class="absolute inset-0 w-full h-full border-0"
+          allow="accelerometer; gyroscope; encrypted-media; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+    )}
+  </section>
+
+  <article class="container-md pt-8 pb-10 prose-portalia">
+    <Content />
+  </article>
+
+  <section id="siguiente" class="container-md pb-24">
+    <div class="glass rounded-2xl p-6 flex flex-wrap items-center gap-4 justify-between">
+      <form method="POST">
+        {isDone ? (
+          <>
+            <span class="text-sm mr-3">✓ Lección completada</span>
+            <button name="action" value="desmarcar" class="btn-ghost text-sm">Desmarcar</button>
+          </>
+        ) : (
+          <button name="action" value="completar" class="btn-primary">Marcar como completada</button>
+        )}
+      </form>
+      <div class="flex gap-3 text-sm">
+        {prev && <a href={`/curso/${prev.slug}`} class="btn-ghost">← Lección {prev.n}</a>}
+        {next ? <a href={`/curso/${next.slug}`} class="btn-primary">Lección {next.n} →</a> : <a href="/comunidad" class="btn-primary">Comparte tu avance en la comunidad →</a>}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

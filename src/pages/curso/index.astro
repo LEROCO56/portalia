@@ -1,27 +1,24 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Sparkle from '@/components/Sparkle.astro';
+import { LESSONS, canAccessCourse } from '@/lib/course';
+import { createSupabaseServerClient } from '@/lib/supabase';
 
 const user = Astro.locals.user;
-const canAccess = user?.role === 'buyer' || user?.role === 'admin';
+if (!user) return Astro.redirect('/login?next=/curso');
+if (!canAccessCourse(user.role)) return Astro.redirect('/curso/bloqueado');
 
-if (!user) {
-  return Astro.redirect('/login?next=/curso');
+let done = new Set<string>();
+try {
+  const supabase = createSupabaseServerClient(Astro.cookies);
+  const { data } = await supabase.from('course_progress').select('lesson_id').eq('user_id', user.id);
+  done = new Set((data ?? []).map((r) => r.lesson_id as string));
+} catch {
+  // Sin progreso disponible: se muestra el curso igual.
 }
-if (!canAccess) {
-  return Astro.redirect('/curso/bloqueado');
-}
-
-const lessons = [
-  { id: 'L1', t: 'Bienvenida y expectativas', dur: '8:32' },
-  { id: 'L2', t: 'Fundamentos AEO/GEO', dur: '22:14' },
-  { id: 'L3', t: 'Paso C — Contextualizar tu negocio', dur: '31:07' },
-  { id: 'L4', t: 'Paso I — Indexar con Schema.org', dur: '28:45' },
-  { id: 'L5', t: 'Paso T — Testimoniar (menciones externas)', dur: '25:22' },
-  { id: 'L6', t: 'Paso A — Automatizar y escalar', dur: '19:58' },
-  { id: 'L7', t: 'Paso R — Revisar cada mes', dur: '17:41' },
-  { id: 'L8', t: 'Caso real: negocio local pasando de invisible a top-3', dur: '34:12' },
-];
+const completed = LESSONS.filter((l) => done.has(l.id)).length;
+const next = LESSONS.find((l) => !done.has(l.id)) ?? LESSONS[0];
+const pct = Math.round((completed / LESSONS.length) * 100);
 ---
 <BaseLayout
   title="Curso Portalia — miembros"
@@ -36,27 +33,40 @@ const lessons = [
       Bienvenido{user.full_name ? `, ${user.full_name.split(' ')[0]}` : ''}.
     </h1>
     <p class="mt-4 text-lg text-text-soft max-w-2xl">
-      Todo el curso Portalia, en tu ritmo. Marca lecciones como completadas para llevar tu progreso.
+      El método CITAR completo en 8 lecciones. Cada una trae la guía paso a paso y un ejercicio para aplicarlo en tu negocio.
+      Marca las lecciones como completadas para llevar tu progreso.
     </p>
+    <div class="mt-8 glass rounded-2xl p-5 max-w-xl">
+      <div class="flex items-center justify-between text-sm">
+        <span>{completed} de {LESSONS.length} lecciones completadas</span>
+        <span class="text-text-mute">{pct} %</span>
+      </div>
+      <div class="mt-3 h-2 rounded-full bg-white/10 overflow-hidden">
+        <div class="h-full bg-aurora-violet" style={`width:${pct}%`}></div>
+      </div>
+      <a href={`/curso/${next.slug}`} class="btn-primary mt-5 inline-block">
+        {completed === 0 ? 'Empezar por la lección 1' : completed === LESSONS.length ? 'Repasar el curso' : `Seguir con la lección ${next.n}`}
+      </a>
+    </div>
   </section>
 
   <section class="container-lg py-8">
     <div class="grid gap-3">
-      {lessons.map((l, i) => (
-        <div class="glass rounded-2xl p-5 flex items-center gap-4">
+      {LESSONS.map((l) => (
+        <a href={`/curso/${l.slug}`} class="glass rounded-2xl p-5 flex items-center gap-4 hover:border-aurora-violet/60 transition">
           <div class="w-10 h-10 rounded-lg bg-aurora-violet/20 border border-aurora-violet/40 grid place-items-center text-sm font-semibold text-aurora-violet2">
-            {i + 1}
+            {l.n}
           </div>
           <div class="flex-1">
-            <p class="font-display text-base font-semibold">{l.t}</p>
-            <p class="text-xs text-text-mute mt-1">Duración {l.dur}</p>
+            <p class="font-display text-base font-semibold">{l.title}</p>
+            <p class="text-xs text-text-mute mt-1">{l.duration}</p>
           </div>
-          <span class="chip">Próximamente</span>
-        </div>
+          <span class="chip">{done.has(l.id) ? '✓ Completada' : 'Disponible'}</span>
+        </a>
       ))}
     </div>
     <p class="mt-6 text-sm text-text-mute">
-      Los videos se activan progresivamente. Estamos hospedando en Bunny Stream para calidad HD sin buffering.
+      Las versiones en video se van sumando a cada lección; la guía escrita ya tiene todo el contenido del método.
     </p>
   </section>
 </BaseLayout>
