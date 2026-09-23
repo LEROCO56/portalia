@@ -1,0 +1,96 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Sparkle from '@/components/Sparkle.astro';
+
+const checkoutUrl = import.meta.env.PUBLIC_HOTMART_CHECKOUT_URL || 'https://pay.hotmart.com/W107728674K?off=92xsf4mj';
+---
+<BaseLayout title="Empezar en Portalia" description="Por dónde empezar en Portalia según tu perfil. Auditor gratis, blog, método, comunidad o zona premium.">
+  <section class="container-lg pt-20 pb-6 md:pt-28">
+    <p class="kicker mb-6 flex items-center gap-2">
+      <Sparkle size={14} class="text-aurora-violet2" /> Cómo empezar
+    </p>
+    <h1 class="font-display text-3xl md:text-5xl font-semibold leading-[1.05] tracking-tight max-w-3xl">
+      Elige por dónde <span class="text-grad-vc">empezar</span>.
+    </h1>
+    <p class="mt-6 max-w-2xl text-lg text-text-soft">
+      Portalia funciona por capas. Puedes empezar 100% gratis, entender el método y decidir si quieres el resto.
+    </p>
+  </section>
+
+  <section class="container-lg pb-8">
+    <div class="grid gap-6 md:grid-cols-3">
+      <div class="glass rounded-2xl p-6 flex flex-col">
+        <span class="chip w-fit">Capa 1</span>
+        <h2 class="mt-3 font-display text-xl font-semibold">Descubre</h2>
+        <p class="mt-2 text-sm text-text-soft flex-1">
+          Aprende qué es AEO y por qué importa. Cero costo.
+        </p>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li><a href="/blog/que-es-aeo" class="text-aurora-cyan">→ ¿Qué es AEO?</a></li>
+          <li><a href="/auditor" class="text-aurora-cyan">→ Auditar mi web (30s)</a></li>
+          <li><a href="/blog" class="text-aurora-cyan">→ Blog gratis</a></li>
+        </ul>
+      </div>
+
+      <div class="glass rounded-2xl p-6 flex flex-col">
+        <span class="chip w-fit">Capa 2</span>
+        <h2 class="mt-3 font-display text-xl font-semibold">Aplica</h2>
+        <p class="mt-2 text-sm text-text-soft flex-1">
+          Adquiere el método. Método CITAR + comunidad + auditor Pro + zona Prime.
+        </p>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li><a href="/metodo" class="text-aurora-cyan">→ Ver el método</a></li>
+          <li><a href="/precios" class="text-aurora-cyan">→ Precio COP 39.900</a></li>
+          <li><a href="/casos/serenity" class="text-aurora-cyan">→ Ver caso real</a></li>
+        </ul>
+      </div>
+
+      <div class="glass rounded-2xl p-6 flex flex-col">
+        <span class="chip w-fit">Capa 3</span>
+        <h2 class="mt-3 font-display text-xl font-semibold">Escala</h2>
+        <p class="mt-2 text-sm text-text-soft flex-1">
+          Aplica AEO como servicio o revende Portalia como afiliado con 60% de comisión.
+        </p>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li><a href="/afiliados" class="text-aurora-cyan">→ Programa afiliados</a></li>
+          <li><a href="/comparador" class="text-aurora-cyan">→ Compara con alternativas</a></li>
+          <li><a href="/manifiesto" class="text-aurora-cyan">→ Manifiesto Portalia</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-lg py-12">
+    <div class="glass-strong rounded-3xl p-8">
+      <h2 class="font-display text-2xl font-semibold">Ruta recomendada según tu perfil</h2>
+      <div class="mt-6 grid gap-6 md:grid-cols-2">
+        <div>
+          <p class="kicker mb-2">Emprendedor/dueño de negocio</p>
+          <p class="text-sm text-text-soft">Auditor → Blog "Qué es AEO" → Método CITAR → Comunidad.</p>
+        </div>
+        <div>
+          <p class="kicker mb-2">Freelancer / agencia</p>
+          <p class="text-sm text-text-soft">Blog completo → Método → Zona Prime (SchemaGen + Prompts) → Programa afiliados.</p>
+        </div>
+        <div>
+          <p class="kicker mb-2">Marketer</p>
+          <p class="text-sm text-text-soft">Blog → Método → Comparativa vs SEO → Aplica a 1 cliente piloto.</p>
+        </div>
+        <div>
+          <p class="kicker mb-2">Estudiante / interés</p>
+          <p class="text-sm text-text-soft">Blog free ilimitado + comunidad de lectura (gratis).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-md pb-16">
+    <div class="glass-strong rounded-3xl p-8 text-center">
+      <h2 class="font-display text-2xl md:text-3xl font-semibold">¿Listo?</h2>
+      <div class="mt-6 flex flex-wrap gap-4 justify-center">
+        <a href="/auditor" class="btn-ghost text-base px-7 py-3">Empezar gratis</a>
+        <a href={checkoutUrl} target="_blank" rel="noopener" class="btn-primary text-base px-7 py-3">Comprar acceso</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

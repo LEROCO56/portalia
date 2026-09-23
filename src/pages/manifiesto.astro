@@ -1,0 +1,67 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Sparkle from '@/components/Sparkle.astro';
+---
+<BaseLayout title="Manifiesto Portalia" description="Los cinco principios que rigen Portalia y todo lo que publicamos.">
+  <section class="container-md pt-20 pb-16 md:pt-28 prose-portalia">
+    <p class="kicker flex items-center gap-2">
+      <Sparkle size={14} class="text-aurora-violet2" /> Manifiesto
+    </p>
+    <h1>Cinco principios que rigen Portalia</h1>
+
+    <h2>1. Sin humo.</h2>
+    <p>
+      Vivimos en la era del contenido AI-generated genérico. Portalia va al lado opuesto: datos concretos, casos
+      reales, métodos que funcionan porque se probaron. Si no lo hemos aplicado, no lo publicamos.
+    </p>
+
+    <h2>2. En español, para LatAm.</h2>
+    <p>
+      Todo el ecosistema anglo se lanza en inglés para Silicon Valley. Portalia es para el emprendedor de Bogotá,
+      Medellín, Ciudad de México, Buenos Aires. Ejemplos con pesos colombianos, casos de barrios reales,
+      referencia a plataformas que usamos.
+    </p>
+
+    <h2>3. El método siempre gana al humo.</h2>
+    <p>
+      Un método enseñable, replicable, mediable. Con métricas. Con checklists. Con criterios de éxito.
+      Si no se puede enseñar, no vale la pena aprenderlo.
+    </p>
+
+    <h2>4. La comunidad multiplica.</h2>
+    <p>
+      Un método aplicado en solitario tarda 6 meses en dar resultados. Un método aplicado en comunidad tarda 8
+      semanas. Compartir hallazgos acelera el aprendizaje de todos.
+    </p>
+
+    <h2>5. Todo en Git, todo transparente.</h2>
+    <p>
+      El código de este portal está en <a href="https://github.com/LEROCO56/portalia">GitHub abierto</a>.
+      Los métodos son documentados. La estrategia de ventas es pública. Nada de "secreto profesional" que
+      esconda incompetencia.
+    </p>
+
+    <hr class="hr-line" />
+
+    <h2>Lo que NO somos</h2>
+    <ul>
+      <li>No somos un curso de "hazte rico con IA".</li>
+      <li>No prometemos resultados garantizados sin trabajo.</li>
+      <li>No tenemos secretos mágicos vendidos por USD 3.000.</li>
+      <li>No aceptamos afiliados que hagan spam o publicidad engañosa.</li>
+      <li>No cobramos por upgrades. Un solo tier, todo incluido.</li>
+    </ul>
+
+    <h2>Lo que SÍ hacemos</h2>
+    <ul>
+      <li>Método probado paso a paso.</li>
+      <li>Casos reales de negocios colombianos.</li>
+      <li>Comunidad activa con hallazgos frescos.</li>
+      <li>Auditor real usando Claude API.</li>
+      <li>Actualizaciones cuando ChatGPT, Claude o Perplexity cambian.</li>
+      <li>Garantía Hotmart 7 días. Sin drama.</li>
+    </ul>
+
+    <p><strong>Firmado:</strong> Leonardo Rojas Cortés, autor y responsable de Portalia. Bogotá, Colombia · septiembre 2026.</p>
+  </section>
+</BaseLayout>
