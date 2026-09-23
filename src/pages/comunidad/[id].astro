@@ -30,7 +30,10 @@ const { data: thread } = await supabase
   .select('id, title, body, category, created_at, author_name')
   .eq('id', id!)
   .maybeSingle();
-if (!thread) return new Response(null, { status: 404 });
+if (!thread) {
+  // Evitamos devolver un Response vacío (en Cloudflare producía 500): redirigimos al foro.
+  return Astro.redirect('/comunidad?hilo=no-encontrado', 302);
+}
 
 const { data: rows } = await supabase
   .from('replies')
