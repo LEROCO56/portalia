@@ -3,12 +3,14 @@
 
 import type { APIRoute } from 'astro';
 import { createSupabaseAdminClient } from '@/lib/supabase';
+import { env } from '@/lib/env';
 
 export const POST: APIRoute = async ({ request }) => {
-  const secret = import.meta.env.HOTMART_WEBHOOK_SECRET;
+  const secret = env('HOTMART_WEBHOOK_SECRET');
   const hottok = request.headers.get('x-hotmart-hottok') || request.headers.get('hottok');
 
-  if (secret && hottok !== secret) {
+  // Sin secreto configurado no se acepta nada (antes se aceptaba cualquier petición).
+  if (!secret || hottok !== secret) {
     return new Response(JSON.stringify({ ok: false, reason: 'invalid_signature' }), {
       status: 401,
       headers: { 'content-type': 'application/json' },

@@ -6,6 +6,7 @@
 import type { APIRoute } from 'astro';
 import { createSupabaseServerClient } from '@/lib/supabase';
 import { runAudit } from '@/lib/aeo-audit';
+import { env } from '@/lib/env';
 
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' } });
@@ -27,9 +28,8 @@ export const POST: APIRoute = async ({ request, cookies, locals }) => {
     if ((count ?? 0) >= 3) return json({ error: 'limit_reached', reason: 'Llegaste a 3 auditorías en 24 horas. Los miembros del método tienen auditorías ilimitadas.' }, 429);
   }
 
-  const env = (locals as any).runtime?.env ?? {};
-  const apiKey: string | undefined = isMember ? env.ANTHROPIC_API_KEY ?? import.meta.env.ANTHROPIC_API_KEY : undefined;
-  const model: string | undefined = env.ANTHROPIC_MODEL ?? import.meta.env.ANTHROPIC_MODEL;
+  const apiKey = isMember ? env('ANTHROPIC_API_KEY') : undefined;
+  const model = env('ANTHROPIC_MODEL');
 
   let result;
   try {
