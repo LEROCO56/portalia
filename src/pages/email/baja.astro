@@ -1,0 +1,77 @@
+---
+// Baja de la secuencia nurture (enlace al pie de cada correo + List-Unsubscribe one-click, RFC 8058).
+// GET muestra confirmación (evita que los escáneres de enlaces del correo den de baja sin querer);
+// POST ejecuta la baja con la función pública email_nurture_unsubscribe (token uuid por persona).
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { createSupabaseServerClient } from '@/lib/supabase';
+
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const token = (Astro.url.searchParams.get('t') ?? '').trim();
+const valid = UUID.test(token);
+
+let state: 'confirmar' | 'hecho' | 'invalido' | 'error' = valid ? 'confirmar' : 'invalido';
+
+if (Astro.request.method === 'POST' && valid) {
+  const form = await Astro.request.formData().catch(() => null);
+  const oneClick = form?.get('List-Unsubscribe') === 'One-Click';
+  try {
+    const supabase = createSupabaseServerClient(Astro.cookies);
+    const { data, error } = await supabase.rpc('email_nurture_unsubscribe', { p_token: token });
+    state = error ? 'error' : data === true ? 'hecho' : 'invalido';
+  } catch {
+    state = 'error';
+  }
+  // Petición one-click de un proveedor de correo: basta con el código de estado.
+  if (oneClick) {
+    return new Response(state === 'hecho' ? 'ok' : state, { status: state === 'hecho' ? 200 : state === 'error' ? 500 : 400 });
+  }
+}
+if (state === 'invalido') Astro.response.status = 400;
+if (state === 'error') Astro.response.status = 500;
+---
+<BaseLayout title="Darte de baja — Portalia" noindex>
+  <section class="container-md pt-16 pb-24 md:pt-24">
+    <div class="glass rounded-2xl p-8 max-w-xl">
+      {state === 'confirmar' && (
+        <>
+          <h1 class="font-display text-3xl font-semibold">¿Dejar de recibir la serie de correos?</h1>
+          <p class="mt-4 text-text-soft">
+            Dejarás de recibir los correos de la serie "3 arreglos para que las IAs te recomienden". Tu cuenta, tu historial del
+            Auditor y tu acceso gratuito siguen igual.
+          </p>
+          <form method="POST" class="mt-8">
+            <button type="submit" class="btn-primary">Sí, darme de baja</button>
+          </form>
+        </>
+      )}
+      {state === 'hecho' && (
+        <>
+          <h1 class="font-display text-3xl font-semibold">Listo, ya no te escribimos</h1>
+          <p class="mt-4 text-text-soft">
+            Quedaste fuera de la serie de correos. Si fue un error o cambias de opinión, escríbenos respondiendo cualquier correo
+            anterior. Tu cuenta sigue activa.
+          </p>
+          <a href="/auditor" class="mt-8 inline-block text-aurora-cyan">Volver al Auditor →</a>
+        </>
+      )}
+      {state === 'invalido' && (
+        <>
+          <h1 class="font-display text-3xl font-semibold">Enlace no válido</h1>
+          <p class="mt-4 text-text-soft">
+            El enlace de baja está incompleto o ya no existe. Usa el enlace del pie de uno de nuestros correos, o respóndelo con la
+            palabra "baja" y te retiramos a mano.
+          </p>
+        </>
+      )}
+      {state === 'error' && (
+        <>
+          <h1 class="font-display text-3xl font-semibold">No pudimos procesar la baja</h1>
+          <p class="mt-4 text-text-soft">Intenta de nuevo en unos minutos, o responde cualquier correo con la palabra "baja".</p>
+        </>
+      )}
+      <p class="mt-8 text-xs text-text-soft">
+        Tratamiento de datos según la Ley 1581 de 2012. <a href="/legal/privacidad" class="underline">Política de privacidad</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
