@@ -92,3 +92,22 @@ Prueba disparar un evento test desde el panel Hotmart y verificar en Cloudflare 
 - Cloudflare Web Analytics (gratis, sin cookies) — ya activo por defecto.
 - Supabase Dashboard → Reports → Auth, Database, Storage.
 - Cloudflare Pages → **Analytics** para requests + errores.
+
+## 9. Correos nurture (Supabase Edge Function + Resend)
+
+Todo lo técnico ya está en producción: migración `004_email_nurture.sql` (inscripción automática de `role='free'`, salida al comprar, baja por token, cron cada hora al minuto 5), Edge Function `nurture-send` (código en `supabase/functions/nurture-send/`, desplegada con `verify_jwt=false` porque autentica con `x-cron-secret` guardado en Vault) y página de baja `/email/baja?t=<token>` (con List-Unsubscribe one-click).
+
+Para que empiece a enviar solo falta:
+1. Cuenta en resend.com → **Domains** → agregar `portalia.com.co` y crear los registros DNS que pide (SPF/DKIM). Depende de que el DNS del dominio esté accesible (sección 3).
+2. **API Keys** → crear una con permiso "Sending access".
+3. Supabase → Edge Functions → **Secrets**: `RESEND_API_KEY=<la key>`, `NURTURE_FROM=Portalia <hola@portalia.com.co>`, opcional `NURTURE_REPLY_TO` y `SITE_URL=https://portalia.com.co` cuando el dominio apunte.
+
+Mientras falten, la función responde `configured:false` y no envía nada (los inscritos esperan y reciben D0 al activarse). Si cambia el copy en `content/email/nurture-secuencia.md`: `node scripts/build-nurture-templates.mjs` y redesplegar la función.
+
+## 10. Video del curso (Bunny Stream, opcional)
+
+`/curso/<lección>` ya entrega la guía escrita completa de las 8 lecciones (`content/lecciones/`). Para sumar el video firmado arriba del texto:
+1. Bunny → Stream → crear Video Library `portalia` → Security → activar **Token Authentication** y copiar la **Token Authentication Key**.
+2. Subir los videos y copiar el GUID de cada uno.
+3. Cloudflare Pages → Variables: `BUNNY_LIBRARY_ID` (texto), `BUNNY_VIDEO_IDS` (texto, JSON `{"L1":"<guid>","L2":"<guid>",...}`), `BUNNY_TOKEN_KEY` (**secreto**). Como hay `wrangler.toml`, las variables de texto van en `[vars]` del archivo; el secreto sí en el dashboard. Re-desplegar.
+Las lecciones sin GUID siguen mostrando solo la guía escrita.
