@@ -7,7 +7,7 @@ import cloudflare from '@astrojs/cloudflare';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://portalia.com.co',
-  output: 'hybrid',
+  output: 'server',
   adapter: cloudflare({
     imageService: 'compile',
     platformProxy: { enabled: true },
