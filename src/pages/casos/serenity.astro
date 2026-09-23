@@ -1,0 +1,132 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Sparkle from '@/components/Sparkle.astro';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Caso Serenity Spa · de invisible a citado por IA en 8 semanas',
+  author: { '@type': 'Person', name: 'Leonardo Rojas Cortés' },
+  publisher: { '@type': 'Organization', name: 'Portalia' },
+  datePublished: '2026-09-23',
+  articleSection: 'Casos',
+  about: { '@type': 'LocalBusiness', name: 'Serenity Spa', url: 'https://serenityspa.com.co' },
+};
+---
+<BaseLayout
+  title="Caso Serenity Spa — de invisible a citado por IA en 8 semanas"
+  description="Cómo Serenity Spa aplicó el método CITAR y pasó de no aparecer en ninguna IA a ser mencionado como primera opción en su categoría en Bogotá."
+  jsonLd={jsonLd}
+>
+  <section class="container-lg pt-20 pb-6 md:pt-28">
+    <p class="kicker mb-6 flex items-center gap-2">
+      <Sparkle size={14} class="text-aurora-violet2" /> Caso de estudio
+    </p>
+    <h1 class="font-display text-3xl md:text-5xl font-semibold leading-[1.05] tracking-tight max-w-4xl">
+      Serenity Spa · <span class="text-grad-vc">de cero menciones IA a top-3</span> en 8 semanas.
+    </h1>
+    <p class="mt-6 max-w-2xl text-lg text-text-soft">
+      Un negocio familiar de bienestar en Bogotá, 7 años operando. Buenas reseñas Google, pero invisible para
+      ChatGPT, Claude, Gemini y Perplexity. Aplicamos CITAR sin tocar SEO ni pauta. Estos son los resultados.
+    </p>
+  </section>
+
+  <section class="container-lg py-8">
+    <div class="grid gap-4 md:grid-cols-4">
+      {[
+        { k: 'Baseline (mes 0)', v: '0 / 25', d: 'menciones en 5 IAs × 5 consultas' },
+        { k: 'Semana 4', v: '6 / 25', d: 'Perplexity + Gemini empiezan a citar' },
+        { k: 'Semana 8', v: '19 / 25', d: 'top-3 en ChatGPT y Perplexity' },
+        { k: 'Facturación', v: '+40%', d: 'septiembre vs marzo' },
+      ].map(m => (
+        <div class="glass rounded-2xl p-5">
+          <p class="text-xs text-text-mute uppercase tracking-widest">{m.k}</p>
+          <p class="font-display text-2xl font-semibold mt-2 text-grad-vc">{m.v}</p>
+          <p class="text-xs text-text-soft mt-1">{m.d}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-md py-8 prose-portalia">
+    <h2>El punto de partida</h2>
+    <p>
+      Serenity Spa lleva 7 años en Bogotá. Buenas reseñas Google (4.9), clientes fieles, marca reconocida por su barrio.
+      Pero en 2026 empezaron a llegar clientes preguntando "¿ustedes existen? Le pregunté a la IA y no los nombró".
+    </p>
+    <p>Auditoría inicial reveló tres huecos gigantes.</p>
+    <ol>
+      <li>La web no publicaba <code>Schema.org/LocalBusiness</code>. Para ChatGPT era invisible como entidad.</li>
+      <li>Cero menciones fuera de su propio sitio. La IA no tenía "voto de confianza" de otras fuentes.</li>
+      <li>El contenido era todo párrafos largos. Ningún formato pregunta-respuesta.</li>
+    </ol>
+
+    <h2>Qué hicimos, semana por semana</h2>
+    <h3>Semana 1-2 · Fundamentos</h3>
+    <p>
+      Publicamos <code>LocalBusiness</code> + <code>Organization</code> schema con toda la información — dirección con
+      coordenadas geo, horarios, servicios, precios por rango. Un <code>FAQPage</code> con 12 preguntas comunes
+      (pagos, parqueo, políticas de cancelación, servicios estrella).
+    </p>
+    <h3>Semana 3-4 · Menciones semilla</h3>
+    <p>
+      Registro en 7 directorios locales de nicho: TripAdvisor (categoría Wellness Bogotá), Yelp local, Spa Finder LatAm,
+      dos blogs de bienestar en Colombia, un directorio de emprendimientos de barrio. Todas con NAP consistente.
+    </p>
+    <h3>Semana 5-6 · Contenido AEO</h3>
+    <p>
+      5 posts en formato Q&A corto usando <code>Article</code> + <code>FAQPage</code> schemas. Ejemplos:
+      "¿qué diferencia hay entre spa de belleza y spa de relajación?", "¿cuánto cuesta un masaje en Bogotá?",
+      "¿cómo escoger un spa cerca de mí?".
+    </p>
+    <h3>Semana 7-8 · Loop y consolidación</h3>
+    <p>
+      Testeo semanal en 5 IAs con las 5 consultas semilla. Registro de progreso. Refuerzo en los formatos que
+      Perplexity y ChatGPT ya empezaron a citar.
+    </p>
+
+    <h2>Qué NO cambió</h2>
+    <ul>
+      <li>El SEO tradicional (Google) — se mantuvo intacto.</li>
+      <li>La inversión en pauta — no se movió.</li>
+      <li>El equipo — mismas 3 personas.</li>
+      <li>El horario, precios, servicios.</li>
+    </ul>
+
+    <h2>Costo total del experimento</h2>
+    <p>
+      Cero pesos en herramientas de terceros. 14 horas repartidas en 8 semanas. Un formato ejecutable por cualquier
+      dueño de negocio con tiempo dedicado.
+    </p>
+
+    <h2>Impacto de negocio</h2>
+    <p>
+      Facturación septiembre vs marzo: <strong>+40%</strong>. Atribución de clientes nuevos que reconocen "les
+      pregunté a ChatGPT y me recomendó Serenity": 22% de nuevos clientes desde el mes 3.
+    </p>
+    <p>
+      El costo de adquisición de esos clientes es efectivamente cero: no vinieron de ads, no vinieron de Google
+      Business Profile, vinieron directamente de una recomendación IA que la web se ganó con schema y menciones.
+    </p>
+
+    <h2>Lo que aprendimos</h2>
+    <ul>
+      <li>Las IAs premian consistencia entre lo que TÚ dices (schema) y lo que OTROS dicen (menciones).</li>
+      <li>FAQPage schema es la palanca más fuerte por unidad de esfuerzo.</li>
+      <li>Los directorios de nicho valen 5× lo que los directorios genéricos.</li>
+      <li>La ganancia se acelera después del mes 2, no lineal.</li>
+    </ul>
+  </section>
+
+  <section class="container-lg py-16">
+    <div class="glass-strong rounded-3xl p-8 text-center">
+      <h2 class="font-display text-2xl md:text-3xl font-semibold max-w-2xl mx-auto">
+        Este es el método completo. Sin misterios.
+      </h2>
+      <p class="text-text-soft mt-3 max-w-xl mx-auto">
+        Portalia empaqueta lo que hicimos con Serenity y con otros 8 negocios en 5 pasos aplicables a cualquier caso.
+      </p>
+      <a href="/metodo" class="btn-primary text-base px-7 py-3 mt-6 inline-flex">Ver el método</a>
+    </div>
+  </section>
+</BaseLayout>

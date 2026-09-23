@@ -1,0 +1,97 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+const user = Astro.locals.user;
+if (!user) return Astro.redirect('/login?next=/prime/transformacion');
+if (user.role !== 'buyer' && user.role !== 'admin') return Astro.redirect('/curso/bloqueado');
+---
+<BaseLayout title="Transformación Digital · Marco Portalia — Prime" noindex={true}>
+  <section class="container-lg pt-20 pb-6 md:pt-24">
+    <a href="/prime" class="text-sm text-text-mute hover:text-text">← Zona Prime</a>
+    <h1 class="mt-4 font-display text-3xl md:text-5xl font-semibold">Marco de Transformación Digital para la era de las respuestas de IA</h1>
+    <p class="mt-4 text-lg text-text-soft max-w-3xl">
+      La mayoría de "transformaciones digitales" fallan porque optimizan para el web anterior. Este marco te lleva
+      del web-de-búsqueda al web-de-respuestas en 4 fases.
+    </p>
+  </section>
+
+  <section class="container-lg pb-16">
+    <div class="space-y-6">
+      {[
+        {
+          fase: 'Fase 1', titulo: 'Diagnóstico honesto (semanas 1-2)',
+          objetivo: 'Saber exactamente dónde estás — sin humo.',
+          entregables: [
+            'Baseline en 5 IAs, 5 consultas cada una (25 datos).',
+            'Auditoría técnica: Schema.org, HTTPS, sitemap, robots, Core Web Vitals.',
+            'Mapa de menciones externas actuales (Google + Perplexity + búsqueda humana).',
+            'Análisis de 3 competidores directos con el mismo método.',
+            'Documento "estado del arte" firmado por decisor.',
+          ],
+        },
+        {
+          fase: 'Fase 2', titulo: 'Fundamentos técnicos (semanas 3-6)',
+          objetivo: 'Poner los tabiques que sostienen el resto.',
+          entregables: [
+            'Schema Organization o LocalBusiness deployado.',
+            'Al menos FAQPage + BreadcrumbList en páginas core.',
+            'Meta descriptions + OG + Twitter cards revisados y consistentes.',
+            'Sitemap XML actualizado enviado a Google + Bing.',
+            'robots.txt permitiendo GPTBot, ClaudeBot, PerplexityBot.',
+            'Content collections en Git — cero contenido en HTML quemado.',
+          ],
+        },
+        {
+          fase: 'Fase 3', titulo: 'Contenido AEO y evidencia (semanas 7-12)',
+          objetivo: 'Convertir tu sitio en fuente citable.',
+          entregables: [
+            'Al menos 12 posts en formato Q&A corto + FAQPage schema.',
+            '3 casos de estudio publicados con Article schema y autor identificable.',
+            '10 menciones externas medibles distribuidas en 8 fuentes distintas.',
+            'Perfil coherente en al menos 4 directorios de nicho.',
+            'Primeras 3 apariciones documentadas en respuestas IA — evidencia.',
+          ],
+        },
+        {
+          fase: 'Fase 4', titulo: 'Loop y expansión (mes 4+)',
+          objetivo: 'Sostener y escalar sin quemarse.',
+          entregables: [
+            'Rutina mensual de 30 min (loop-mensual.md).',
+            'Contenido evergreen calendarizado: 2 posts AEO por mes.',
+            'Programa de menciones semilla — 1 nueva por semana.',
+            'Automatización de auditoría con /api/auditor cada 30 días.',
+            'Playbook por país si expandes (LocalBusiness debe ser per-ubicación).',
+          ],
+        },
+      ].map((f, i) => (
+        <div class="glass rounded-2xl p-6 relative">
+          <div class="absolute -top-3 left-6 chip">{f.fase}</div>
+          <h3 class="mt-3 font-display text-xl font-semibold">{f.titulo}</h3>
+          <p class="text-sm text-aurora-cyan mt-1">Objetivo: {f.objetivo}</p>
+          <p class="text-xs uppercase tracking-widest text-text-mute mt-4 mb-2">Entregables</p>
+          <ul class="space-y-1.5">
+            {f.entregables.map(e => (
+              <li class="text-sm text-text-soft flex gap-2"><span class="text-aurora-cyan shrink-0">✓</span>{e}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-lg pb-16">
+    <div class="glass-strong rounded-3xl p-8">
+      <h2 class="font-display text-2xl font-semibold">Checkpoints por fase</h2>
+      <table class="mt-4 w-full text-sm">
+        <thead class="text-xs text-text-mute uppercase tracking-widest">
+          <tr><th class="text-left py-2">Fase</th><th class="text-left py-2">Métrica</th><th class="text-left py-2">Meta mínima</th></tr>
+        </thead>
+        <tbody>
+          <tr class="border-t border-border"><td class="py-3">1</td><td>Baseline documentado</td><td>25 datos IA + auditoría técnica</td></tr>
+          <tr class="border-t border-border"><td class="py-3">2</td><td>Schema desplegado</td><td>Al menos 3 tipos en producción</td></tr>
+          <tr class="border-t border-border"><td class="py-3">3</td><td>Primera mención IA</td><td>1 aparición demostrable en 5 IAs</td></tr>
+          <tr class="border-t border-border"><td class="py-3">4</td><td>Consolidación</td><td>Top-3 en al menos 1 consulta clave</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,73 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+const user = Astro.locals.user;
+if (!user) return Astro.redirect('/login?next=/prime/api-sandbox');
+if (user.role !== 'buyer' && user.role !== 'admin') return Astro.redirect('/curso/bloqueado');
+---
+<BaseLayout title="API Sandbox — Prime" noindex={true}>
+  <section class="container-lg pt-20 pb-6 md:pt-24">
+    <a href="/prime" class="text-sm text-text-mute hover:text-text">← Zona Prime</a>
+    <h1 class="mt-4 font-display text-3xl md:text-4xl font-semibold">API Sandbox</h1>
+    <p class="mt-3 text-text-soft max-w-3xl">
+      Endpoints listos para que integres el auditor Portal IA a tu propia herramienta, panel interno o CRM.
+      Autenticación con Bearer token que generas desde tu panel.
+    </p>
+  </section>
+
+  <section class="container-lg pb-16">
+    <div class="glass rounded-2xl p-6 space-y-6">
+      <div>
+        <p class="kicker mb-2">POST /api/auditor</p>
+        <p class="text-sm text-text-soft">Corre una auditoría AEO real con Claude sobre una URL. Devuelve puntaje, gaps por severidad y wins detectados.</p>
+        <pre class="mt-3 text-xs bg-bg-elevated rounded-lg p-4 overflow-auto"><code>{`curl -X POST https://portalia.com.co/api/auditor \\
+  -H "Content-Type: application/json" \\
+  -H "Cookie: sb-access-token=..." \\
+  -d '{
+    "domain": "https://minegocio.com",
+    "business": "Café Origen",
+    "query": "mejor café especialidad Bogotá"
+  }'`}</code></pre>
+      </div>
+
+      <div>
+        <p class="kicker mb-2">Respuesta</p>
+        <pre class="text-xs bg-bg-elevated rounded-lg p-4 overflow-auto"><code>{`{
+  "score": 62,
+  "gaps": [
+    { "title": "JSON-LD Organization ausente", "detail": "…", "severity": "high" }
+  ],
+  "wins": ["HTTPS activo", "Meta description presente"],
+  "savedAt": "2026-09-23T04:00:00Z"
+}`}</code></pre>
+      </div>
+
+      <div>
+        <p class="kicker mb-2">Quotas y límites</p>
+        <ul class="text-sm text-text-soft space-y-1.5">
+          <li>• Miembro comprador: 100 auditorías / mes.</li>
+          <li>• Miembro admin: sin límite.</li>
+          <li>• Rate limit: 10 por minuto por sesión.</li>
+          <li>• Excedente: se responde con 429 y en el header `Retry-After` los segundos hasta el reset.</li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="kicker mb-2">Cómo se autentica</p>
+        <p class="text-sm text-text-soft">
+          El endpoint usa la cookie de sesión Supabase. Para llamadas server-side, pasa la cookie
+          <code class="text-aurora-cyan">sb-access-token</code>. Para uso en el navegador, ya viene automática.
+        </p>
+      </div>
+
+      <div>
+        <p class="kicker mb-2">Roadmap de endpoints (fase 2)</p>
+        <ul class="text-sm text-text-soft space-y-1.5">
+          <li>• <strong>POST /api/schema-gen</strong> — genera JSON-LD del tipo indicado con Claude.</li>
+          <li>• <strong>POST /api/faqpage</strong> — genera 15 Q&A + FAQPage schema desde una URL o descripción.</li>
+          <li>• <strong>POST /api/compare</strong> — compara tu URL vs 3 competidores.</li>
+          <li>• <strong>GET /api/history</strong> — histórico de auditorías tuyas para gráficos de evolución.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

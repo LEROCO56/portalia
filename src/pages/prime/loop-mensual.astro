@@ -1,0 +1,80 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+const user = Astro.locals.user;
+if (!user) return Astro.redirect('/login?next=/prime/loop-mensual');
+if (user.role !== 'buyer' && user.role !== 'admin') return Astro.redirect('/curso/bloqueado');
+---
+<BaseLayout title="Loop mensual — Prime" noindex={true}>
+  <section class="container-lg pt-20 pb-6 md:pt-24">
+    <a href="/prime" class="text-sm text-text-mute hover:text-text">← Zona Prime</a>
+    <h1 class="mt-4 font-display text-3xl md:text-4xl font-semibold">Loop mensual · 30 minutos que sostienen el ranking</h1>
+    <p class="mt-3 text-text-soft max-w-3xl">
+      El ritual que replicas el mismo día de cada mes. Ocho ítems, 30 minutos.
+    </p>
+  </section>
+
+  <section class="container-lg pb-16">
+    <div class="grid gap-6 lg:grid-cols-[2fr_1fr]">
+      <div class="glass rounded-2xl p-6">
+        <h2 class="font-display text-xl font-semibold mb-4">Checklist</h2>
+        <ol class="space-y-4">
+          <li class="flex gap-4"><span class="chip shrink-0">1</span><div><p class="font-semibold">Testeo blindado (5 min)</p><p class="text-sm text-text-soft">Toma tus 5 consultas semilla y las mismas 5 en 5 IAs. Anota apariciones y fuentes citadas.</p></div></li>
+          <li class="flex gap-4"><span class="chip shrink-0">2</span><div><p class="font-semibold">Delta vs mes pasado (3 min)</p><p class="text-sm text-text-soft">Contra la bitácora del mes anterior: ¿subió, se mantuvo, bajó? Marca las que se movieron.</p></div></li>
+          <li class="flex gap-4"><span class="chip shrink-0">3</span><div><p class="font-semibold">Revisar Search Console (3 min)</p><p class="text-sm text-text-soft">Consultas ganadoras en Google → ¿estás en las respuestas IA de esas mismas consultas?</p></div></li>
+          <li class="flex gap-4"><span class="chip shrink-0">4</span><div><p class="font-semibold">Validador de schema (2 min)</p><p class="text-sm text-text-soft">Corre las URLs principales por validator.schema.org y Rich Results Test.</p></div></li>
+          <li class="flex gap-4"><span class="chip shrink-0">5</span><div><p class="font-semibold">Menciones externas nuevas (5 min)</p><p class="text-sm text-text-soft">Busca en Google "site:reddit.com [tu marca]", "quora [tu marca]", "[tu marca]" en filtros de las últimas 30 días.</p></div></li>
+          <li class="flex gap-4"><span class="chip shrink-0">6</span><div><p class="font-semibold">Un cambio, no más (5 min)</p><p class="text-sm text-text-soft">Elige UN experimento para el mes: un nuevo FAQPage, una nueva mención semilla, o una tanda de contenido. Escríbelo.</p></div></li>
+          <li class="flex gap-4"><span class="chip shrink-0">7</span><div><p class="font-semibold">Sync en la comunidad (5 min)</p><p class="text-sm text-text-soft">Publica un hilo en Portalia comunidad con tus wins y frustraciones del mes. Recibe feedback.</p></div></li>
+          <li class="flex gap-4"><span class="chip shrink-0">8</span><div><p class="font-semibold">Cerrar bitácora (2 min)</p><p class="text-sm text-text-soft">Actualiza la plantilla (columna derecha). Guarda. Nos vemos en 30 días.</p></div></li>
+        </ol>
+      </div>
+
+      <div class="glass rounded-2xl p-6">
+        <h2 class="font-display text-xl font-semibold mb-4">Plantilla de bitácora</h2>
+        <pre class="text-xs bg-bg-elevated rounded-lg p-4 whitespace-pre-wrap"><code>Mes: [YYYY-MM]
+
+Consultas testeadas y resultado:
+1. "[consulta]" → aparezco en: [ChatGPT ✓ / Claude ✕ / …]
+2. …
+
+Fuentes que la IA cita:
+- [dominio], [dominio]…
+
+Delta vs mes anterior:
+- Ganancias:
+- Pérdidas:
+
+Experimento del mes:
+[una sola cosa]
+
+Nuevas menciones detectadas:
+- [origen]
+
+Decisión para el próximo mes:
+[una acción]
+</code></pre>
+        <p class="mt-3 text-xs text-text-mute">Copia esto a tu Notion, Sheets o markdown. Reusa todos los meses.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-lg pb-16">
+    <div class="glass-strong rounded-3xl p-8">
+      <h2 class="font-display text-2xl font-semibold">Criterios de decisión</h2>
+      <div class="mt-4 grid gap-3 md:grid-cols-3">
+        <div>
+          <p class="font-semibold">📈 Sube en 3+ IAs este mes</p>
+          <p class="text-sm text-text-soft mt-1">Intensifica en menciones externas. Es señal de que tu schema y contenido ya cargan bien.</p>
+        </div>
+        <div>
+          <p class="font-semibold">➡ Se mantiene igual</p>
+          <p class="text-sm text-text-soft mt-1">Cambia el vector: si venías con schema, ahora contenido nuevo Q&A. Si venías con contenido, ahora directorios.</p>
+        </div>
+        <div>
+          <p class="font-semibold">📉 Baja en 2+ IAs</p>
+          <p class="text-sm text-text-soft mt-1">Revisa: ¿publicaste algo que rompió schema? ¿desapareció una mención? Revalida y arregla.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

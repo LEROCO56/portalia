@@ -1,0 +1,19 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PromptSandbox from '@/islands/PromptSandbox.tsx';
+const user = Astro.locals.user;
+if (!user) return Astro.redirect('/login?next=/prime/prompts');
+if (user.role !== 'buyer' && user.role !== 'admin') return Astro.redirect('/curso/bloqueado');
+---
+<BaseLayout title="Biblioteca de Prompts CITAR — Prime" noindex={true}>
+  <section class="container-lg pt-20 pb-6 md:pt-24">
+    <a href="/prime" class="text-sm text-text-mute hover:text-text">← Zona Prime</a>
+    <h1 class="mt-4 font-display text-3xl md:text-4xl font-semibold">Biblioteca de Prompts CITAR</h1>
+    <p class="mt-3 text-text-soft max-w-2xl">
+      Prompts probados, categorizados y listos para copiar. Cada uno incluye marcadores <code class="text-aurora-cyan">[MAYÚSCULAS]</code> que reemplazas con tus datos.
+    </p>
+  </section>
+  <section class="container-lg pb-24">
+    <PromptSandbox client:load />
+  </section>
+</BaseLayout>

@@ -1,0 +1,19 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ROICalculator from '@/islands/ROICalculator.tsx';
+const user = Astro.locals.user;
+if (!user) return Astro.redirect('/login?next=/prime/roi');
+if (user.role !== 'buyer' && user.role !== 'admin') return Astro.redirect('/curso/bloqueado');
+---
+<BaseLayout title="Calculadora ROI AEO — Prime" noindex={true}>
+  <section class="container-lg pt-20 pb-6 md:pt-24">
+    <a href="/prime" class="text-sm text-text-mute hover:text-text">← Zona Prime</a>
+    <h1 class="mt-4 font-display text-3xl md:text-4xl font-semibold">Calculadora ROI AEO</h1>
+    <p class="mt-3 text-text-soft max-w-2xl">
+      Modela cuánto ingresa tu negocio si sube su tasa de aparición en respuestas de IA. Ideal para justificar el esfuerzo AEO ante socios, jefes o clientes.
+    </p>
+  </section>
+  <section class="container-lg pb-24">
+    <ROICalculator client:load />
+  </section>
+</BaseLayout>

@@ -1,0 +1,20 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SchemaGenerator from '@/islands/SchemaGenerator.tsx';
+const user = Astro.locals.user;
+if (!user) return Astro.redirect('/login?next=/prime/schema-generator');
+if (user.role !== 'buyer' && user.role !== 'admin') return Astro.redirect('/curso/bloqueado');
+---
+<BaseLayout title="Generador de Schema JSON-LD — Prime" noindex={true}>
+  <section class="container-lg pt-20 pb-6 md:pt-24">
+    <a href="/prime" class="text-sm text-text-mute hover:text-text">← Zona Prime</a>
+    <h1 class="mt-4 font-display text-3xl md:text-4xl font-semibold">Generador de Schema JSON-LD</h1>
+    <p class="mt-3 text-text-soft max-w-2xl">
+      Completa los datos de tu negocio. Genera un bloque JSON-LD listo para pegar antes de <code class="text-aurora-cyan">&lt;/head&gt;</code> en tu web.
+      La IA lo detecta en su próxima indexación.
+    </p>
+  </section>
+  <section class="container-lg pb-24">
+    <SchemaGenerator client:load />
+  </section>
+</BaseLayout>

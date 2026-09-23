@@ -1,0 +1,158 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+const user = Astro.locals.user;
+if (!user) return Astro.redirect('/login?next=/prime/arquitecturas');
+if (user.role !== 'buyer' && user.role !== 'admin') return Astro.redirect('/curso/bloqueado');
+
+const arquetipos = [
+  {
+    slug: 'ecommerce-aeo',
+    icon: '🛒',
+    titulo: 'E-commerce AEO-first',
+    resumen: 'Tu tienda debe hablarle al asistente que evalúa "¿dónde compro X?".',
+    piezas: [
+      'Product schema con GTIN, brand, offer.price y availability por SKU.',
+      'AggregateRating con datos reales de tu plataforma.',
+      'FAQPage por producto con las 5 preguntas más frecuentes de tu SAC.',
+      'BreadcrumbList en cada categoría.',
+      'Menciones en 3 comparadores de nicho + 2 blogs de review.',
+      'Feed a Google Merchant Center + Bing Shopping.',
+    ],
+    riesgos: [
+      'Duplicar schema entre listing y detalle (usa itemListElement).',
+      'Precios inconsistentes entre schema y widget del carrito.',
+    ],
+  },
+  {
+    slug: 'saas',
+    icon: '⚙',
+    titulo: 'SaaS B2B',
+    resumen: 'Tu producto compite por respuestas B2B como "¿mejor herramienta para X?".',
+    piezas: [
+      'SoftwareApplication schema con offer.price, applicationCategory, operatingSystem.',
+      'Página comparativa vs top 3 competidores con Article + FAQPage schemas.',
+      'Casos de estudio con Case schema (o Article + author.jobTitle).',
+      'Perfiles en Capterra, G2, GetApp, Product Hunt con enlace directo.',
+      'Blog técnico con HowTo schema por integración típica.',
+      'Sitemap XML separando /features/, /pricing/, /docs/, /blog/.',
+    ],
+    riesgos: [
+      'Ausencia de página con precios visible (LLMs desconfían).',
+      'Contenido sales-heavy y poco técnico — reduce autoridad.',
+    ],
+  },
+  {
+    slug: 'negocio-local',
+    icon: '📍',
+    titulo: 'Negocio local',
+    resumen: 'Tu negocio de barrio compite por "cerca de mí" y "mejor X en [ciudad]".',
+    piezas: [
+      'LocalBusiness schema con geo.latitude / longitude y openingHoursSpecification.',
+      'Perfil Google Business Profile + Bing Places + Apple Business Connect.',
+      'Reseñas coherentes entre Google, Facebook, TripAdvisor si aplica.',
+      'Sitio propio con al menos 8 preguntas FAQPage locales ("¿tienen parqueo?", "¿aceptan efectivo?").',
+      'Menciones en 3 directorios locales de nicho + 2 blogs de la ciudad.',
+      'Página por barrio si sirves más de uno (evita cannibalización).',
+    ],
+    riesgos: [
+      'Direcciones y horarios inconsistentes entre plataformas (NAP mismatch).',
+      'Fotos de Google diferentes al sitio propio.',
+    ],
+  },
+  {
+    slug: 'servicios-profesionales',
+    icon: '💼',
+    titulo: 'Servicios profesionales',
+    resumen: 'Compites por "abogado / contador / consultor de X en [ciudad]".',
+    piezas: [
+      'ProfessionalService schema con priceRange y areaServed.',
+      'Person schema del profesional principal con alumniOf, memberOf, knowsAbout.',
+      'Blog jurídico/técnico con Article + FAQPage por área de práctica.',
+      'Casos anonimizados con Article schema.',
+      'Perfiles LinkedIn actualizados y consistentes.',
+      'Menciones en 2 blogs de gremio + 1 podcast del sector.',
+    ],
+    riesgos: [
+      'Compliance regulatorio (evita promesas cuantificadas).',
+      'Testimonials que la regulación no permite en tu jurisdicción.',
+    ],
+  },
+  {
+    slug: 'agencia',
+    icon: '🎯',
+    titulo: 'Agencia (marketing / diseño / dev)',
+    resumen: 'Tu agencia debe ser recomendada cuando alguien busca "¿mejor agencia de X?".',
+    piezas: [
+      'Organization schema con múltiples serviceType y knowsAbout.',
+      'Portafolio con CreativeWork schema por caso.',
+      'Blog con al menos 30 posts técnicos usando Article + HowTo.',
+      'Perfiles en Clutch, DesignRush, Sortlist.',
+      'Menciones cruzadas entre proyectos (con permiso del cliente).',
+      'Página de equipo con Person schema por cada rol clave.',
+    ],
+    riesgos: [
+      'Cases sin permiso → problemas legales.',
+      'Autoridad diluida por decir "hacemos todo" (mejor 3 verticales).',
+    ],
+  },
+  {
+    slug: 'medios',
+    icon: '📰',
+    titulo: 'Medios y creadores',
+    resumen: 'Tu publicación quiere ser fuente citada por IAs.',
+    piezas: [
+      'NewsArticle o Article schema por post con author.sameAs a redes.',
+      'Person schema para cada autor con h-card completa.',
+      'CreativeWorkSeries si publicas newsletters o series.',
+      'Menciones en aggregators de nicho.',
+      'Feed RSS validado + firma verificable.',
+      'Historial de correcciones publicado (aumenta trust en LLMs).',
+    ],
+    riesgos: [
+      'Contenido pobre en fechas → LLMs prefieren fuentes con temporalidad clara.',
+      'Reciclar posts antiguos sin declarar dateModified.',
+    ],
+  },
+];
+---
+<BaseLayout title="Arquetipos de arquitectura AEO — Prime" noindex={true}>
+  <section class="container-lg pt-20 pb-6 md:pt-24">
+    <a href="/prime" class="text-sm text-text-mute hover:text-text">← Zona Prime</a>
+    <h1 class="mt-4 font-display text-3xl md:text-4xl font-semibold">Arquetipos de arquitectura AEO</h1>
+    <p class="mt-3 text-text-soft max-w-3xl">
+      Seis modelos según el tipo de negocio. Cada uno con las piezas críticas, los enlaces que necesitas y los errores comunes que hunden proyectos.
+    </p>
+  </section>
+
+  <section class="container-lg pb-16">
+    <div class="grid gap-6 md:grid-cols-2">
+      {arquetipos.map(a => (
+        <article class="glass rounded-2xl p-6">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-3xl">{a.icon}</span>
+            <div>
+              <h2 class="font-display text-xl font-semibold">{a.titulo}</h2>
+              <p class="text-xs text-text-mute">{a.resumen}</p>
+            </div>
+          </div>
+          <div class="mt-4">
+            <p class="text-xs uppercase tracking-widest text-text-mute mb-2">Piezas críticas</p>
+            <ul class="space-y-1.5">
+              {a.piezas.map(p => (
+                <li class="text-sm text-text-soft flex gap-2"><span class="text-aurora-cyan shrink-0">✓</span>{p}</li>
+              ))}
+            </ul>
+          </div>
+          <div class="mt-5">
+            <p class="text-xs uppercase tracking-widest text-red-300/70 mb-2">Errores comunes</p>
+            <ul class="space-y-1.5">
+              {a.riesgos.map(r => (
+                <li class="text-sm text-text-soft flex gap-2"><span class="text-red-400 shrink-0">!</span>{r}</li>
+              ))}
+            </ul>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,103 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Sparkle from '@/components/Sparkle.astro';
+
+const user = Astro.locals.user;
+if (!user) return Astro.redirect('/login?next=/prime');
+if (user.role !== 'buyer' && user.role !== 'admin') return Astro.redirect('/curso/bloqueado');
+---
+<BaseLayout title="Zona Prime — miembros" noindex={true}>
+  <section class="container-lg pt-20 pb-8 md:pt-24">
+    <p class="kicker mb-6 flex items-center gap-2">
+      <Sparkle size={14} class="text-aurora-violet2" /> Zona Prime
+    </p>
+    <h1 class="font-display text-3xl md:text-5xl font-semibold leading-[1.05] tracking-tight max-w-3xl">
+      Todo el arsenal <span class="text-grad-vc">para que tu negocio sea citado</span>.
+    </h1>
+    <p class="mt-4 text-lg text-text-soft max-w-2xl">
+      Los artefactos que usamos internamente para llevar negocios reales de invisibles a fuente citada por IA.
+      Todo listo para copiar, adaptar y desplegar en tu caso.
+    </p>
+  </section>
+
+  <section class="container-lg py-10">
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {[
+        {
+          t: 'Generador de Schema JSON-LD',
+          d: '7 tipos (Organization, LocalBusiness, Restaurant, Store, SoftwareApplication…). Rellena el formulario, copia el bloque, pégalo en tu <head>.',
+          href: '/prime/schema-generator',
+          icon: '{ }',
+        },
+        {
+          t: 'Simulador cómo te ve una IA',
+          d: 'Marca las señales que tiene tu web hoy. Simulamos si ChatGPT, Claude, Gemini, Perplexity y Copilot te mencionan.',
+          href: '/prime/visibility-sim',
+          icon: '◉',
+        },
+        {
+          t: 'Calculadora de ROI AEO',
+          d: 'Proyecta ingresos incrementales por menciones IA en 6-24 meses. Justifica la inversión.',
+          href: '/prime/roi',
+          icon: '$',
+        },
+        {
+          t: 'Biblioteca de Prompts CITAR',
+          d: '30+ prompts probados para auditar, generar contenido, analizar competencia y planear tu estrategia AEO. Copia y pega.',
+          href: '/prime/prompts',
+          icon: '⌘',
+        },
+        {
+          t: 'Modelos de Arquitectura',
+          d: '6 arquetipos de transformación digital: e-commerce → AEO-first, SaaS, negocio local, servicios profesionales, agencia, medios.',
+          href: '/prime/arquitecturas',
+          icon: '◈',
+        },
+        {
+          t: 'Loop mensual — playbook',
+          d: 'El ritual de 30 min al mes que mantiene tu ranking IA subiendo. Checklist + bitácora + criterios de decisión.',
+          href: '/prime/loop-mensual',
+          icon: '↻',
+        },
+        {
+          t: 'Endpoints de práctica',
+          d: 'API sandbox: audita URLs reales llamando a Claude, genera schema con IA, valida FAQPage. Con quota mensual.',
+          href: '/prime/api-sandbox',
+          icon: '⚡',
+        },
+        {
+          t: 'Guía Transformación Digital',
+          d: 'Marco de trabajo para llevar cualquier negocio tradicional a la era de las respuestas de IA. Fases, checkpoints, decisiones.',
+          href: '/prime/transformacion',
+          icon: '△',
+        },
+        {
+          t: 'Caso Serenity Spa',
+          d: 'De cero menciones IA a top-3 en ChatGPT y Perplexity en 8 semanas. Documentado paso a paso.',
+          href: '/casos/serenity',
+          icon: '★',
+        },
+      ].map(c => (
+        <a href={c.href} class="glass rounded-2xl p-6 hover:-translate-y-1 transition flex flex-col">
+          <div class="w-12 h-12 rounded-xl bg-aurora-violet/20 border border-aurora-violet/40 grid place-items-center font-display font-semibold text-aurora-violet2 text-xl mb-4">{c.icon}</div>
+          <h3 class="font-display text-lg font-semibold">{c.t}</h3>
+          <p class="mt-2 text-sm text-text-soft flex-1">{c.d}</p>
+          <span class="mt-4 text-xs text-aurora-cyan">Abrir →</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-lg py-10">
+    <div class="glass-strong rounded-3xl p-8">
+      <h2 class="font-display text-2xl font-semibold">Ruta recomendada por semana</h2>
+      <ol class="mt-4 space-y-3 text-text-soft">
+        <li class="flex gap-3"><span class="chip">Sem 1</span>Baseline con el Simulador + genera tu primer Schema JSON-LD y publícalo.</li>
+        <li class="flex gap-3"><span class="chip">Sem 2</span>Aplica los 5 prompts de la sección "Auditar" a tus 3 competidores. Documenta gaps.</li>
+        <li class="flex gap-3"><span class="chip">Sem 3</span>Crea tu FAQPage con la biblioteca de prompts. Publica con schema.</li>
+        <li class="flex gap-3"><span class="chip">Sem 4</span>Ejecuta el plan de menciones externas (30 días).</li>
+        <li class="flex gap-3"><span class="chip">Sem 5+</span>Loop mensual: mide, ajusta, itera. Comparte hallazgos en la comunidad.</li>
+      </ol>
+    </div>
+  </section>
+</BaseLayout>

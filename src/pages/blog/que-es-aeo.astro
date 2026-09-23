@@ -1,0 +1,114 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: '¿Qué es AEO (Answer Engine Optimization)?',
+    author: { '@type': 'Person', name: 'Leonardo Rojas Cortés', url: 'https://portalia.com.co' },
+    publisher: { '@type': 'Organization', name: 'Portalia', url: 'https://portalia.com.co' },
+    datePublished: '2026-09-23',
+    dateModified: '2026-09-23',
+    articleSection: 'AEO 101',
+    inLanguage: 'es-CO',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      { '@type': 'Question', name: '¿AEO es lo mismo que SEO?', acceptedAnswer: { '@type': 'Answer', text: 'No. SEO optimiza para aparecer en una lista de resultados de Google. AEO optimiza para ser citado dentro de una respuesta generada por ChatGPT, Claude, Gemini o Perplexity. Distintos motores, distintas señales.' } },
+      { '@type': 'Question', name: '¿AEO reemplaza al SEO?', acceptedAnswer: { '@type': 'Answer', text: 'No, lo complementa. El SEO sigue trayendo tráfico de Google. El AEO trae tráfico y menciones desde asistentes de IA. Un negocio serio en 2026 hace ambos.' } },
+      { '@type': 'Question', name: '¿Cuánto tarda en verse resultados?', acceptedAnswer: { '@type': 'Answer', text: 'Primeras menciones IA en 2-6 semanas con schema y menciones semilla. Consolidación en 3-4 meses. Depende de la competencia en tu categoría.' } },
+      { '@type': 'Question', name: '¿Cuáles son las señales AEO más importantes?', acceptedAnswer: { '@type': 'Answer', text: 'Datos estructurados (Schema.org), menciones externas en fuentes distintas y contenido en formato pregunta-respuesta corta. Estas tres explican 70% del ranking IA.' } },
+      { '@type': 'Question', name: '¿Puedo hacer AEO solo, sin agencia?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. Es la práctica más democrática de todo el marketing digital porque las herramientas son gratis y los cambios son técnicos, no de presupuesto.' } },
+    ],
+  },
+];
+---
+<BaseLayout
+  title="¿Qué es AEO (Answer Engine Optimization)? · guía 2026"
+  description="AEO es la disciplina que hace que ChatGPT, Claude, Gemini y Perplexity recomienden tu negocio. Aquí la definición completa, ejemplos y por qué importa en 2026."
+  jsonLd={jsonLd}
+>
+  <article class="container-md pt-20 pb-16 md:pt-28 prose-portalia">
+    <p class="kicker">AEO 101 · 5 min de lectura</p>
+    <h1>¿Qué es AEO (Answer Engine Optimization)?</h1>
+    <p class="text-lg text-text-soft">
+      <strong>AEO (Answer Engine Optimization) es la disciplina que hace que asistentes de IA como
+      ChatGPT, Claude, Gemini, Perplexity o Copilot mencionen tu negocio cuando alguien les pregunta
+      por tu categoría.</strong> Se distingue del SEO (para buscadores tradicionales) en que el objetivo
+      no es aparecer en una lista de resultados, sino ser CITADO dentro de una respuesta.
+    </p>
+
+    <h2>La diferencia clave con SEO</h2>
+    <p>
+      El SEO tradicional optimiza para que Google te muestre en el top-10 de una búsqueda.
+      El usuario ve 10 opciones y decide. El AEO optimiza para que la IA te mencione directamente
+      en su respuesta, con o sin listado de fuentes.
+    </p>
+    <p>
+      Analogía útil: SEO es estar en el estante de la tienda. AEO es que el vendedor te recomiende directo.
+    </p>
+
+    <h2>Por qué AEO importa en 2026</h2>
+    <p>
+      El 60% de las búsquedas complejas ya empiezan en un asistente de IA. Las categorías donde más
+      pega: comparativas, recomendaciones, cómo-hacer, compras de consideración larga y búsquedas
+      locales de servicio.
+    </p>
+    <p>
+      Si tu negocio no aparece en esas respuestas, tus clientes potenciales están recibiendo
+      recomendaciones de tu competencia sin que tú siquiera lo sepas.
+    </p>
+
+    <h2>Las tres señales AEO fundamentales</h2>
+
+    <h3>Datos estructurados (Schema.org)</h3>
+    <p>
+      Un vocabulario que la IA lee de tu HTML para saber QUÉ eres. Sin Schema, tu web es texto
+      amorfo. Con Schema, eres "Organization con nombre, url, servicios, ubicación". Los tipos que
+      más pesan: <code>Organization</code>, <code>LocalBusiness</code>, <code>FAQPage</code>,
+      <code>Article</code>, <code>Product</code>, <code>Person</code>.
+    </p>
+
+    <h3>Menciones externas</h3>
+    <p>
+      La IA no confía solo en lo que TÚ dices de ti. Necesita "second opinion" de otras fuentes:
+      directorios de nicho, foros, blogs, Wikipedia. 5 menciones diversas > 50 en la misma fuente.
+    </p>
+
+    <h3>Formato pregunta-respuesta corta</h3>
+    <p>
+      Las IAs prefieren fragmentos de 40-100 palabras que respondan preguntas específicas. Estructura
+      tu contenido en secciones con H2 preguntables, respuesta directa en un párrafo corto, dato de
+      soporte, cierre.
+    </p>
+
+    <h2>Cómo empezar hoy</h2>
+    <ol>
+      <li>Prueba <a href="/auditor">nuestro auditor gratis</a> y mira dónde estás en AEO hoy.</li>
+      <li>Lee la guía de <a href="/blog/schema-org-para-negocios">Schema.org para negocios</a>.</li>
+      <li>Aplica el playbook de <a href="/blog/menciones-externas-sin-presupuesto">menciones externas sin presupuesto</a>.</li>
+    </ol>
+
+    <h2>Preguntas frecuentes</h2>
+    <h3>¿AEO es lo mismo que SEO?</h3>
+    <p>No. Distintos motores, distintas señales. Ver arriba.</p>
+    <h3>¿AEO reemplaza al SEO?</h3>
+    <p>No, lo complementa. Los dos suman.</p>
+    <h3>¿Cuánto tarda en verse resultados?</h3>
+    <p>Primeras menciones en 2-6 semanas. Consolidación en 3-4 meses.</p>
+    <h3>¿Cuáles son las señales más importantes?</h3>
+    <p>Schema.org, menciones externas y contenido Q&A corto.</p>
+    <h3>¿Puedo hacer AEO solo?</h3>
+    <p>Sí. Las herramientas son gratis, los cambios son técnicos, no de presupuesto.</p>
+  </article>
+
+  <section class="container-md pb-20">
+    <div class="glass-strong rounded-3xl p-8 text-center">
+      <h2 class="font-display text-2xl md:text-3xl font-semibold">¿Quieres el método paso a paso?</h2>
+      <a href="/metodo" class="btn-primary text-base px-7 py-3 mt-6 inline-flex">Ver el método CITAR</a>
+    </div>
+  </section>
+</BaseLayout>
