@@ -19,8 +19,15 @@ const faq = [
   { q: '¿Sirve si soy un negocio local?', a: 'Sí. De hecho es donde más rápido se ve impacto: hay menos competencia por la mención local en las IAs que en Google Maps.' },
   { q: '¿Tengo garantía?', a: 'Sí. 7 días de garantía Hotmart. Si no te sirve, te devolvemos el 100%.' },
 ];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
 ---
 <BaseLayout
+  jsonLd={jsonLd}
   title="Método CITAR — que las IAs te recomienden"
   description="El sistema paso a paso para que ChatGPT, Claude, Gemini y Perplexity citen y recomienden tu negocio. Método CITAR completo."
 >
