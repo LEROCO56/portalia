@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Sparkle from '@/components/Sparkle.astro';
 import { createSupabaseServerClient } from '@/lib/supabase';
+import LiveThreadsNotice from '@/islands/LiveThreadsNotice.tsx';
 
 const user = Astro.locals.user;
 
@@ -12,11 +13,11 @@ try {
     const supabase = createSupabaseServerClient(Astro.cookies);
     const { data } = await supabase
       .from('threads')
-      .select('id, title, category, created_at, author:profiles(full_name, email)')
+      .select('id, title, category, created_at, author_name')
       .order('pinned', { ascending: false })
       .order('created_at', { ascending: false })
       .limit(20);
-    threads = (data as any) ?? [];
+    threads = ((data as any[]) ?? []).map((t) => ({ ...t, author: { full_name: t.author_name, email: '' } }));
   }
 } catch {
   // Silencio: en desarrollo sin env solo mostramos placeholder.
@@ -58,9 +59,10 @@ const isMember = user?.role === 'buyer' || user?.role === 'admin' || user?.role 
         <a href="/metodo" class="btn-ghost text-sm px-5 py-2">Convertirme en miembro</a>
       )}
     </div>
+    <LiveThreadsNotice client:idle supabaseUrl={import.meta.env.PUBLIC_SUPABASE_URL ?? ''} anonKey={import.meta.env.PUBLIC_SUPABASE_ANON_KEY ?? ''} />
     <div class="space-y-3">
       {previews.map((t) => (
-        <a href={`/comunidad/${t.id}`} class="glass rounded-2xl p-5 flex items-start gap-4 hover:-translate-y-0.5 transition block">
+        <a href={t.id.startsWith('demo-') ? '/metodo' : `/comunidad/${t.id}`} class="glass rounded-2xl p-5 flex items-start gap-4 hover:-translate-y-0.5 transition block">
           <div class="chip mt-1">{t.category}</div>
           <div class="flex-1">
             <p class="font-display text-base font-semibold">{t.title}</p>

@@ -1,0 +1,59 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { createSupabaseServerClient } from '@/lib/supabase';
+import { CATEGORIES, MEMBER_ROLES } from '@/lib/community';
+
+const user = Astro.locals.user;
+if (!user) return Astro.redirect('/login?next=/comunidad/nuevo');
+if (!MEMBER_ROLES.includes(user.role)) return Astro.redirect('/metodo');
+
+let error: string | null = null;
+let values = { title: '', body: '', category: 'general' };
+
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  values = {
+    title: String(form.get('title') ?? '').trim().slice(0, 160),
+    body: String(form.get('body') ?? '').trim().slice(0, 10000),
+    category: String(form.get('category') ?? 'general'),
+  };
+  if (!CATEGORIES.some((c) => c.id === values.category)) values.category = 'general';
+  if (values.title.length < 8) error = 'El título debe tener al menos 8 caracteres.';
+  else if (values.body.length < 20) error = 'Cuenta un poco más de contexto (mínimo 20 caracteres).';
+  else {
+    const supabase = createSupabaseServerClient(Astro.cookies);
+    const { data, error: insErr } = await supabase
+      .from('threads')
+      .insert({ author_id: user.id, title: values.title, body: values.body, category: values.category })
+      .select('id')
+      .single();
+    if (insErr || !data) error = 'No se pudo publicar el hilo. Intenta de nuevo.';
+    else return Astro.redirect(`/comunidad/${data.id}`, 303);
+  }
+}
+---
+<BaseLayout title="Nuevo hilo — Comunidad Portalia" noindex>
+  <section class="container-md pt-16 pb-24 md:pt-24">
+    <a href="/comunidad" class="text-xs text-aurora-cyan">← Comunidad</a>
+    <h1 class="mt-6 font-display text-3xl font-semibold">Nuevo hilo</h1>
+    <p class="mt-2 text-sm text-text-soft">Comparte una victoria, una duda del método o algo que notaste en las IAs. Datos concretos ayudan más que opiniones.</p>
+    <form method="POST" class="mt-8 glass rounded-2xl p-6 space-y-4">
+      <div>
+        <label for="title" class="block text-xs uppercase tracking-widest text-text-mute mb-2">Título</label>
+        <input id="title" name="title" required minlength="8" maxlength="160" value={values.title} class="w-full bg-bg-elevated border border-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-aurora-violet" />
+      </div>
+      <div>
+        <label for="category" class="block text-xs uppercase tracking-widest text-text-mute mb-2">Categoría</label>
+        <select id="category" name="category" class="w-full bg-bg-elevated border border-border rounded-lg px-4 py-3 text-sm">
+          {CATEGORIES.map((c) => <option value={c.id} selected={c.id === values.category}>{c.label}</option>)}
+        </select>
+      </div>
+      <div>
+        <label for="body" class="block text-xs uppercase tracking-widest text-text-mute mb-2">Contenido</label>
+        <textarea id="body" name="body" required rows="10" maxlength="10000" class="w-full bg-bg-elevated border border-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-aurora-violet">{values.body}</textarea>
+      </div>
+      {error && <p class="text-sm text-red-300">{error}</p>}
+      <button type="submit" class="btn-primary text-base px-6 py-3">Publicar hilo</button>
+    </form>
+  </section>
+</BaseLayout>
