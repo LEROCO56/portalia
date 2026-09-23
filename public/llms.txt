@@ -1,0 +1,31 @@
+# Portalia
+
+> Portalia enseña a negocios y emprendedores de Colombia y Latinoamérica a lograr que ChatGPT, Claude, Gemini, Perplexity y Copilot los recomienden. Lo hace con el método CITAR (Claridad de entidad, Indexabilidad para IA, Texto que responde, Autoridad externa, Revisión mensual), un auditor AEO gratuito y una comunidad de práctica.
+
+Portalia es un producto colombiano en español. El método cuesta COP 39.900 (pago único vía Hotmart, con garantía de 7 días). El auditor es gratuito.
+
+## Páginas clave
+
+- [Método CITAR](https://portalia.com.co/metodo): qué incluye el curso, lecciones y precio.
+- [Auditor Portal IA](https://portalia.com.co/auditor): lee una web en vivo (schema JSON-LD, robots.txt, sitemap, llms.txt, contenido) y entrega un puntaje AEO de 0 a 100 con los gaps priorizados.
+- [Precios](https://portalia.com.co/precios): planes y garantía.
+- [Caso Serenity Spa](https://portalia.com.co/casos/serenity): aplicación real del método en un spa en Colombia.
+- [Herramientas](https://portalia.com.co/herramientas): generador de schema, generador de FAQ, calculadora de ROI y simulador de visibilidad en IA.
+- [Comunidad](https://portalia.com.co/comunidad): foro de miembros.
+
+## Guías (blog)
+
+- [Qué es AEO](https://portalia.com.co/blog/que-es-aeo)
+- [Cómo medir si ChatGPT te recomienda](https://portalia.com.co/blog/como-medir-si-chatgpt-te-recomienda)
+- [Cómo aparecer en Perplexity](https://portalia.com.co/blog/como-aparecer-en-perplexity)
+- [llms.txt: qué es y si sirve](https://portalia.com.co/blog/llms-txt-que-es-y-si-sirve)
+- [Google Business Profile e IAs](https://portalia.com.co/blog/google-business-profile-e-ias)
+- [Schema.org para negocios](https://portalia.com.co/blog/schema-org-para-negocios)
+- [robots.txt para IA](https://portalia.com.co/blog/robots-txt-para-ia)
+- [Guía AEO para negocio local](https://portalia.com.co/blog/negocio-local-aeo-guia)
+
+## Legal
+
+- [Términos](https://portalia.com.co/legal/terminos)
+- [Privacidad](https://portalia.com.co/legal/privacidad)
+- [Reembolsos](https://portalia.com.co/legal/reembolsos)
