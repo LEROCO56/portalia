@@ -1,0 +1,47 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+const jsonLd = { '@context': 'https://schema.org', '@type': 'Article', headline: 'SaaS B2B · cómo aparecer en respuestas de IA', author: { '@type': 'Person', name: 'Leonardo Rojas Cortés' }, publisher: { '@type': 'Organization', name: 'Portalia' }, datePublished: '2026-09-23' };
+---
+<BaseLayout title="SaaS B2B · aparecer cuando pregunten a la IA por tu categoría" description="Receta AEO específica para SaaS B2B. Schema, comparativas, perfiles en review sites." jsonLd={jsonLd}>
+  <article class="container-md pt-20 pb-16 md:pt-28 prose-portalia">
+    <p class="kicker">Vertical B2B · 8 min</p>
+    <h1>SaaS B2B · cómo aparecer en respuestas de IA</h1>
+    <p class="text-lg text-text-soft">Cuando alguien le pregunta a Perplexity o ChatGPT "¿mejor herramienta para X?", los SaaS que aparecen NO son al azar. Aquí la receta.</p>
+
+    <h2>1. SoftwareApplication schema</h2>
+    <p>El schema base. Incluye applicationCategory, operatingSystem, offers.price, aggregateRating con datos reales.</p>
+
+    <h2>2. Página comparativa vs top 3 competidores</h2>
+    <p>Con Article + FAQPage schema. Las IAs adoran comparativas honestas — te posicionan como "fuente que compara imparcialmente".</p>
+
+    <h2>3. Casos de estudio publicables</h2>
+    <p>Con Article schema, autor identificable, dato numérico específico y logo del cliente (con permiso). Al menos 3 casos con formato consistente.</p>
+
+    <h2>4. Perfiles en review sites</h2>
+    <p>Prioridad: G2 → Capterra → GetApp → Product Hunt (si aplica) → TrustRadius. Cada perfil debe enlazar a tu web con marca coherente.</p>
+
+    <h2>5. Blog técnico con HowTo</h2>
+    <p>Tutoriales de integración con schema HowTo. Cada integración típica = 1 post. Meta: 20 posts HowTo el primer año.</p>
+
+    <h2>6. Documentación pública</h2>
+    <p>API docs abiertas, changelog público, roadmap visible. Las IAs premian empresas con transparencia técnica.</p>
+
+    <h2>7. Contenido educativo</h2>
+    <p>Guía definitiva del problema que resuelves. Ejemplo: "Guía definitiva de facturación electrónica en Colombia" para un SaaS de facturación.</p>
+
+    <h2>Palancas específicas para Perplexity</h2>
+    <ul>
+      <li>dateModified reciente en todos los posts.</li>
+      <li>Estadísticas propias que otros puedan citar (encuesta anual del sector).</li>
+      <li>Comparativas con datos objetivos (precio, features, integraciones).</li>
+    </ul>
+
+    <h2>Errores fatales SaaS</h2>
+    <ul>
+      <li>Página de precios oculta detrás de "contactar ventas".</li>
+      <li>Landing sin schema (impensable en 2026).</li>
+      <li>Casos de estudio con datos genéricos ("ayudamos a X, resultado positivo").</li>
+      <li>Blog vacío de contenido técnico real.</li>
+    </ul>
+  </article>
+</BaseLayout>

@@ -1,0 +1,48 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+const jsonLd = { '@context': 'https://schema.org', '@type': 'Article', headline: 'ChatGPT vs Perplexity vs Claude — en cuál priorizar tu AEO', author: { '@type': 'Person', name: 'Leonardo Rojas Cortés' }, publisher: { '@type': 'Organization', name: 'Portalia' }, datePublished: '2026-09-23' };
+---
+<BaseLayout title="ChatGPT vs Perplexity vs Claude · dónde priorizar AEO" description="Cómo cada motor elige fuentes citadas. Dónde poner el esfuerzo primero según el tipo de negocio y objetivo." jsonLd={jsonLd}>
+  <article class="container-md pt-20 pb-16 md:pt-28 prose-portalia">
+    <p class="kicker">Estrategia · 6 min</p>
+    <h1>ChatGPT vs Perplexity vs Claude · dónde priorizar tu AEO</h1>
+    <p class="text-lg text-text-soft">Cada motor pesa señales de forma distinta. Priorizar según tu contexto acelera resultados.</p>
+
+    <h2>ChatGPT (OpenAI)</h2>
+    <p><strong>Cómo elige:</strong> combina su índice web con fuentes autoritativas cuando activa búsqueda. Menciones cruzadas y schema pesan mucho.</p>
+    <p><strong>Prioriza si:</strong> vendes B2C, categoría con mucha búsqueda, LatAm masivo.</p>
+    <p><strong>Palancas clave:</strong> Schema Organization/LocalBusiness completo, menciones en 3+ fuentes distintas.</p>
+
+    <h2>Perplexity</h2>
+    <p><strong>Cómo elige:</strong> cita fuentes explícitas casi siempre. Prioriza contenido reciente, con datos, en formato Q&A.</p>
+    <p><strong>Prioriza si:</strong> vendes SaaS, servicios profesionales, o tu categoría gira alrededor de comparativas técnicas.</p>
+    <p><strong>Palancas clave:</strong> FAQPage schema, artículos con datos concretos, Article + dateModified reciente.</p>
+
+    <h2>Claude (Anthropic)</h2>
+    <p><strong>Cómo elige:</strong> exigente con autoridad declarada. Autor identificable, Person schema, Organization detallado.</p>
+    <p><strong>Prioriza si:</strong> vendes servicios profesionales, formación, contenido premium.</p>
+    <p><strong>Palancas clave:</strong> Person schema con alumniOf/knowsAbout, About page detallada, autoría en cada post.</p>
+
+    <h2>Gemini (Google)</h2>
+    <p><strong>Cómo elige:</strong> hereda mucho del ranking SEO de Google. Structured data lo procesa agresivamente.</p>
+    <p><strong>Prioriza si:</strong> ya inviertes en SEO y quieres extender el ROI a Gemini.</p>
+    <p><strong>Palancas clave:</strong> Schema.org completo, sitemap actualizado, Search Console limpio.</p>
+
+    <h2>Copilot (Microsoft)</h2>
+    <p><strong>Cómo elige:</strong> conservador, prioriza fuentes con historial y schema B2B.</p>
+    <p><strong>Prioriza si:</strong> vendes B2B enterprise, sector regulado.</p>
+    <p><strong>Palancas clave:</strong> Organization + LocalBusiness + testimonios verificables, presencia en LinkedIn Company Page.</p>
+
+    <h2>Orden recomendado por perfil</h2>
+    <ul>
+      <li><strong>Negocio local:</strong> Perplexity → ChatGPT → Gemini.</li>
+      <li><strong>SaaS B2B:</strong> Perplexity → Copilot → ChatGPT → Claude.</li>
+      <li><strong>Servicios profesionales:</strong> Claude → Perplexity → ChatGPT.</li>
+      <li><strong>E-commerce:</strong> ChatGPT → Gemini → Perplexity.</li>
+      <li><strong>Medios/creador:</strong> Claude → Perplexity → ChatGPT.</li>
+    </ul>
+
+    <h2>Cómo priorizar sin sobre-optimizar</h2>
+    <p>Empieza con el más importante para tu perfil. Consolida 3 meses. Después expande al segundo. Nunca todos a la vez.</p>
+  </article>
+</BaseLayout>

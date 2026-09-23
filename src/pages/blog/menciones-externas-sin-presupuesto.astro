@@ -1,0 +1,69 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+const jsonLd = {
+  '@context': 'https://schema.org', '@type': 'Article',
+  headline: 'Cómo conseguir tus primeras 10 menciones externas sin presupuesto',
+  author: { '@type': 'Person', name: 'Leonardo Rojas Cortés' },
+  publisher: { '@type': 'Organization', name: 'Portalia' },
+  datePublished: '2026-09-23',
+};
+---
+<BaseLayout title="Menciones externas AEO sin presupuesto · playbook 30 días" description="El playbook de 30 días para que un emprendedor solo consiga sus primeras 10 menciones externas medibles. Sin PR ni agencia." jsonLd={jsonLd}>
+  <article class="container-md pt-20 pb-16 md:pt-28 prose-portalia">
+    <p class="kicker">Estrategia · 7 min</p>
+    <h1>Cómo conseguir tus primeras 10 menciones externas sin presupuesto</h1>
+    <p class="text-lg text-text-soft">Las IAs necesitan "second opinion" de fuentes distintas de tu propia web. Aquí un playbook de 30 días ejecutable en 1 hora/día.</p>
+
+    <h2>Semana 1 · Directorios de nicho</h2>
+    <p>Objetivo: 4 menciones semilla.</p>
+    <ul>
+      <li>Lunes: identifica 10 directorios específicos de tu categoría (no directorios genéricos).</li>
+      <li>Martes: registra en los 3 más autoritarios con nombre-dirección-teléfono (NAP) consistente.</li>
+      <li>Miércoles: registra en 2 más. Confirma emails.</li>
+      <li>Jueves: verifica que los perfiles carguen y sean crawlables.</li>
+      <li>Viernes: busca "site:[directorio] tu-marca" y confirma indexación.</li>
+    </ul>
+
+    <h2>Semana 2 · Foros y comunidades</h2>
+    <p>Objetivo: 3 menciones orgánicas.</p>
+    <ul>
+      <li>Reddit: identifica 3 subreddits de tu categoría o ciudad. Responde 10 hilos aportando valor real antes de mencionar tu negocio.</li>
+      <li>Quora: responde 5 preguntas relevantes con detalle. Si aplica, mención natural con enlace.</li>
+      <li>Foros locales de tu ciudad/industria: aporta valor primero, mencionas después.</li>
+    </ul>
+
+    <h2>Semana 3 · Blog invitado y podcasts</h2>
+    <p>Objetivo: 2 menciones cualitativas.</p>
+    <ul>
+      <li>Identifica 20 blogs y 20 podcasts de tu nicho con audiencia pequeña-media (más accesibles).</li>
+      <li>Escríbeles con un ángulo específico: "he publicado sobre X, ¿te aporta un post invitado desde el ángulo Y?".</li>
+      <li>Ratio típico: 20 outreach → 3 respuestas → 1 aparición. Espera 10 días para respuestas.</li>
+    </ul>
+
+    <h2>Semana 4 · Prensa local y testimonios</h2>
+    <p>Objetivo: 1 mención de peso.</p>
+    <ul>
+      <li>Manda una nota de valor a 3 medios locales de tu ciudad (no press release genérico).</li>
+      <li>Cierra la semana con un testimonio en una herramienta que uses (SaaS, servicio) con tu nombre + link.</li>
+    </ul>
+
+    <h2>Cómo medir menciones</h2>
+    <ul>
+      <li>Google Alerts para "[tu marca]" y "[tu categoría] [tu ciudad]".</li>
+      <li>Search Console → Reporte de enlaces (mensual).</li>
+      <li>Búsqueda mensual: "[tu marca]" en las últimas 30 días.</li>
+    </ul>
+
+    <h2>Errores fatales</h2>
+    <ul>
+      <li>Comprar links. Detectado y penalizado rápido.</li>
+      <li>Comment spam en blogs. Cero valor, contraproducente.</li>
+      <li>Cross-linking entre tus propias webs. La IA lo huele.</li>
+      <li>Directorios genéricos de mala calidad. 1 directorio de nicho > 20 genéricos.</li>
+    </ul>
+
+    <h2>El siguiente nivel</h2>
+    <p>Una vez tengas 10, la siguiente meta son 25 en 60 días. Aquí el playbook cambia a alianzas y colaboraciones.
+    Los miembros del método reciben el playbook completo hasta 50 menciones.</p>
+  </article>
+</BaseLayout>

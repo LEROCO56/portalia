@@ -1,0 +1,46 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+const jsonLd = { '@context': 'https://schema.org', '@type': 'Article', headline: 'Guía AEO para negocio local', author: { '@type': 'Person', name: 'Leonardo Rojas Cortés' }, publisher: { '@type': 'Organization', name: 'Portalia' }, datePublished: '2026-09-23' };
+---
+<BaseLayout title="Guía AEO para negocio local · restaurantes, spas, tiendas" description="Todo lo específico para que ChatGPT y Perplexity recomienden tu negocio local. LocalBusiness, geo, NAP, GBP." jsonLd={jsonLd}>
+  <article class="container-md pt-20 pb-16 md:pt-28 prose-portalia">
+    <p class="kicker">Vertical · 9 min</p>
+    <h1>Guía AEO para negocio local</h1>
+    <p class="text-lg text-text-soft">Restaurantes, spas, tiendas, clínicas, servicios locales — la receta específica para ganar "mejor X cerca de mí".</p>
+
+    <h2>1. LocalBusiness schema (obligatorio)</h2>
+    <p>Con coordenadas geo, horarios por día y priceRange. Un solo bloque JSON-LD en el head de la home.</p>
+
+    <h2>2. NAP consistency (name, address, phone)</h2>
+    <p>Idéntico en tu web, Google Business Profile, Bing Places, Yelp, TripAdvisor, redes sociales. Un espacio de diferencia rompe la coherencia y la IA descuenta puntos.</p>
+
+    <h2>3. Google Business Profile completo</h2>
+    <ul>
+      <li>Categoría primaria + 2 secundarias correctas.</li>
+      <li>Fotos (mínimo 10, actualizadas cada trimestre).</li>
+      <li>Horarios actualizados incluyendo festivos.</li>
+      <li>Preguntas y respuestas del propietario (responder las que te llegan).</li>
+      <li>Publicaciones semanales.</li>
+    </ul>
+
+    <h2>4. Directorios de nicho locales</h2>
+    <p>Para restaurantes: TripAdvisor, TheFork, Zomato local. Para spas: Fresha, Booksy, Wellness. Para clínicas: Doctoralia, Zocdoc. Para tiendas: comparadores locales.</p>
+
+    <h2>5. FAQPage con preguntas locales</h2>
+    <p>Las que un cliente real hace por WhatsApp: "¿tienen parqueo?", "¿aceptan tarjeta?", "¿hay reservas?", "¿cuánto cuesta X?", "¿cómo llegar?".</p>
+
+    <h2>6. Reseñas orgánicas</h2>
+    <p>Sistema simple para pedirlas: mensaje post-servicio con link directo a Google. Meta: 1 reseña por cada 30 clientes atendidos.</p>
+
+    <h2>7. Menciones en medios locales</h2>
+    <p>Una mención en un medio de tu ciudad vale 5 en directorios genéricos. Manda notas de valor a 3 medios locales al mes.</p>
+
+    <h2>Errores fatales</h2>
+    <ul>
+      <li>Mismo perfil GBP para varias sedes (usa uno por ubicación).</li>
+      <li>Fotos de banco de imágenes (Google penaliza).</li>
+      <li>Contestar reseñas mal (nunca discutir, siempre gratitud + oferta de resolver).</li>
+      <li>Cambiar horarios sin actualizar en todas las plataformas.</li>
+    </ul>
+  </article>
+</BaseLayout>

@@ -1,0 +1,41 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+const jsonLd = { '@context': 'https://schema.org', '@type': 'Article', headline: 'FAQPage que sí funciona · 12 errores comunes', author: { '@type': 'Person', name: 'Leonardo Rojas Cortés' }, publisher: { '@type': 'Organization', name: 'Portalia' }, datePublished: '2026-09-23' };
+---
+<BaseLayout title="FAQPage que sí funciona · 12 errores comunes" description="FAQPage mal implementado empeora tu ranking IA. Los 12 errores más frecuentes y qué hacer distinto." jsonLd={jsonLd}>
+  <article class="container-md pt-20 pb-16 md:pt-28 prose-portalia">
+    <p class="kicker">Técnico · 6 min</p>
+    <h1>FAQPage que sí funciona · 12 errores comunes</h1>
+    <p class="text-lg text-text-soft">FAQPage es la palanca AEO más fuerte por unidad de esfuerzo — cuando se hace bien. Cuando se hace mal, hunde tu ranking.</p>
+
+    <h2>Los 12 errores</h2>
+    <ol>
+      <li><strong>Preguntas genéricas.</strong> "¿Qué hacemos?" no ayuda. "¿Cuánto cuesta X en [ciudad]?" sí.</li>
+      <li><strong>Respuestas largas.</strong> 40-100 palabras es el rango citable. Más y la IA no lo elige.</li>
+      <li><strong>FAQPage duplicado en varias páginas.</strong> Concentra en 1-2 páginas core.</li>
+      <li><strong>Q&A sin coherencia con la página.</strong> Si la página es de servicio A, las Q&A son de servicio A.</li>
+      <li><strong>Datos hipotéticos.</strong> "Puede costar entre X y Y" pierde vs "Costo típico: $Z, varía por Q".</li>
+      <li><strong>Copiar-pegar de plantilla.</strong> La IA reconoce boilerplate y lo devalúa.</li>
+      <li><strong>Preguntas que solo pregunta tu marketing, no tu cliente real.</strong> Robar preguntas del SAC/chat.</li>
+      <li><strong>Ausencia de dato específico.</strong> Cada respuesta debe tener 1 número, precio, plazo, ejemplo.</li>
+      <li><strong>FAQPage sin AggregateRating.</strong> Añade rating agregado si aplica a producto/servicio.</li>
+      <li><strong>Menos de 5 Q&A.</strong> Umbral mínimo para que Google/IAs lo consideren.</li>
+      <li><strong>Más de 25 Q&A.</strong> Diluye el peso de cada una. Rango dulce: 8-15.</li>
+      <li><strong>Sin actualización.</strong> Añade dateModified y actualiza cada 90 días.</li>
+    </ol>
+
+    <h2>Estructura ganadora</h2>
+    <pre><code>{`Pregunta (H3, formato que un cliente real usaría)
+Respuesta (párrafo de 40-80 palabras)
+- Primera oración: respuesta directa
+- Segunda oración: dato o cifra
+- Tercera oración: matiz o excepción
+- Cierre: acción o enlace interno`}</code></pre>
+
+    <h2>Ejemplo bueno</h2>
+    <p><strong>P: ¿Cuánto cuesta un curso de AEO/GEO en 2026?</strong></p>
+    <p><strong>R:</strong> En español, los cursos serios oscilan entre COP 40.000 (ebook) y USD 500 (bootcamp completo). Portalia
+    cuesta COP 39.900 por acceso a método, comunidad y auditor Pro. Programas premium con mentoría 1-1 pueden llegar a
+    USD 3.000. Empieza con el ebook + comunidad para validar tu interés antes de escalar.</p>
+  </article>
+</BaseLayout>

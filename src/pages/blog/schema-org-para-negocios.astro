@@ -1,0 +1,112 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Schema.org para negocios que quieren aparecer en ChatGPT',
+  author: { '@type': 'Person', name: 'Leonardo Rojas Cortés' },
+  publisher: { '@type': 'Organization', name: 'Portalia' },
+  datePublished: '2026-09-23',
+  articleSection: 'AEO 101',
+};
+---
+<BaseLayout
+  title="Schema.org para negocios · guía práctica"
+  description="Los 6 tipos de Schema.org que más pesan para que ChatGPT, Claude y Perplexity mencionen tu negocio. Con plantillas listas para copiar."
+  jsonLd={jsonLd}
+>
+  <article class="container-md pt-20 pb-16 md:pt-28 prose-portalia">
+    <p class="kicker">AEO 101 · 8 min</p>
+    <h1>Schema.org para negocios que quieren aparecer en ChatGPT</h1>
+    <p class="text-lg text-text-soft">
+      Schema.org es el vocabulario que las IAs leen de tu HTML para saber qué eres.
+      Sin él, tu web es texto amorfo. Con él, eres una entidad reconocible.
+    </p>
+
+    <h2>Los 6 tipos que más pesan para AEO</h2>
+
+    <h3>1. Organization</h3>
+    <p>Punto de partida obligatorio. Le dice a la IA quién eres.</p>
+    <pre><code>{`{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Tu Negocio",
+  "url": "https://tunegocio.com",
+  "logo": "https://tunegocio.com/logo.png",
+  "sameAs": [
+    "https://linkedin.com/company/tunegocio",
+    "https://twitter.com/tunegocio"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+57-1-234-5678",
+    "contactType": "customer service"
+  }
+}`}</code></pre>
+
+    <h3>2. LocalBusiness</h3>
+    <p>Si tienes dirección física, prefiere este sobre Organization. Incluye coordenadas y horarios.</p>
+    <pre><code>{`{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Café Origen Bogotá",
+  "image": "https://cafeorigen.co/photo.jpg",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Cra 7 # 12-34",
+    "addressLocality": "Bogotá",
+    "addressCountry": "CO"
+  },
+  "geo": { "@type": "GeoCoordinates", "latitude": 4.6, "longitude": -74.08 },
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    "opens": "08:00", "closes": "18:00"
+  },
+  "priceRange": "$$"
+}`}</code></pre>
+
+    <h3>3. FAQPage</h3>
+    <p>La palanca más fuerte por unidad de esfuerzo. Cada Q&A puede ser citado directo.</p>
+    <pre><code>{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Aceptan efectivo?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Sí, aceptamos efectivo y todas las tarjetas." }
+    }
+  ]
+}`}</code></pre>
+
+    <h3>4. Article</h3>
+    <p>Para cada post de blog. Autor identificable importa.</p>
+
+    <h3>5. Product</h3>
+    <p>Si vendes productos. GTIN + brand + precio + disponibilidad.</p>
+
+    <h3>6. BreadcrumbList</h3>
+    <p>Ayuda a la IA a entender la jerarquía de tu sitio.</p>
+
+    <h2>Cómo validar tu schema</h2>
+    <p>Antes de publicar:</p>
+    <ul>
+      <li><a href="https://validator.schema.org" target="_blank" rel="noopener">validator.schema.org</a></li>
+      <li><a href="https://search.google.com/test/rich-results" target="_blank" rel="noopener">Rich Results Test de Google</a></li>
+    </ul>
+
+    <h2>Errores comunes que anulan tu esfuerzo</h2>
+    <ol>
+      <li>Duplicar el mismo @type en la misma página (bien: unificar; mal: dos Organization).</li>
+      <li>Datos inconsistentes entre schema y contenido visible (nombre, teléfono, dirección).</li>
+      <li>Copiar-pegar del ejemplo sin cambiar los datos ficticios.</li>
+      <li>Usar Organization cuando debería ser LocalBusiness.</li>
+    </ol>
+
+    <h2>Siguiente paso</h2>
+    <p>Genera tu schema con nuestra <a href="/prime/schema-generator">herramienta interactiva</a> (miembros)
+    o léelo del ejemplo arriba y adapta a mano. Publica y espera 5-14 días para que las IAs lo detecten.</p>
+  </article>
+</BaseLayout>

@@ -1,0 +1,51 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+const jsonLd = { '@context': 'https://schema.org', '@type': 'Article', headline: 'Cómo funciona un auditor AEO por dentro', author: { '@type': 'Person', name: 'Leonardo Rojas Cortés' }, publisher: { '@type': 'Organization', name: 'Portalia' }, datePublished: '2026-09-23' };
+---
+<BaseLayout title="Cómo funciona un auditor AEO por dentro" description="Qué señales lee, cómo puntúa y qué no puede medir todavía un auditor AEO. Transparencia técnica." jsonLd={jsonLd}>
+  <article class="container-md pt-20 pb-16 md:pt-28 prose-portalia">
+    <p class="kicker">Técnico · 5 min</p>
+    <h1>Cómo funciona un auditor AEO por dentro</h1>
+    <p class="text-lg text-text-soft">Todos los auditores AEO (el nuestro incluido) leen las mismas cosas base. Aquí sin humo lo que sí miden y lo que no.</p>
+
+    <h2>Lo que un auditor lee de tu HTML</h2>
+    <ol>
+      <li><strong>&lt;head&gt; completo:</strong> title, meta description, canonical, OG, Twitter cards.</li>
+      <li><strong>JSON-LD:</strong> todos los bloques schema.org — tipo, campos requeridos y sugeridos, coherencia interna.</li>
+      <li><strong>Microdata legacy:</strong> itemscope/itemprop si aún los usas.</li>
+      <li><strong>Estructura semántica:</strong> H1-H6, longitud de párrafos, presencia de listas.</li>
+      <li><strong>Meta robots + directivas AEO:</strong> robots.txt permitiendo GPTBot, ClaudeBot, PerplexityBot.</li>
+    </ol>
+
+    <h2>Lo que el auditor Pro (Claude API) analiza adicional</h2>
+    <ul>
+      <li>Contenido del cuerpo: ¿está en formato Q&A citable?</li>
+      <li>Densidad de datos concretos vs generalidades.</li>
+      <li>Coherencia autoral (Person schema vs contenido).</li>
+      <li>Diagnóstico específico para tu categoría y ciudad.</li>
+    </ul>
+
+    <h2>Lo que NO puede medir un auditor (todavía)</h2>
+    <ul>
+      <li>Menciones externas (no puede crawlear todo el web). Aproximación: buscar tu marca en Google.</li>
+      <li>Autoridad real del dominio (usa DA/DR de terceros como proxy imperfecto).</li>
+      <li>Cómo cada IA específicamente te percibe hoy. Solo un test humano en cada IA lo confirma.</li>
+    </ul>
+
+    <h2>Cómo puntuamos (0-100)</h2>
+    <table>
+      <thead><tr><th>Dimensión</th><th>Peso</th></tr></thead>
+      <tbody>
+        <tr><td>Structured data</td><td>30%</td></tr>
+        <tr><td>Contenido Q&A</td><td>25%</td></tr>
+        <tr><td>Menciones detectables</td><td>20%</td></tr>
+        <tr><td>Meta + head</td><td>10%</td></tr>
+        <tr><td>Autoridad autoral</td><td>10%</td></tr>
+        <tr><td>Técnicos (HTTPS, robots, sitemap)</td><td>5%</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Cuándo un auditor no basta</h2>
+    <p>Los números son referencia. La prueba real es hacer las 5 preguntas semilla en 5 IAs y ver si te nombran. Un puntaje 80 con cero menciones IA reales significa que falta activar palancas externas.</p>
+  </article>
+</BaseLayout>
