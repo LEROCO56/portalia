@@ -12,3 +12,4 @@ dist/
 .netlify/
 .wrangler/
 coverage/
+package-lock.json
