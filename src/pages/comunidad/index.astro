@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Sparkle from '@/components/Sparkle.astro';
-import { createSupabaseServerClient } from '@/lib/supabase';
+import { createSupabaseServerClient, supabasePublicConfig } from '@/lib/supabase';
+const pub = supabasePublicConfig();
 import LiveThreadsNotice from '@/islands/LiveThreadsNotice.tsx';
 
 const user = Astro.locals.user;
@@ -9,7 +10,7 @@ const user = Astro.locals.user;
 // Traer últimos hilos si Supabase está configurado. En build sin env, mostramos previews.
 let threads: Array<{ id: string; title: string; category: string; created_at: string; author?: { full_name: string | null; email: string } }> = [];
 try {
-  if (import.meta.env.PUBLIC_SUPABASE_URL) {
+  if (pub.url) {
     const supabase = createSupabaseServerClient(Astro.cookies);
     const { data } = await supabase
       .from('threads')
@@ -59,7 +60,7 @@ const isMember = user?.role === 'buyer' || user?.role === 'admin' || user?.role 
         <a href="/metodo" class="btn-ghost text-sm px-5 py-2">Convertirme en miembro</a>
       )}
     </div>
-    <LiveThreadsNotice client:idle supabaseUrl={import.meta.env.PUBLIC_SUPABASE_URL ?? ''} anonKey={import.meta.env.PUBLIC_SUPABASE_ANON_KEY ?? ''} />
+    <LiveThreadsNotice client:idle supabaseUrl={pub.url} anonKey={pub.anonKey} />
     <div class="space-y-3">
       {previews.map((t) => (
         <a href={t.id.startsWith('demo-') ? '/metodo' : `/comunidad/${t.id}`} class="glass rounded-2xl p-5 flex items-start gap-4 hover:-translate-y-0.5 transition block">

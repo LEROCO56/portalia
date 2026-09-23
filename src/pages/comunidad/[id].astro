@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import LiveReplies from '@/islands/LiveReplies.tsx';
-import { createSupabaseServerClient } from '@/lib/supabase';
+import { createSupabaseServerClient, supabasePublicConfig } from '@/lib/supabase';
+const pub = supabasePublicConfig();
 import { CATEGORIES, MEMBER_ROLES, isUuid } from '@/lib/community';
 
 const { id } = Astro.params;
@@ -45,7 +46,7 @@ try {
   }
 } catch (e) {
   console.error('comunidad/[id] error', e);
-  return new Response(`Error cargando el hilo: ${e instanceof Error ? e.message : String(e)}`, { status: 503, headers: { 'content-type': 'text/plain; charset=utf-8' } });
+  return new Response('El foro no está disponible en este momento. Intenta de nuevo en unos minutos.', { status: 503, headers: { 'content-type': 'text/plain; charset=utf-8' } });
 }
 if (!thread) {
   return Astro.redirect('/comunidad?hilo=no-encontrado', 302);
@@ -80,8 +81,8 @@ const jsonLd = {
       client:load
       threadId={t.id}
       initial={replies}
-      supabaseUrl={import.meta.env.PUBLIC_SUPABASE_URL ?? ''}
-      anonKey={import.meta.env.PUBLIC_SUPABASE_ANON_KEY ?? ''}
+      supabaseUrl={pub.url}
+      anonKey={pub.anonKey}
     />
     {isMember ? (
       <form method="POST" class="mt-8 glass rounded-2xl p-5 space-y-3">
