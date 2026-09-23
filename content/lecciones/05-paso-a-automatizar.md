@@ -1,7 +1,6 @@
 # Lección 5 — Paso A del método CITAR: Automatizar el contenido citable
 
 **Duración estimada:** 20 min video + 40 min configuración.
-**Estado:** Guion listo. Video pendiente de grabación.
 
 ---
 

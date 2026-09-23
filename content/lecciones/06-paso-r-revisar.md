@@ -1,7 +1,6 @@
 # Lección 6 — Paso R del método CITAR: Revisar cada mes
 
 **Duración estimada:** 18 min video + 45 min primera revisión.
-**Estado:** Guion listo. Video pendiente de grabación.
 
 ---
 

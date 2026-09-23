@@ -1,7 +1,6 @@
 # Lección 7 — Tu plan CITAR de 30 días
 
 **Duración estimada:** 17 min video + plan descargable.
-**Estado:** Guion listo. Video pendiente de grabación.
 
 ---
 

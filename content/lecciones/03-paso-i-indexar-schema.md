@@ -1,7 +1,6 @@
 # Lección 3 — Paso I del método CITAR: Indexar con Schema.org
 
 **Duración estimada:** 29 min video + 30 min ejercicio.
-**Estado:** Guion listo. Video pendiente de grabación.
 
 ---
 

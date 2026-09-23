@@ -1,7 +1,6 @@
 # Lección 1 — Fundamentos AEO/GEO
 
 **Duración estimada:** 22 min video + 15 min lectura.
-**Estado:** Guion listo. Video pendiente de grabación (Fase 2).
 
 ---
 

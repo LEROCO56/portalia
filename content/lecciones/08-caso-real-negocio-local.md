@@ -1,7 +1,6 @@
 # Lección 8 — Caso real: un negocio local de invisible a top-3
 
 **Duración estimada:** 34 min video + 20 min ejercicio.
-**Estado:** Guion listo. Video pendiente de grabación.
 
 ---
 

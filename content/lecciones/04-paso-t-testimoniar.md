@@ -1,7 +1,6 @@
 # Lección 4 — Paso T del método CITAR: Testimoniar con menciones externas
 
 **Duración estimada:** 25 min video + 45 min ejercicio (repartido en 2 semanas).
-**Estado:** Guion listo. Video pendiente de grabación.
 
 ---
 

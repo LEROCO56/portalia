@@ -1,7 +1,6 @@
 # Lección 2 — Paso C del método CITAR: Contextualizar tu negocio
 
 **Duración estimada:** 31 min video + 20 min ejercicio.
-**Estado:** Guion listo. Video pendiente de grabación.
 
 ---
 
