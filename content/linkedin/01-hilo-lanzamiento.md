@@ -96,5 +96,5 @@ Link: portalia.com.co
 
 - **NO** poner el link en el post principal (LinkedIn penaliza el alcance). El link va al primer comentario.
 - Responder a cada comentario nuevo dentro de las 2 primeras horas (algoritmo LinkedIn premia la conversación temprana).
-- Etiquetar 2–3 pares de CINTE que sepas que interactúan.
+- Etiquetar 2–3 personas de tu red profesional que sepas que interactúan.
 - Imagen final: captura del auditor con puntaje bajo + gaps rojos (crea FOMO).
