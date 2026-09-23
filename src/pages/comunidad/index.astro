@@ -1,0 +1,92 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Sparkle from '@/components/Sparkle.astro';
+import { createSupabaseServerClient } from '@/lib/supabase';
+
+const user = Astro.locals.user;
+
+// Traer últimos hilos si Supabase está configurado. En build sin env, mostramos previews.
+let threads: Array<{ id: string; title: string; category: string; created_at: string; author?: { full_name: string | null; email: string } }> = [];
+try {
+  if (import.meta.env.PUBLIC_SUPABASE_URL) {
+    const supabase = createSupabaseServerClient(Astro.cookies);
+    const { data } = await supabase
+      .from('threads')
+      .select('id, title, category, created_at, author:profiles(full_name, email)')
+      .order('pinned', { ascending: false })
+      .order('created_at', { ascending: false })
+      .limit(20);
+    threads = (data as any) ?? [];
+  }
+} catch {
+  // Silencio: en desarrollo sin env solo mostramos placeholder.
+}
+
+const previews = threads.length > 0
+  ? threads
+  : [
+      { id: 'demo-1', title: 'ChatGPT me nombró primero en "mejor agencia SEO Bogotá" — cómo lo logré', category: 'wins', created_at: new Date().toISOString(), author: { full_name: 'Ana G.', email: '' } },
+      { id: 'demo-2', title: '¿Alguien más notó que Perplexity cambió cómo pondera dominios .co?', category: 'observatorio', created_at: new Date().toISOString(), author: { full_name: 'Camilo R.', email: '' } },
+      { id: 'demo-3', title: 'Plantilla de FAQPage que me subió 18 puntos en el auditor', category: 'plantillas', created_at: new Date().toISOString(), author: { full_name: 'Luisa P.', email: '' } },
+    ];
+
+const isMember = user?.role === 'buyer' || user?.role === 'admin' || user?.role === 'affiliate';
+---
+<BaseLayout
+  title="Comunidad Portalia"
+  description="El foro para emprendedores que quieren que las IAs recomienden su negocio. Lectura pública, participación para miembros."
+>
+  <section class="container-lg pt-20 pb-10 md:pt-28">
+    <p class="kicker mb-6 flex items-center gap-2">
+      <Sparkle size={14} class="text-aurora-violet2" /> Comunidad
+    </p>
+    <h1 class="font-display text-4xl md:text-5xl font-semibold leading-[1.05] tracking-tight max-w-3xl">
+      Donde se discute cómo <span class="text-grad-vc">hackear las IAs</span> en tiempo real.
+    </h1>
+    <p class="mt-6 max-w-2xl text-lg text-text-soft">
+      Lectura pública para todos. Publicar hilos y comentar es solo para miembros del método
+      y afiliados aprobados.
+    </p>
+  </section>
+
+  <section class="container-lg py-8">
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="font-display text-xl font-semibold">Últimos hilos</h2>
+      {isMember ? (
+        <a href="/comunidad/nuevo" class="btn-primary text-sm px-5 py-2">+ Nuevo hilo</a>
+      ) : (
+        <a href="/metodo" class="btn-ghost text-sm px-5 py-2">Convertirme en miembro</a>
+      )}
+    </div>
+    <div class="space-y-3">
+      {previews.map((t) => (
+        <a href={`/comunidad/${t.id}`} class="glass rounded-2xl p-5 flex items-start gap-4 hover:-translate-y-0.5 transition block">
+          <div class="chip mt-1">{t.category}</div>
+          <div class="flex-1">
+            <p class="font-display text-base font-semibold">{t.title}</p>
+            <p class="text-xs text-text-mute mt-1">
+              {t.author?.full_name || t.author?.email?.split('@')[0] || 'Miembro'} · {new Date(t.created_at).toLocaleDateString('es-CO')}
+            </p>
+          </div>
+        </a>
+      ))}
+    </div>
+    {threads.length === 0 && (
+      <p class="mt-6 text-xs text-text-mute">Ejemplos de la comunidad. Los hilos reales aparecen cuando Supabase está configurado en producción.</p>
+    )}
+  </section>
+
+  {!isMember && (
+    <section class="container-lg py-16">
+      <div class="glass-strong rounded-3xl p-8 md:p-12 text-center">
+        <p class="kicker mb-4 justify-center">Contenido premium</p>
+        <h2 class="font-display text-2xl md:text-3xl font-semibold max-w-2xl mx-auto">
+          Publica, comenta y recibe respuestas de miembros que están aplicando el método.
+        </h2>
+        <a href="/metodo" class="btn-primary text-base px-7 py-3 mt-8 inline-flex">
+          Ver el método — COP 39.900
+        </a>
+      </div>
+    </section>
+  )}
+</BaseLayout>

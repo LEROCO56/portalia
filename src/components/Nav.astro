@@ -1,0 +1,59 @@
+---
+import Sparkle from './Sparkle.astro';
+
+const items = [
+  { href: '/metodo', label: 'Método' },
+  { href: '/auditor', label: 'Auditor gratis' },
+  { href: '/comunidad', label: 'Comunidad' },
+  { href: '/afiliados', label: 'Afiliados' },
+];
+
+const currentPath = Astro.url.pathname;
+const checkoutUrl = import.meta.env.PUBLIC_HOTMART_CHECKOUT_URL
+  || 'https://pay.hotmart.com/W107728674K?off=92xsf4mj';
+---
+
+<header class="sticky top-0 z-40 backdrop-blur-md">
+  <div class="container-lg py-4">
+    <nav class="glass flex items-center justify-between rounded-full px-4 py-2.5">
+      <a href="/" class="flex items-center gap-2 pl-2 pr-4 py-1" aria-label="Portalia — Inicio">
+        <Sparkle size={20} class="text-aurora-violet2" />
+        <span class="font-display text-base font-semibold tracking-tight">
+          portalia<span class="text-text-soft">.com.co</span>
+        </span>
+      </a>
+
+      <ul class="hidden md:flex items-center gap-6 text-sm text-text-soft">
+        {items.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class:list={[
+                'transition hover:text-text',
+                currentPath.startsWith(item.href) && 'text-text',
+              ]}
+            >{item.label}</a>
+          </li>
+        ))}
+      </ul>
+
+      <div class="flex items-center gap-2">
+        <a
+          href="/login"
+          class="hidden sm:inline text-sm text-text-soft transition hover:text-text px-3 py-2"
+        >Entrar</a>
+        <a
+          href={checkoutUrl}
+          target="_blank"
+          rel="noopener"
+          class="btn-primary text-sm px-5 py-2"
+        >
+          Comprar
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <path d="M5 12h14M13 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>

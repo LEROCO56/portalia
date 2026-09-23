@@ -1,0 +1,161 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Sparkle from '@/components/Sparkle.astro';
+
+const checkoutUrl = import.meta.env.PUBLIC_HOTMART_CHECKOUT_URL
+  || 'https://pay.hotmart.com/W107728674K?off=92xsf4mj';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Portalia',
+  url: 'https://portalia.com.co',
+  logo: 'https://portalia.com.co/favicon.svg',
+  sameAs: ['https://www.linkedin.com/in/leonardorojasdj/'],
+  founder: { '@type': 'Person', name: 'Leonardo Rojas Cortés' },
+  description: 'Método, comunidad y auditor para que las IAs recomienden tu negocio.',
+};
+---
+<BaseLayout
+  title="Que las IAs recomienden tu negocio"
+  description="Portalia — el método, la comunidad y el auditor para que ChatGPT, Claude, Gemini, Perplexity y Copilot dejen de ignorar tu negocio y empiecen a recomendarlo primero."
+  jsonLd={jsonLd}
+>
+  {/* HERO */}
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-aurora opacity-70 pointer-events-none" aria-hidden="true"></div>
+    <div class="container-lg relative pt-20 pb-24 md:pt-28 md:pb-32">
+      <p class="kicker mb-6 flex items-center gap-2">
+        <Sparkle size={14} class="text-aurora-violet2" />
+        Portal IA · Colombia · LatAm
+      </p>
+      <h1 class="font-display text-4xl md:text-6xl lg:text-7xl font-semibold leading-[1.05] tracking-tight max-w-4xl">
+        Que las IAs
+        <span class="text-grad-vc"> recomienden tu negocio</span>
+        antes que a tu competencia.
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-text-soft">
+        En 2026, el 60% de las búsquedas empiezan en ChatGPT, Claude, Gemini, Perplexity o Copilot.
+        Si las IAs no te nombran, no existes. Portalia es el método probado —
+        más la comunidad y el auditor gratis — para que empiecen a hacerlo.
+      </p>
+      <div class="mt-10 flex flex-wrap items-center gap-4">
+        <a href={checkoutUrl} target="_blank" rel="noopener" class="btn-primary text-base px-7 py-3">
+          Comprar acceso — COP 39.900
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M5 12h14M13 5l7 7-7 7" />
+          </svg>
+        </a>
+        <a href="/auditor" class="btn-ghost text-base px-7 py-3">
+          Probar el auditor gratis
+        </a>
+      </div>
+      <div class="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-text-mute">
+        <span>✓ Garantía 7 días</span>
+        <span>✓ Pago seguro Hotmart</span>
+        <span>✓ Acceso inmediato</span>
+        <span>✓ Afiliados 60%</span>
+      </div>
+    </div>
+  </section>
+
+  {/* PILARES */}
+  <section class="container-lg py-20">
+    <p class="kicker mb-4">Cuatro puertas de entrada al ecosistema</p>
+    <h2 class="font-display text-3xl md:text-4xl font-semibold max-w-3xl">
+      Un solo portal. Cuatro formas de ganar visibilidad en la era de las IAs.
+    </h2>
+    <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      {[
+        {
+          k: 'Método',
+          t: 'CITAR',
+          d: 'El sistema paso a paso para volver a tu negocio citable por las IAs. Bases teóricas + plantillas.',
+          href: '/metodo',
+          cta: 'Ver método',
+        },
+        {
+          k: 'Auditor gratis',
+          t: 'Portal IA',
+          d: 'Analiza tu web en 30 segundos y descubre qué te está costando visibilidad en ChatGPT, Claude y Gemini.',
+          href: '/auditor',
+          cta: 'Auditar mi web',
+        },
+        {
+          k: 'Comunidad',
+          t: 'Foro Portalia',
+          d: 'Comparte hallazgos con emprendedores que también quieren ser recomendados por las IAs.',
+          href: '/comunidad',
+          cta: 'Entrar al foro',
+        },
+        {
+          k: 'Afiliados',
+          t: '60% de comisión',
+          d: 'Recomienda Portalia y gana. Kit de recursos, banners, hooks y tracking transparente.',
+          href: '/afiliados',
+          cta: 'Ser afiliado',
+        },
+      ].map((p) => (
+        <a href={p.href} class="glass rounded-2xl p-6 flex flex-col hover:-translate-y-1 transition">
+          <span class="chip mb-4 w-fit">{p.k}</span>
+          <h3 class="font-display text-xl font-semibold">{p.t}</h3>
+          <p class="mt-2 text-sm text-text-soft flex-1">{p.d}</p>
+          <span class="mt-6 text-sm text-aurora-cyan flex items-center gap-1">
+            {p.cta}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M5 12h14M13 5l7 7-7 7" />
+            </svg>
+          </span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  {/* PROBLEMA / PROMESA */}
+  <section class="container-lg py-20">
+    <div class="grid gap-10 lg:grid-cols-2 items-start">
+      <div>
+        <p class="kicker mb-4 text-red-300/70">Antes de Portalia</p>
+        <h3 class="font-display text-2xl md:text-3xl font-semibold">Cuando alguien le pregunta a la IA por tu categoría, aparece cualquiera menos tú.</h3>
+        <ul class="mt-6 space-y-3 text-text-soft">
+          <li class="flex gap-3"><span class="text-red-400">✕</span> Tu web tiene tráfico pero cero recomendaciones de IA.</li>
+          <li class="flex gap-3"><span class="text-red-400">✕</span> Tus competidores más pequeños aparecen primero en ChatGPT.</li>
+          <li class="flex gap-3"><span class="text-red-400">✕</span> No sabes por qué las IAs no te "leen".</li>
+          <li class="flex gap-3"><span class="text-red-400">✕</span> El SEO tradicional ya no alcanza.</li>
+        </ul>
+      </div>
+      <div>
+        <p class="kicker mb-4">Con Portalia</p>
+        <h3 class="font-display text-2xl md:text-3xl font-semibold">Aparece primero en las respuestas que ya está dando la IA hoy.</h3>
+        <ul class="mt-6 space-y-3 text-text-soft">
+          <li class="flex gap-3"><span class="text-aurora-cyan">✓</span> Tu web se vuelve fuente citable por las IAs.</li>
+          <li class="flex gap-3"><span class="text-aurora-cyan">✓</span> ChatGPT y Perplexity te mencionan por nombre.</li>
+          <li class="flex gap-3"><span class="text-aurora-cyan">✓</span> Metodología paso a paso, sin humo.</li>
+          <li class="flex gap-3"><span class="text-aurora-cyan">✓</span> Comunidad activa y auditor gratuito.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {/* AUTOR + CIERRE */}
+  <section class="container-lg py-20">
+    <div class="glass-strong rounded-3xl p-8 md:p-12 relative overflow-hidden">
+      <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-aurora-violet/30 blur-3xl pointer-events-none"></div>
+      <p class="kicker mb-4">Autor</p>
+      <h2 class="font-display text-3xl md:text-4xl font-semibold max-w-3xl">
+        Leonardo Rojas Cortés — Director de Operaciones TI en CINTE Colombia.
+      </h2>
+      <p class="mt-4 text-text-soft max-w-2xl">
+        Diez años implementando tecnología para empresas medianas y grandes en LatAm.
+        Portalia nace de un descubrimiento: la ventaja competitiva de la próxima década
+        no es aparecer en Google; es aparecer en las respuestas de las IAs.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-4">
+        <a href={checkoutUrl} target="_blank" rel="noopener" class="btn-primary text-base px-7 py-3">
+          Comprar acceso — COP 39.900
+        </a>
+        <a href="/metodo" class="btn-ghost text-base px-7 py-3">Ver el método completo</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

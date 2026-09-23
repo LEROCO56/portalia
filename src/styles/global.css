@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============ AURORA PROTOCOL — sistema de diseño ============ */
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: theme('colors.bg.DEFAULT');
+    color: theme('colors.text.DEFAULT');
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    background-color: theme('colors.bg.DEFAULT');
+    background-image: theme('backgroundImage.aurora-radial');
+    background-attachment: fixed;
+    background-size: 200% 200%;
+    min-height: 100vh;
+  }
+  h1, h2, h3, h4, h5 {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+  /* Selection */
+  ::selection {
+    background: theme('colors.aurora.violet');
+    color: #fff;
+  }
+  /* Focus ring accessible */
+  *:focus-visible {
+    outline: 2px solid theme('colors.aurora.cyan');
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+}
+
+@layer components {
+  /* Container ancho editorial */
+  .container-lg { @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8; }
+  .container-md { @apply mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8; }
+  .container-sm { @apply mx-auto w-full max-w-2xl px-4 sm:px-6 lg:px-8; }
+
+  /* Glass card */
+  .glass {
+    @apply rounded-2xl border border-border bg-white/[0.03] backdrop-blur-sm;
+  }
+  .glass-strong {
+    @apply rounded-2xl border border-border-strong bg-white/[0.05] backdrop-blur-md;
+  }
+
+  /* Botones */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition;
+  }
+  .btn-primary {
+    @apply btn bg-grad-vc text-white shadow-glow hover:shadow-glow-cyan;
+  }
+  .btn-ghost {
+    @apply btn border border-border text-text-soft hover:border-border-strong hover:text-text;
+  }
+  .btn-lg { @apply px-8 py-4 text-base; }
+
+  /* Chip pill */
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-border bg-white/[0.04] px-3 py-1 text-xs font-medium text-text-soft;
+  }
+  .chip-dot::before {
+    content: "";
+    @apply block h-1.5 w-1.5 rounded-full bg-aurora-green;
+  }
+
+  /* Section spacing */
+  .section { @apply py-16 sm:py-24; }
+  .section-tight { @apply py-10 sm:py-16; }
+
+  /* Kicker (over-title small caps) */
+  .kicker {
+    @apply text-xs font-semibold uppercase tracking-wider text-aurora-violet2;
+  }
+
+  /* Gradient text */
+  .text-grad-vc {
+    background-image: theme('backgroundImage.grad-vc-glow');
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 40px rgba(139,92,246,0.4);
+  }
+
+  /* Hairline separator */
+  .hr-line { @apply my-8 h-px w-full border-0 bg-border; }
+
+  /* Prose overrides */
+  .prose-portalia {
+    @apply prose prose-invert prose-lg max-w-none;
+  }
+}
+
+@layer utilities {
+  .noise::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+  }
+}

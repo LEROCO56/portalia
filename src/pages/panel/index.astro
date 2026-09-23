@@ -1,0 +1,56 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Sparkle from '@/components/Sparkle.astro';
+
+const user = Astro.locals.user;
+if (!user) return Astro.redirect('/login?next=/panel');
+
+const roleLabel: Record<string, string> = {
+  free: 'Registrado (gratis)',
+  buyer: '⭐ Miembro del método',
+  affiliate: 'Afiliado',
+  admin: 'Admin',
+};
+---
+<BaseLayout title="Mi panel" noindex={true}>
+  <section class="container-lg pt-20 pb-8 md:pt-24">
+    <p class="kicker mb-6 flex items-center gap-2">
+      <Sparkle size={14} class="text-aurora-violet2" /> Mi cuenta
+    </p>
+    <h1 class="font-display text-3xl md:text-4xl font-semibold">
+      Hola{user.full_name ? `, ${user.full_name.split(' ')[0]}` : ''} 👋
+    </h1>
+    <p class="mt-3 text-text-soft">
+      Estado: <span class="chip ml-2">{roleLabel[user.role] || user.role}</span>
+    </p>
+  </section>
+
+  <section class="container-lg py-8">
+    <div class="grid gap-6 md:grid-cols-3">
+      <a href="/curso" class="glass rounded-2xl p-6 hover:-translate-y-1 transition">
+        <h3 class="font-display text-lg font-semibold">Curso Portalia</h3>
+        <p class="mt-2 text-sm text-text-soft">
+          {user.role === 'buyer' || user.role === 'admin' ? 'Acceso completo.' : 'Bloqueado — requiere membresía.'}
+        </p>
+      </a>
+      <a href="/comunidad" class="glass rounded-2xl p-6 hover:-translate-y-1 transition">
+        <h3 class="font-display text-lg font-semibold">Comunidad</h3>
+        <p class="mt-2 text-sm text-text-soft">Foro Portalia — publica y comenta.</p>
+      </a>
+      <a href="/afiliados" class="glass rounded-2xl p-6 hover:-translate-y-1 transition">
+        <h3 class="font-display text-lg font-semibold">Afiliados</h3>
+        <p class="mt-2 text-sm text-text-soft">Kit de venta y link de tracking.</p>
+      </a>
+      <a href="/auditor" class="glass rounded-2xl p-6 hover:-translate-y-1 transition">
+        <h3 class="font-display text-lg font-semibold">Auditor Portal IA</h3>
+        <p class="mt-2 text-sm text-text-soft">
+          {user.role === 'buyer' || user.role === 'admin' ? 'Auditorías ilimitadas.' : '3 gratis al día.'}
+        </p>
+      </a>
+      <form action="/api/auth/logout" method="POST" class="glass rounded-2xl p-6">
+        <p class="text-sm text-text-soft">¿Terminaste?</p>
+        <button type="submit" class="mt-3 btn-ghost text-sm px-5 py-2">Cerrar sesión</button>
+      </form>
+    </div>
+  </section>
+</BaseLayout>

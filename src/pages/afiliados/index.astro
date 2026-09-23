@@ -1,0 +1,75 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Sparkle from '@/components/Sparkle.astro';
+
+const user = Astro.locals.user;
+const isAffiliate = user?.role === 'affiliate' || user?.role === 'buyer' || user?.role === 'admin';
+
+const hotmartAffiliateUrl = 'https://hotmart.com/es/marketplace/productos/portalia/W107728674K';
+---
+<BaseLayout
+  title="Programa de afiliados — 60% de comisión"
+  description="Recomienda Portalia y gana 60% por cada venta. Kit completo de recursos para vender."
+>
+  <section class="container-lg pt-20 pb-10 md:pt-28">
+    <p class="kicker mb-6 flex items-center gap-2">
+      <Sparkle size={14} class="text-aurora-violet2" /> Programa de Afiliados
+    </p>
+    <h1 class="font-display text-4xl md:text-6xl font-semibold leading-[1.05] tracking-tight max-w-3xl">
+      <span class="text-grad-vc">60% de comisión</span> por cada venta.
+    </h1>
+    <p class="mt-6 max-w-2xl text-lg text-text-soft">
+      Portalia paga la comisión más alta del mercado para producto de conocimiento en LatAm.
+      COP 39.900 × 60% = <strong class="text-text">COP 23.940</strong> por venta directa. Sin techo.
+    </p>
+    <div class="mt-10 flex flex-wrap gap-4">
+      <a href={hotmartAffiliateUrl} target="_blank" rel="noopener" class="btn-primary text-base px-7 py-3">
+        Inscribirme en Hotmart
+      </a>
+      {!user && (
+        <a href="/login?next=/afiliados" class="btn-ghost text-base px-7 py-3">
+          Entrar para ver mis recursos
+        </a>
+      )}
+    </div>
+  </section>
+
+  <section class="container-lg py-16">
+    <p class="kicker mb-4">Kit de venta</p>
+    <div class="grid gap-6 md:grid-cols-3">
+      {[
+        { t: '10 hooks probados', d: 'Frases de apertura para reels, hilos y emails que convierten desde el segundo 1.', locked: !isAffiliate },
+        { t: '5 banners listos', d: 'Formatos IG, Facebook, WhatsApp status y email header. PNG + Canva editable.', locked: !isAffiliate },
+        { t: '3 emails de venta', d: 'Secuencia probada: educar → problema → oferta. Copia y pega, cambia tu link.', locked: !isAffiliate },
+        { t: 'Guión de video 60s', d: 'Estructura para reel/short o TikTok con voz en off. Sube tu conversión.', locked: !isAffiliate },
+        { t: 'Objeciones + respuestas', d: 'Las 12 objeciones más comunes y cómo responderlas sin sonar comercial.', locked: !isAffiliate },
+        { t: 'Dashboard de comisiones', d: 'Tracking directo desde Hotmart. Reportes semanales por email.', locked: !isAffiliate },
+      ].map((r) => (
+        <div class="glass rounded-2xl p-6 relative">
+          {r.locked && (
+            <div class="absolute inset-0 backdrop-blur-sm rounded-2xl grid place-items-center bg-bg/60">
+              <div class="text-center px-6">
+                <p class="text-xs uppercase tracking-widest text-aurora-violet2">🔒 Solo afiliados aprobados</p>
+                <a href="/login?next=/afiliados" class="text-xs mt-2 inline-block text-aurora-cyan">Entrar / registrarse</a>
+              </div>
+            </div>
+          )}
+          <h3 class="font-display text-lg font-semibold">{r.t}</h3>
+          <p class="mt-2 text-sm text-text-soft">{r.d}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-lg py-16">
+    <div class="glass-strong rounded-3xl p-8 md:p-12">
+      <h2 class="font-display text-2xl md:text-3xl font-semibold">Cómo funciona</h2>
+      <ol class="mt-6 space-y-4 text-text-soft">
+        <li class="flex gap-4"><span class="chip">1</span>Te inscribes en Hotmart al producto Portalia (aprobación automática).</li>
+        <li class="flex gap-4"><span class="chip">2</span>Compartes tu link con seguidores, clientes o red profesional.</li>
+        <li class="flex gap-4"><span class="chip">3</span>Cada compra genera comisión inmediata (Hotmart la deposita en tu billetera).</li>
+        <li class="flex gap-4"><span class="chip">4</span>Retiras a tu banco en cualquier momento (mínimo USD 100).</li>
+      </ol>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,41 @@
+---
+import Sparkle from './Sparkle.astro';
+const year = new Date().getFullYear();
+---
+<footer class="mt-24 border-t border-border">
+  <div class="container-lg py-16 grid gap-10 md:grid-cols-4">
+    <div class="md:col-span-2">
+      <a href="/" class="inline-flex items-center gap-2">
+        <Sparkle size={20} class="text-aurora-violet2" />
+        <span class="font-display text-base font-semibold">portalia.com.co</span>
+      </a>
+      <p class="mt-4 max-w-md text-sm text-text-soft">
+        El método y la comunidad para que ChatGPT, Claude, Gemini, Perplexity y
+        Copilot dejen de ignorar tu negocio y empiecen a recomendarlo primero.
+      </p>
+    </div>
+    <div>
+      <h4 class="mb-3 text-xs font-semibold uppercase tracking-wider text-text-mute">Explorar</h4>
+      <ul class="space-y-2 text-sm text-text-soft">
+        <li><a href="/metodo" class="hover:text-text">Método</a></li>
+        <li><a href="/auditor" class="hover:text-text">Auditor gratis</a></li>
+        <li><a href="/comunidad" class="hover:text-text">Comunidad</a></li>
+        <li><a href="/afiliados" class="hover:text-text">Afiliados</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="mb-3 text-xs font-semibold uppercase tracking-wider text-text-mute">Legal</h4>
+      <ul class="space-y-2 text-sm text-text-soft">
+        <li><a href="/legal/terminos" class="hover:text-text">Términos</a></li>
+        <li><a href="/legal/privacidad" class="hover:text-text">Privacidad</a></li>
+        <li><a href="/legal/reembolsos" class="hover:text-text">Reembolsos</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-border">
+    <div class="container-lg py-6 text-xs text-text-mute flex flex-col sm:flex-row items-center justify-between gap-2">
+      <p>© {year} · Portalia · Método por Leonardo Rojas Cortés · Bogotá, Colombia</p>
+      <p>Pago seguro con Hotmart · Garantía 7 días</p>
+    </div>
+  </div>
+</footer>

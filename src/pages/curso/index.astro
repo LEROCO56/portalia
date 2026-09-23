@@ -1,0 +1,62 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Sparkle from '@/components/Sparkle.astro';
+
+const user = Astro.locals.user;
+const canAccess = user?.role === 'buyer' || user?.role === 'admin';
+
+if (!user) {
+  return Astro.redirect('/login?next=/curso');
+}
+if (!canAccess) {
+  return Astro.redirect('/curso/bloqueado');
+}
+
+const lessons = [
+  { id: 'L1', t: 'Bienvenida y expectativas', dur: '8:32' },
+  { id: 'L2', t: 'Fundamentos AEO/GEO', dur: '22:14' },
+  { id: 'L3', t: 'Paso C — Contextualizar tu negocio', dur: '31:07' },
+  { id: 'L4', t: 'Paso I — Indexar con Schema.org', dur: '28:45' },
+  { id: 'L5', t: 'Paso T — Testimoniar (menciones externas)', dur: '25:22' },
+  { id: 'L6', t: 'Paso A — Automatizar y escalar', dur: '19:58' },
+  { id: 'L7', t: 'Paso R — Revisar cada mes', dur: '17:41' },
+  { id: 'L8', t: 'Caso real: negocio local pasando de invisible a top-3', dur: '34:12' },
+];
+---
+<BaseLayout
+  title="Curso Portalia — miembros"
+  description="Curso completo Portalia para miembros con acceso comprado."
+  noindex={true}
+>
+  <section class="container-lg pt-20 pb-8 md:pt-24">
+    <p class="kicker mb-6 flex items-center gap-2">
+      <Sparkle size={14} class="text-aurora-violet2" /> Área de miembros
+    </p>
+    <h1 class="font-display text-3xl md:text-5xl font-semibold leading-[1.05] tracking-tight">
+      Bienvenido{user.full_name ? `, ${user.full_name.split(' ')[0]}` : ''}.
+    </h1>
+    <p class="mt-4 text-lg text-text-soft max-w-2xl">
+      Todo el curso Portalia, en tu ritmo. Marca lecciones como completadas para llevar tu progreso.
+    </p>
+  </section>
+
+  <section class="container-lg py-8">
+    <div class="grid gap-3">
+      {lessons.map((l, i) => (
+        <div class="glass rounded-2xl p-5 flex items-center gap-4">
+          <div class="w-10 h-10 rounded-lg bg-aurora-violet/20 border border-aurora-violet/40 grid place-items-center text-sm font-semibold text-aurora-violet2">
+            {i + 1}
+          </div>
+          <div class="flex-1">
+            <p class="font-display text-base font-semibold">{l.t}</p>
+            <p class="text-xs text-text-mute mt-1">Duración {l.dur}</p>
+          </div>
+          <span class="chip">Próximamente</span>
+        </div>
+      ))}
+    </div>
+    <p class="mt-6 text-sm text-text-mute">
+      Los videos se activan progresivamente. Estamos hospedando en Bunny Stream para calidad HD sin buffering.
+    </p>
+  </section>
+</BaseLayout>

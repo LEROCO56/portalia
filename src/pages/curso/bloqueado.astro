@@ -1,0 +1,21 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+const checkoutUrl = import.meta.env.PUBLIC_HOTMART_CHECKOUT_URL
+  || 'https://pay.hotmart.com/W107728674K?off=92xsf4mj';
+---
+<BaseLayout title="Contenido premium bloqueado" noindex={true}>
+  <section class="container-md py-32 text-center">
+    <div class="text-6xl mb-6">🔒</div>
+    <h1 class="font-display text-3xl md:text-4xl font-semibold">Este contenido es solo para miembros.</h1>
+    <p class="mt-4 text-text-soft max-w-lg mx-auto">
+      El curso completo Portalia se desbloquea al comprar el acceso.
+      Si ya compraste y ves este mensaje, verifica que iniciaste sesión con el email de la compra.
+    </p>
+    <div class="mt-8 flex flex-wrap gap-4 justify-center">
+      <a href={checkoutUrl} target="_blank" rel="noopener" class="btn-primary text-base px-7 py-3">
+        Comprar acceso — COP 39.900
+      </a>
+      <a href="/login" class="btn-ghost text-base px-7 py-3">Ya compré, entrar</a>
+    </div>
+  </section>
+</BaseLayout>

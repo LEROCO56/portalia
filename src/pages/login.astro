@@ -1,0 +1,71 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Sparkle from '@/components/Sparkle.astro';
+import { createSupabaseServerClient } from '@/lib/supabase';
+
+const url = new URL(Astro.request.url);
+const next = url.searchParams.get('next') || '/panel';
+let sent = false;
+let error: string | null = null;
+
+if (Astro.request.method === 'POST') {
+  try {
+    const form = await Astro.request.formData();
+    const email = String(form.get('email') || '').trim().toLowerCase();
+    if (!email) throw new Error('Email requerido');
+
+    const supabase = createSupabaseServerClient(Astro.cookies);
+    const { error: authError } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo: `${url.origin}/api/auth/callback?next=${encodeURIComponent(next)}`,
+      },
+    });
+    if (authError) throw authError;
+    sent = true;
+  } catch (e: any) {
+    error = e.message || 'Ocurrió un error, intenta de nuevo.';
+  }
+}
+---
+<BaseLayout title="Entrar" description="Accede a tu cuenta Portalia" noindex={true}>
+  <section class="container-md py-24 md:py-32">
+    <p class="kicker mb-6 flex items-center gap-2">
+      <Sparkle size={14} class="text-aurora-violet2" /> Portalia
+    </p>
+    <h1 class="font-display text-3xl md:text-4xl font-semibold">Entra a tu cuenta</h1>
+    <p class="mt-3 text-text-soft">
+      Usamos <strong>magic links</strong>: te enviamos un enlace de un solo uso a tu email.
+      Sin contraseñas.
+    </p>
+
+    {sent ? (
+      <div class="mt-8 glass-strong rounded-2xl p-6">
+        <p class="font-display text-lg font-semibold">✅ Revisa tu bandeja</p>
+        <p class="mt-2 text-sm text-text-soft">
+          Enviamos el enlace de acceso. Puede tardar hasta 1 minuto — revisa también spam.
+        </p>
+      </div>
+    ) : (
+      <form method="POST" class="mt-8 glass rounded-2xl p-6 space-y-4">
+        <div>
+          <label class="block text-xs uppercase tracking-widest text-text-mute mb-2">Email</label>
+          <input
+            required
+            name="email"
+            type="email"
+            placeholder="tucorreo@dominio.com"
+            class="w-full bg-bg-elevated border border-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-aurora-violet transition"
+          />
+        </div>
+        {error && <p class="text-sm text-red-400">{error}</p>}
+        <button type="submit" class="btn-primary w-full text-base py-3 justify-center">
+          Enviarme el enlace de acceso
+        </button>
+        <p class="text-xs text-text-mute text-center">
+          ¿Ya compraste? Usa el mismo email de la compra en Hotmart para que se te asigne acceso automáticamente.
+        </p>
+      </form>
+    )}
+  </section>
+</BaseLayout>
