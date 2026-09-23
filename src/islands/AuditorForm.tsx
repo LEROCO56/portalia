@@ -2,11 +2,16 @@ import { useState } from 'react';
 
 interface AuditResult {
   score: number;
-  gaps: { title: string; detail: string; severity: 'high' | 'mid' | 'low' }[];
+  gaps: { title: string; detail: string; severity: 'high' | 'mid' | 'low'; step?: string }[];
   wins: string[];
+  summary?: string;
+  plan?: string[];
+  tier?: 'guest' | 'free' | 'pro';
+  engine?: string;
+  fallback?: boolean;
 }
 
-// Heurística local — Fase 1 (sin llamar a Claude API). Fase 2 será servidor.
+// Respaldo local si el endpoint no responde (sin red, error del servidor).
 function analyzeHeuristic(domain: string, business: string, query: string): AuditResult {
   const gaps: AuditResult['gaps'] = [];
   let score = 45;
@@ -51,7 +56,7 @@ function analyzeHeuristic(domain: string, business: string, query: string): Audi
 
   score = Math.min(72, Math.max(20, score));
 
-  return { score, gaps, wins };
+  return { score, gaps, wins, fallback: true };
 }
 
 export default function AuditorForm() {
@@ -60,13 +65,25 @@ export default function AuditorForm() {
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<AuditResult | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-    // Simular análisis (Fase 2 → llamar /api/auditor real)
-    await new Promise((r) => setTimeout(r, 900));
-    setResult(analyzeHeuristic(domain, business, query));
+    setError(null);
+    try {
+      const res = await fetch('/api/auditor', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ domain, business, query }),
+      });
+      const data = await res.json().catch(() => null);
+      if (res.ok && data && typeof data.score === 'number') setResult(data as AuditResult);
+      else if (data?.reason) setError(data.reason);
+      else setResult(analyzeHeuristic(domain, business, query));
+    } catch {
+      setResult(analyzeHeuristic(domain, business, query));
+    }
     setLoading(false);
   }
 
@@ -78,13 +95,27 @@ export default function AuditorForm() {
           <p className="text-sm uppercase tracking-widest text-text-mute">Puntaje AEO</p>
           <p className={`font-display text-5xl font-semibold ${color}`}>{result.score}<span className="text-text-mute text-2xl">/100</span></p>
         </div>
+        <p className="mt-2 text-xs text-text-mute">
+          {result.fallback
+            ? 'Diagnóstico estimado (no pudimos leer tu web en este momento).'
+            : 'Medido leyendo tu página, robots.txt, sitemap.xml, llms.txt y schema JSON-LD.'}
+        </p>
+        {result.summary && <p className="mt-5 text-sm text-text-soft leading-relaxed">{result.summary}</p>}
+        {result.plan && result.plan.length > 0 && (
+          <div className="mt-6 glass rounded-xl p-5">
+            <p className="kicker mb-3">Tu plan de 30 días (Auditor Pro)</p>
+            <ol className="space-y-2 list-decimal list-inside text-sm text-text-soft">
+              {result.plan.map((p, i) => <li key={i}>{p}</li>)}
+            </ol>
+          </div>
+        )}
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           <div>
             <p className="kicker mb-3 text-red-300/70">Gaps detectados</p>
             <ul className="space-y-3">
               {result.gaps.map((g, i) => (
                 <li key={i} className="glass rounded-xl p-4">
-                  <p className="font-semibold text-sm">{g.title}</p>
+                  <p className="font-semibold text-sm">{g.step && <span className="text-aurora-cyan mr-1">[{g.step}]</span>}{g.title}</p>
                   <p className="text-xs text-text-soft mt-1">{g.detail}</p>
                 </li>
               ))}
@@ -97,14 +128,16 @@ export default function AuditorForm() {
                 <li key={i} className="text-sm text-text-soft flex gap-2"><span className="text-aurora-cyan">✓</span>{w}</li>
               ))}
             </ul>
+            {result.tier !== 'pro' && (
             <div className="mt-6 p-4 rounded-xl border border-aurora-violet/40 bg-aurora-violet/10">
               <p className="text-sm font-semibold">Auditor Pro (miembros)</p>
               <p className="mt-1 text-xs text-text-soft">
-                Los miembros del método reciben auditorías reales llamando a Claude API,
-                histórico de puntajes y comparativa contra competidores.
+                Los miembros del método reciben, además de este diagnóstico, un resumen y un plan
+                de 30 días escrito con IA, auditorías ilimitadas e historial de puntajes.
               </p>
               <a href="/metodo" className="mt-3 inline-block text-xs text-aurora-cyan">Ver método →</a>
             </div>
+            )}
           </div>
         </div>
         <button onClick={() => setResult(null)} className="mt-6 btn-ghost text-sm px-5 py-2">
@@ -120,7 +153,8 @@ export default function AuditorForm() {
         <label className="block text-xs uppercase tracking-widest text-text-mute mb-2">URL de tu web</label>
         <input
           required
-          type="url"
+          type="text"
+          inputMode="url"
           placeholder="https://minegocio.com"
           value={domain}
           onChange={(e) => setDomain(e.target.value)}
@@ -149,11 +183,12 @@ export default function AuditorForm() {
           className="w-full bg-bg-elevated border border-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-aurora-violet transition"
         />
       </div>
+      {error && <p className="text-sm text-red-300">{error}</p>}
       <button type="submit" disabled={loading} className="btn-primary w-full text-base py-3 justify-center disabled:opacity-50">
         {loading ? 'Analizando…' : 'Auditar mi web (gratis)'}
       </button>
       <p className="text-xs text-text-mute text-center">
-        Auditoría heurística instantánea. Los miembros del método acceden al Auditor Pro con IA real.
+        Leemos tu web en vivo (schema, robots.txt, sitemap, llms.txt, contenido). Los miembros reciben además un plan de 30 días con IA.
       </p>
     </form>
   );
