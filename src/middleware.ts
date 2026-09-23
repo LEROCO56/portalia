@@ -3,8 +3,10 @@
 
 import { defineMiddleware } from 'astro:middleware';
 import { createSupabaseServerClient } from '@/lib/supabase';
+import { setRuntimeEnv } from '@/lib/env';
 
 export const onRequest = defineMiddleware(async (context, next) => {
+  setRuntimeEnv((context.locals as any).runtime?.env);
   try {
     const supabase = createSupabaseServerClient(context.cookies);
     const {
