@@ -4,12 +4,16 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { createClient } from '@supabase/supabase-js';
 import type { AstroCookies } from 'astro';
+import { env } from '@/lib/env';
 
-const SUPABASE_URL = import.meta.env.PUBLIC_SUPABASE_URL;
-const SUPABASE_ANON = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
-const SUPABASE_SERVICE = import.meta.env.SUPABASE_SERVICE_ROLE_KEY;
+export const supabasePublicConfig = () => ({
+  url: env('PUBLIC_SUPABASE_URL') ?? '',
+  anonKey: env('PUBLIC_SUPABASE_ANON_KEY') ?? '',
+});
 
 export function createSupabaseServerClient(cookies: AstroCookies) {
+  const SUPABASE_URL = env('PUBLIC_SUPABASE_URL');
+  const SUPABASE_ANON = env('PUBLIC_SUPABASE_ANON_KEY');
   if (!SUPABASE_URL || !SUPABASE_ANON) {
     throw new Error('Supabase env vars missing');
   }
@@ -30,6 +34,8 @@ export function createSupabaseServerClient(cookies: AstroCookies) {
 
 // Admin client — only for webhooks / server-only operations. NEVER expose.
 export function createSupabaseAdminClient() {
+  const SUPABASE_URL = env('PUBLIC_SUPABASE_URL');
+  const SUPABASE_SERVICE = env('SUPABASE_SERVICE_ROLE_KEY');
   if (!SUPABASE_URL || !SUPABASE_SERVICE) {
     throw new Error('Supabase admin env vars missing');
   }
