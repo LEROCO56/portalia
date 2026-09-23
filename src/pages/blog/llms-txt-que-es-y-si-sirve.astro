@@ -1,0 +1,69 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "llms.txt: qué es, cómo se hace y si de verdad sirve",
+    "description": "El archivo llms.txt propone un resumen de tu sitio pensado para modelos de lenguaje. Qué sabemos, qué no y si vale la pena en un negocio pequeño.",
+    "author": {
+      "@type": "Organization",
+      "name": "Portalia",
+      "url": "https://portalia.com.co"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Portalia",
+      "url": "https://portalia.com.co"
+    },
+    "datePublished": "2026-09-23",
+    "dateModified": "2026-09-23",
+    "inLanguage": "es-CO",
+    "mainEntityOfPage": "https://portalia.com.co/blog/llms-txt-que-es-y-si-sirve"
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Dónde lo subo?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "En la raíz: `https://tunegocio.com/llms.txt`, como texto plano o Markdown."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Existe `llms-full.txt`?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "La propuesta contempla una versión extendida con el contenido completo. Para un negocio pequeño, con la versión corta basta."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Afecta mi SEO?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No hay evidencia de que afecte el posicionamiento en Google, ni para bien ni para mal."
+        }
+      }
+    ]
+  }
+];
+
+const html = "<p><strong>Respuesta corta:</strong> <code>llms.txt</code> es una propuesta de estándar para poner en la raíz de tu web un archivo Markdown que resume tu sitio y enlaza las páginas más importantes, pensado para que un modelo de lenguaje lo entienda rápido. Es barato de hacer (20 minutos), pero no reemplaza lo que sí tiene efecto comprobado: datos estructurados, respuestas claras y menciones externas.</p>\n<h2>¿De dónde sale?</h2>\n<p>Es una propuesta abierta publicada en 2024 (llmstxt.org). La idea: los sitios están llenos de menús, scripts y publicidad que estorban a un modelo; un archivo limpio en <code>/llms.txt</code> le daría lo esencial.</p>\n<h2>¿Cómo se ve?</h2>\n<pre><code class=\"language-markdown\"># Serenity Spa\n\n&gt; Spa de relajación en Chapinero, Bogotá, especializado en masajes terapéuticos\n&gt; para oficinistas con dolor de espalda.\n\n## Servicios\n- [Masaje terapéutico](https://serenityspa.com.co/masaje-terapeutico): 60 y 90 minutos, con valoración de postura.\n- [Precios](https://serenityspa.com.co/precios): tarifas actualizadas.\n\n## Preguntas frecuentes\n- [FAQ](https://serenityspa.com.co/preguntas): pagos, parqueadero, cancelaciones.\n</code></pre>\n<p><em>(Ejemplo ilustrativo.)</em></p>\n<h2>¿Las IAs lo leen?</h2>\n<p>Aquí hay que ser honestos: <strong>no hay confirmación pública de que los grandes asistentes lo usen de forma sistemática</strong> para decidir qué recomendar. Algunas herramientas y documentaciones técnicas lo adoptaron, sobre todo para que asistentes de programación lean documentación. Para un negocio local, su efecto sobre las recomendaciones no está demostrado.</p>\n<h2>Entonces, ¿lo hago?</h2>\n<p>Sí, si ya tienes lo básico. El orden correcto:</p>\n<ol>\n<li><code>LocalBusiness</code>/<code>Organization</code> y <code>FAQPage</code> en JSON-LD.</li>\n<li><code>robots.txt</code> abierto a rastreadores de IA.</li>\n<li>Menciones externas coherentes.</li>\n<li><strong>Después</strong>, <code>llms.txt</code> como complemento.</li>\n</ol>\n<p>Hacerlo cuesta poco y te obliga a un ejercicio útil: resumir tu negocio en 3 líneas y elegir tus 5 páginas más importantes. Esa claridad sí se nota en todo lo demás.</p>\n<h2>Errores comunes</h2>\n<ul>\n<li>Poner en <code>llms.txt</code> información que no está en la web visible o que la contradice.</li>\n<li>Pensar que reemplaza al <code>robots.txt</code> (no lo hace: <code>robots.txt</code> controla acceso; <code>llms.txt</code> es solo un resumen).</li>\n<li>Dejarlo desactualizado: si cambias precios o servicios, actualízalo.</li>\n</ul>\n<h2>Preguntas relacionadas</h2>\n<p><strong>¿Dónde lo subo?</strong>\nEn la raíz: <code>https://tunegocio.com/llms.txt</code>, como texto plano o Markdown.</p>\n<p><strong>¿Existe <code>llms-full.txt</code>?</strong>\nLa propuesta contempla una versión extendida con el contenido completo. Para un negocio pequeño, con la versión corta basta.</p>\n<p><strong>¿Afecta mi SEO?</strong>\nNo hay evidencia de que afecte el posicionamiento en Google, ni para bien ni para mal.</p>\n<hr />\n<p>Revisa si tu sitio tiene lo básico con el <a href=\"/auditor\">Auditor gratis</a>.</p>";
+---
+<BaseLayout
+  title={"llms.txt: qué es, cómo se hace y si de verdad sirve"}
+  description={"El archivo llms.txt propone un resumen de tu sitio pensado para modelos de lenguaje. Qué sabemos, qué no y si vale la pena en un negocio pequeño."}
+  jsonLd={jsonLd}
+>
+  <article class="container-md pt-20 pb-16 md:pt-28 prose-portalia">
+    <p class="kicker">Guía AEO · 4 min de lectura</p>
+    <h1>llms.txt: qué es, cómo se hace y si de verdad sirve</h1>
+    <Fragment set:html={html} />
+  </article>
+</BaseLayout>

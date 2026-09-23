@@ -1,0 +1,69 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Cómo aparecer en Perplexity: guía para negocios en Colombia",
+    "description": "Perplexity siempre muestra sus fuentes. Qué tipo de páginas cita, cómo preparar la tuya y cómo verificar si ya te está usando.",
+    "author": {
+      "@type": "Organization",
+      "name": "Portalia",
+      "url": "https://portalia.com.co"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Portalia",
+      "url": "https://portalia.com.co"
+    },
+    "datePublished": "2026-09-23",
+    "dateModified": "2026-09-23",
+    "inLanguage": "es-CO",
+    "mainEntityOfPage": "https://portalia.com.co/blog/como-aparecer-en-perplexity"
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Perplexity usa Google?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Tiene su propio sistema de búsqueda y recuperación. Estar bien en Google ayuda, pero no es condición ni garantía para aparecer en Perplexity."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cuánto tarda en citarme?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Depende de cuándo rastree tu página y de la competencia de la consulta. En casos como el de Serenity Spa, Perplexity empezó a mencionar al negocio hacia la semana 4 del método."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Sirve pagar publicidad en Perplexity?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Los formatos publicitarios, si existen en tu mercado, son independientes de las respuestas orgánicas. Este artículo trata solo de la cita orgánica."
+        }
+      }
+    ]
+  }
+];
+
+const html = "<p><strong>Respuesta corta:</strong> Perplexity busca en la web en tiempo real y muestra las fuentes que usó. Para aparecer necesitas que su rastreador pueda leer tu sitio, que tengas páginas que respondan preguntas concretas en pocas líneas y que otras fuentes confiables confirmen quién eres.</p>\n<h2>¿Por qué Perplexity es un buen primer objetivo?</h2>\n<p>Porque <strong>siempre cita</strong>. Cada respuesta trae enlaces numerados, así que puedes verificar exactamente qué páginas usó y si la tuya está entre ellas. En muchos casos es de las primeras IAs donde un negocio empieza a aparecer después de aplicar datos estructurados y conseguir menciones.</p>\n<h2>Paso 1: deja entrar a su rastreador</h2>\n<p>Revisa <code>tunegocio.com/robots.txt</code>. Si ves algo como <code>User-agent: PerplexityBot</code> con <code>Disallow: /</code>, Perplexity no puede leerte. Lo recomendado para un negocio que quiere ser citado:</p>\n<pre><code>User-agent: PerplexityBot\nAllow: /\n</code></pre>\n<p>Bloquea solo zonas privadas (carrito, panel, administración).</p>\n<h2>Paso 2: páginas que respondan una pregunta</h2>\n<p>Perplexity arma respuestas con fragmentos. Le sirven las páginas que:\n- tienen la pregunta en un título (H1 o H2);\n- responden en el primer párrafo, en 40 a 100 palabras;\n- agregan un dato concreto (precio, tiempo, condición);\n- muestran autor y fecha de actualización.</p>\n<p>Un ejemplo: en vez de una página \"Servicios\" con 800 palabras, crea \"¿Cuánto cuesta un masaje terapéutico en Bogotá?\" con la respuesta arriba y el detalle después.</p>\n<h2>Paso 3: datos estructurados</h2>\n<p>Agrega <code>LocalBusiness</code> (u <code>Organization</code>) y <code>FAQPage</code> en JSON-LD. No garantizan la cita, pero reducen la ambigüedad sobre quién eres y qué respondes.</p>\n<h2>Paso 4: fuentes que te confirmen</h2>\n<p>Perplexity suele citar directorios, reseñas, foros y medios además de sitios de negocios. Si tu competencia aparece en un directorio de tu nicho y tú no, esa es la tarea de la semana. Mantén el mismo nombre, dirección y teléfono en todas partes.</p>\n<h2>Paso 5: verifica</h2>\n<ol>\n<li>Pregunta en Perplexity tus 5 consultas semilla.</li>\n<li>Abre las fuentes numeradas de cada respuesta.</li>\n<li>Anota si tu web o alguna mención tuya aparece.</li>\n<li>Repite cada mes con la misma redacción.</li>\n</ol>\n<h2>Preguntas relacionadas</h2>\n<p><strong>¿Perplexity usa Google?</strong>\nTiene su propio sistema de búsqueda y recuperación. Estar bien en Google ayuda, pero no es condición ni garantía para aparecer en Perplexity.</p>\n<p><strong>¿Cuánto tarda en citarme?</strong>\nDepende de cuándo rastree tu página y de la competencia de la consulta. En casos como el de Serenity Spa, Perplexity empezó a mencionar al negocio hacia la semana 4 del método.</p>\n<p><strong>¿Sirve pagar publicidad en Perplexity?</strong>\nLos formatos publicitarios, si existen en tu mercado, son independientes de las respuestas orgánicas. Este artículo trata solo de la cita orgánica.</p>\n<hr />\n<p>Mira el caso completo de <a href=\"/casos/serenity\">Serenity Spa</a> o empieza con el <a href=\"/auditor\">Auditor gratis</a>.</p>";
+---
+<BaseLayout
+  title={"Cómo aparecer en Perplexity: guía para negocios en Colombia"}
+  description={"Perplexity siempre muestra sus fuentes. Qué tipo de páginas cita, cómo preparar la tuya y cómo verificar si ya te está usando."}
+  jsonLd={jsonLd}
+>
+  <article class="container-md pt-20 pb-16 md:pt-28 prose-portalia">
+    <p class="kicker">Guía AEO · 4 min de lectura</p>
+    <h1>Cómo aparecer en Perplexity: guía para negocios en Colombia</h1>
+    <Fragment set:html={html} />
+  </article>
+</BaseLayout>

@@ -1,0 +1,69 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Cómo medir si ChatGPT (y las otras IAs) recomiendan tu negocio",
+    "description": "Un método de 25 minutos al mes para saber si ChatGPT, Claude, Gemini, Perplexity y Copilot te citan, con una matriz de puntaje comparable mes a mes.",
+    "author": {
+      "@type": "Organization",
+      "name": "Portalia",
+      "url": "https://portalia.com.co"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Portalia",
+      "url": "https://portalia.com.co"
+    },
+    "datePublished": "2026-09-23",
+    "dateModified": "2026-09-23",
+    "inLanguage": "es-CO",
+    "mainEntityOfPage": "https://portalia.com.co/blog/como-medir-si-chatgpt-te-recomienda"
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Hay herramientas que hagan esto automático?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Existen herramientas de monitoreo de marca en IA, pero para un negocio pequeño la matriz manual de 25 minutos al mes es suficiente y te obliga a leer las respuestas, que es donde aparecen las ideas."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Sirve preguntar \"¿conoces a [mi negocio]?\"?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Poco. Esa pregunta mide si el modelo te reconoce, no si te recomienda. Tus clientes no preguntan por tu nombre; preguntan por su problema."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Qué puntaje es \"bueno\"?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Depende de tu categoría y ciudad. Lo importante es la dirección: si subes mes a mes, el trabajo está funcionando."
+        }
+      }
+    ]
+  }
+];
+
+const html = "<p><strong>Respuesta corta:</strong> arma una matriz de 5 consultas × 5 IAs, dale a cada celda 0 (no apareces), 1 (te nombra entre otros) o 2 (te recomienda primero o te enlaza) y repítela el mismo día cada mes con el mismo protocolo. El total, sobre 50, es tu indicador de visibilidad en IA.</p>\n<h2>¿Por qué no basta con preguntarle una vez a ChatGPT?</h2>\n<p>Porque las respuestas cambian según la sesión, el historial, la ubicación y la versión del modelo. Una sola pregunta es una anécdota. Una matriz con protocolo fijo es un dato que puedes comparar.</p>\n<h2>El protocolo en 5 pasos</h2>\n<ol>\n<li><strong>Elige 5 consultas</strong> que haría un cliente real: 2 de categoría + lugar (\"mejor spa en Chapinero\"), 1 de problema, 1 de comparación y 1 de precio.</li>\n<li><strong>Pregunta en 5 IAs:</strong> ChatGPT con búsqueda, Claude, Gemini, Perplexity y Copilot.</li>\n<li><strong>Usa sesión nueva o modo incógnito</strong>, sin historial ni memoria activa.</li>\n<li><strong>Escribe la consulta exactamente igual</strong> cada mes.</li>\n<li><strong>Guarda captura</strong> de cada respuesta: es tu evidencia.</li>\n</ol>\n<h2>La matriz</h2>\n<table>\n<thead>\n<tr>\n<th>Consulta</th>\n<th>ChatGPT</th>\n<th>Claude</th>\n<th>Gemini</th>\n<th>Perplexity</th>\n<th>Copilot</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>Consulta 1</td>\n<td>0/1/2</td>\n<td></td>\n<td></td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td>Consulta 2</td>\n<td></td>\n<td></td>\n<td></td>\n<td></td>\n<td></td>\n</tr>\n<tr>\n<td>…</td>\n<td></td>\n<td></td>\n<td></td>\n<td></td>\n<td></td>\n</tr>\n</tbody>\n</table>\n<p>Suma todo: el máximo es 50. Anota también qué competidores aparecen y qué fuentes cita cada IA; ahí están las pistas de dónde te falta presencia.</p>\n<h2>¿Cada cuánto medir?</h2>\n<p>Una vez al mes, el mismo día de la semana. Las variaciones de una semana a otra no son señal; la tendencia de 60 a 90 días sí.</p>\n<h2>¿Qué hago con el resultado?</h2>\n<ul>\n<li><strong>0 en todas las IAs y el Auditor Portalia por debajo de 60:</strong> el problema es técnico. Revisa datos estructurados, <code>robots.txt</code> y preguntas frecuentes visibles.</li>\n<li><strong>Auditor alto pero 0 en las IAs:</strong> faltan menciones externas que confirmen quién eres.</li>\n<li><strong>Apareces en Perplexity pero no en ChatGPT:</strong> revisa qué fuentes cita ChatGPT para esa consulta y busca presencia allí.</li>\n<li><strong>Te nombran con datos viejos:</strong> tu nombre, dirección o teléfono no coinciden entre fuentes.</li>\n</ul>\n<h2>Preguntas relacionadas</h2>\n<p><strong>¿Hay herramientas que hagan esto automático?</strong>\nExisten herramientas de monitoreo de marca en IA, pero para un negocio pequeño la matriz manual de 25 minutos al mes es suficiente y te obliga a leer las respuestas, que es donde aparecen las ideas.</p>\n<p><strong>¿Sirve preguntar \"¿conoces a [mi negocio]?\"?</strong>\nPoco. Esa pregunta mide si el modelo te reconoce, no si te recomienda. Tus clientes no preguntan por tu nombre; preguntan por su problema.</p>\n<p><strong>¿Qué puntaje es \"bueno\"?</strong>\nDepende de tu categoría y ciudad. Lo importante es la dirección: si subes mes a mes, el trabajo está funcionando.</p>\n<hr />\n<p>¿Quieres saber de dónde partes? Corre el <a href=\"/auditor\">Auditor gratis</a> y usa el resultado como línea base junto con tu matriz.</p>";
+---
+<BaseLayout
+  title={"Cómo medir si ChatGPT (y las otras IAs) recomiendan tu negocio"}
+  description={"Un método de 25 minutos al mes para saber si ChatGPT, Claude, Gemini, Perplexity y Copilot te citan, con una matriz de puntaje comparable mes a mes."}
+  jsonLd={jsonLd}
+>
+  <article class="container-md pt-20 pb-16 md:pt-28 prose-portalia">
+    <p class="kicker">Guía AEO · 4 min de lectura</p>
+    <h1>Cómo medir si ChatGPT (y las otras IAs) recomiendan tu negocio</h1>
+    <Fragment set:html={html} />
+  </article>
+</BaseLayout>
