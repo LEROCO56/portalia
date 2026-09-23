@@ -1,0 +1,19 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import FAQGenerator from '@/islands/FAQGenerator.tsx';
+const user = Astro.locals.user;
+if (!user) return Astro.redirect('/login?next=/prime/faq-generator');
+if (user.role !== 'buyer' && user.role !== 'admin') return Astro.redirect('/curso/bloqueado');
+---
+<BaseLayout title="Generador de FAQPage — Prime" noindex={true}>
+  <section class="container-lg pt-20 pb-6 md:pt-24">
+    <a href="/prime" class="text-sm text-text-mute hover:text-text">← Zona Prime</a>
+    <h1 class="mt-4 font-display text-3xl md:text-4xl font-semibold">Generador de FAQPage schema</h1>
+    <p class="mt-3 text-text-soft max-w-2xl">
+      Añade preguntas y respuestas de tu negocio. Genera un bloque FAQPage listo para pegar en tu web.
+    </p>
+  </section>
+  <section class="container-lg pb-24">
+    <FAQGenerator client:load />
+  </section>
+</BaseLayout>
