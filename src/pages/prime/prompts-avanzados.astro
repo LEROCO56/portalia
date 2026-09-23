@@ -1,0 +1,148 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+const user = Astro.locals.user;
+if (!user) return Astro.redirect('/login?next=/prime/prompts-avanzados');
+if (user.role !== 'buyer' && user.role !== 'admin') return Astro.redirect('/curso/bloqueado');
+
+const prompts = [
+  {
+    categoria: 'Auditoria adversarial',
+    titulo: 'Auto-adversario · encuentra huecos en tu AEO',
+    prompt: `Eres el mejor auditor AEO del mundo, y tu especialidad es encontrar TODO lo que está mal en una web. Sin piedad, sin corrección política.
+
+Voy a darte:
+- URL: [URL]
+- Rubro: [RUBRO]
+- 3 competidores directos: [COMP1], [COMP2], [COMP3]
+
+Devuelve una lista de 15 problemas encontrados, ordenados por severidad de impacto en AEO. Para cada uno:
+1. Descripción del problema en 1 línea
+2. Por qué las IAs lo penalizan
+3. Cómo lo arreglaría un profesional en <30 min
+4. Efecto esperado en 30 días si se arregla
+
+Sé brutalmente honesto. Ignora el hecho de que soy el dueño.`,
+  },
+  {
+    categoria: 'Estrategia',
+    titulo: 'Roadmap 90 días personalizado',
+    prompt: `Actúa como consultor AEO senior con 10 años de experiencia. Diseña un roadmap detallado de 90 días para el negocio abajo, semana por semana.
+
+Contexto:
+- Negocio: [NOMBRE]
+- Rubro: [RUBRO]
+- Ciudad: [CIUDAD]
+- Presencia digital actual: [describe]
+- Recursos: [horas/semana, presupuesto, equipo]
+- Objetivos: [top-3 en X consultas, Y menciones IA, Z%+ conversión]
+
+Devuelve tabla: Semana | Objetivo | 3 acciones específicas | Métrica de éxito | Riesgo si no se cumple.
+
+Sé realista con las horas requeridas. No prometas milagros. Prioriza calidad sobre cantidad.`,
+  },
+  {
+    categoria: 'Contenido',
+    titulo: 'Generador de casos de estudio publicables',
+    prompt: `Actúa como redactor de casos de estudio B2B. Basado en la información abajo, genera un caso de estudio de 800 palabras listo para publicar en el blog.
+
+Estructura requerida:
+1. Título con dato clave (ej. "+40% en 8 semanas")
+2. Contexto del cliente (2 párrafos, con nombres y ciudad)
+3. El problema medible (con números)
+4. El proceso paso a paso (5 fases con detalle técnico)
+5. Los resultados (métricas específicas antes/después)
+6. Lecciones aprendidas (3 bullets)
+7. Testimonio del cliente
+8. Sugerencias de schema JSON-LD a usar
+
+Datos del caso:
+- Cliente: [NOMBRE, con permiso o anonimizado]
+- Industria: [INDUSTRIA]
+- Problema inicial: [DESCRIPCIÓN]
+- Solución aplicada: [MÉTODO]
+- Duración: [SEMANAS]
+- Resultados: [NÚMEROS]`,
+  },
+  {
+    categoria: 'Contenido',
+    titulo: 'Blog post AEO-perfecto en 15 min',
+    prompt: `Actúa como redactor AEO experto. Genera un post de blog de 1200-1500 palabras optimizado para ser CITADO por ChatGPT, Claude, Gemini y Perplexity.
+
+Estructura obligatoria:
+1. H1 con la consulta objetivo exacta
+2. TL;DR en 60 palabras (primer párrafo, citable)
+3. 5-7 secciones con H2 en formato pregunta
+4. Cada sección: respuesta directa + dato + ejemplo
+5. Al menos 1 tabla o lista comparativa
+6. 3 preguntas frecuentes al final con FAQPage
+7. Meta description sugerida (155 chars)
+8. Sugerencias de schema Article + FAQPage
+
+Contexto:
+- Consulta objetivo: [QUERY]
+- Audiencia: [PERFIL]
+- Diferencial de nuestro negocio: [DIFERENCIAL]
+- Palabras clave secundarias: [KWS]
+- Tono: [FORMAL/CASUAL/TÉCNICO]
+
+Al final, devuelve TODO el bloque HTML + JSON-LD schemas por separado.`,
+  },
+  {
+    categoria: 'Análisis',
+    titulo: 'Autopsia · por qué mi competidor gana',
+    prompt: `Actúa como espía competitivo AEO. Voy a darte mi URL y la URL de un competidor que consistentemente aparece en las IAs cuando yo no.
+
+Necesito que:
+1. Analices las señales visibles de ambas webs
+2. Identifiques QUÉ hace el competidor que yo no
+3. Prioriza los factores por impacto probable
+4. Diseña un plan para replicar sus victorias
+5. Identifiques 2 debilidades del competidor que podría explotar
+
+URLs:
+- Mi web: [URL_MIA]
+- Competidor: [URL_COMP]
+- Consulta donde él gana: [QUERY]
+
+Sé específico y accionable. Nada de "mejora el schema". Dime EXACTAMENTE qué schema, dónde ponerlo.`,
+  },
+  {
+    categoria: 'Anti-hallucination',
+    titulo: 'Verificación de facts para posts largos',
+    prompt: `Actúa como fact-checker riguroso. Voy a darte un artículo que escribí. Necesito que:
+
+1. Identifiques cada afirmación factual concreta (número, fecha, cita, dato).
+2. Para cada una, evalúes: verificable / requiere fuente / potencialmente inexacto.
+3. Marques las que requieran cita.
+4. Sugieras qué fuente confiable citar para cada afirmación.
+5. Detectes contradicciones internas.
+
+Artículo:
+[PEGA AQUÍ]
+
+Devuelve tabla: Afirmación | Estado | Fuente sugerida | Confianza (1-10).`,
+  },
+];
+---
+<BaseLayout title="Prompts avanzados CITAR — Prime" noindex={true}>
+  <section class="container-lg pt-20 pb-6 md:pt-24">
+    <a href="/prime" class="text-sm text-text-mute hover:text-text">← Zona Prime</a>
+    <h1 class="mt-4 font-display text-3xl md:text-4xl font-semibold">Prompts avanzados CITAR</h1>
+    <p class="mt-3 text-text-soft max-w-2xl">
+      Prompts de nivel senior. Los que usamos internamente para auditorías, estrategia y contenido.
+      Copia, adapta con tus datos, pega en Claude o ChatGPT.
+    </p>
+  </section>
+
+  <section class="container-lg pb-24">
+    <div class="space-y-6">
+      {prompts.map(p => (
+        <div class="glass rounded-2xl p-6">
+          <span class="chip">{p.categoria}</span>
+          <h2 class="mt-3 font-display text-xl font-semibold">{p.titulo}</h2>
+          <pre class="mt-4 text-xs bg-bg-elevated rounded-lg p-4 overflow-auto whitespace-pre-wrap leading-relaxed"><code>{p.prompt}</code></pre>
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

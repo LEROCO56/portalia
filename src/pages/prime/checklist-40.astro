@@ -1,0 +1,102 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+const user = Astro.locals.user;
+if (!user) return Astro.redirect('/login?next=/prime/checklist-40');
+if (user.role !== 'buyer' && user.role !== 'admin') return Astro.redirect('/curso/bloqueado');
+
+const seccion = [
+  {
+    titulo: 'Fundamentos técnicos',
+    items: [
+      'HTTPS activo con certificado válido no expirando en < 30 días',
+      'HTTP/2 o HTTP/3 activo',
+      'robots.txt permite GPTBot, ClaudeBot, PerplexityBot, Google-Extended',
+      'Sitemap XML enviado a Google Search Console + Bing Webmaster',
+      'Core Web Vitals: LCP < 2.5s, INP < 200ms, CLS < 0.1',
+      'Meta viewport correcto (mobile)',
+      'Idioma declarado en <html lang="es-CO"> o similar',
+      'Charset UTF-8 declarado',
+    ],
+  },
+  {
+    titulo: 'Schema.org (structured data)',
+    items: [
+      'Organization o LocalBusiness en home',
+      'BreadcrumbList en cada página no-home',
+      'FAQPage con 8-15 preguntas en al menos 1 página core',
+      'Article schema en cada post de blog con author identificable',
+      'Person schema para el autor principal',
+      'Product o Service schema donde aplique',
+      'AggregateRating con datos reales (nunca inventados)',
+      'Validado en validator.schema.org sin errores',
+    ],
+  },
+  {
+    titulo: 'Contenido AEO',
+    items: [
+      'Home responde en 60 palabras a "¿qué hace este negocio?"',
+      'About page con datos concretos (año, empleados, ubicación)',
+      'Al menos 12 posts en formato pregunta-respuesta corta',
+      'Cada post tiene dateModified real y actualizada',
+      'Nombre del negocio consistente en todas las páginas',
+      'Sin párrafos de más de 100 palabras',
+      'Uso de listas y H2-H3 para escaneabilidad',
+      'Al menos 5 preguntas semilla mapeadas y respondidas',
+    ],
+  },
+  {
+    titulo: 'Menciones externas',
+    items: [
+      'Perfil completo en 3+ directorios de nicho',
+      'Perfil consistente en LinkedIn Company Page',
+      'Google Business Profile completo (si aplica)',
+      'Al menos 5 menciones externas medibles en distintas fuentes',
+      'Wikipedia si es viable (categoría específica)',
+      'Historial de al menos 1 mención en podcast o blog invitado',
+      'Reseñas orgánicas en al menos 2 plataformas',
+      'Autor con perfil profesional público (LinkedIn actualizado)',
+    ],
+  },
+  {
+    titulo: 'Loop y sostenibilidad',
+    items: [
+      'Bitácora mensual activa con últimos 3 registros',
+      'Testeo mensual en 5 IAs documentado',
+      'Al menos 1 experimento nuevo por mes registrado',
+      'Un cambio consciente al mes en schema o contenido',
+      'Participación activa en comunidad AEO',
+      'Uso del auditor Pro cada 30 días',
+      'Compartir hallazgos con la comunidad',
+      'Métrica de éxito clara y medida cada trimestre',
+    ],
+  },
+];
+---
+<BaseLayout title="Checklist AEO 40 puntos — Prime" noindex={true}>
+  <section class="container-lg pt-20 pb-6 md:pt-24">
+    <a href="/prime" class="text-sm text-text-mute hover:text-text">← Zona Prime</a>
+    <h1 class="mt-4 font-display text-3xl md:text-4xl font-semibold">Checklist AEO · 40 puntos</h1>
+    <p class="mt-3 text-text-soft max-w-2xl">
+      La lista completa que aplicamos en cada auditoría. Cinco dimensiones × ocho puntos.
+      Si marcas 32+, estás en el top-10% de webs LatAm.
+    </p>
+  </section>
+
+  <section class="container-lg pb-16">
+    <div class="space-y-6">
+      {seccion.map(s => (
+        <div class="glass rounded-2xl p-6">
+          <h2 class="font-display text-xl font-semibold">{s.titulo}</h2>
+          <ul class="mt-4 space-y-3">
+            {s.items.map((it, i) => (
+              <li class="flex gap-3 text-sm text-text-soft">
+                <input type="checkbox" class="mt-1 w-5 h-5 accent-aurora-violet" />
+                <span>{it}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

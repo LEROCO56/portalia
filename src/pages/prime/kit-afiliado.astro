@@ -1,0 +1,111 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+const user = Astro.locals.user;
+if (!user) return Astro.redirect('/login?next=/prime/kit-afiliado');
+if (user.role === 'guest' || user.role === 'free') return Astro.redirect('/afiliados');
+
+const hooks = [
+  '"Le pregunté a ChatGPT por [rubro] en Bogotá. No mencionó ni una sola de las 5 empresas top de Google."',
+  '"En 2026, el 60% de las búsquedas empiezan en un asistente de IA. Y ese asistente no usa el ranking de Google."',
+  '"Cambié 3 líneas de código en la web de un cliente. Perplexity empezó a citarlo en 11 días."',
+  '"Todos pensamos que el SEO era el juego. Resulta que en 2026 el juego cambió a AEO, y casi nadie se dio cuenta."',
+  '"Portalia (COP 39.900) me devolvió 20× la inversión en 2 meses. Aquí cómo."',
+  '"Este método hizo pasar a un negocio local de invisible a top-3 en 5 IAs en 8 semanas."',
+  '"El error #1 del 92% de webs en LatAm cuesta más caro que cualquier ads. Y se arregla en 30 minutos."',
+  '"Auditoría gratuita: mide en 30 segundos si las IAs están recomendando tu negocio. Sin correo."',
+];
+
+const emails = [
+  {
+    asunto: '[Presento] El método que hace que las IAs recomienden tu negocio',
+    body: `Hola [NOMBRE],
+
+Rápido: acabo de terminar el ebook Portalia y no me lo esperaba tan bueno.
+
+En 2 semanas ya vi resultados aplicándolo a la web de un cliente. Perplexity empezó a citarlo por nombre en su categoría.
+
+El autor es Leonardo Rojas, Director de Operaciones TI en CINTE Colombia. Método probado, no gurú de instagram.
+
+Precio de lanzamiento: COP 39.900 (mitad de precio). Con garantía 7 días de Hotmart.
+
+Aquí el link: [TU_LINK_AFILIADO]
+
+Cualquier duda, me preguntas.
+
+Saludos,
+[TU_NOMBRE]`,
+  },
+  {
+    asunto: '¿Ya te preguntaste si las IAs recomiendan tu negocio?',
+    body: `Hola [NOMBRE],
+
+Test rápido: entra a ChatGPT y pregúntale "cuál es el mejor [tu rubro] en Bogotá".
+
+¿Aparece tu negocio?
+
+Si la respuesta es no (o "no tengo información sobre eso"), estás perdiendo el canal que crece más rápido en 2026: el 60% de las búsquedas complejas ya empiezan en asistentes de IA.
+
+Hay un método para arreglarlo. Se llama Portalia. COP 39.900 con garantía 7 días.
+
+[TU_LINK_AFILIADO]
+
+Saludos,
+[TU_NOMBRE]`,
+  },
+];
+---
+<BaseLayout title="Kit afiliado — Portalia Prime" noindex={true}>
+  <section class="container-lg pt-20 pb-6 md:pt-24">
+    <a href="/prime" class="text-sm text-text-mute hover:text-text">← Zona Prime</a>
+    <h1 class="mt-4 font-display text-3xl md:text-4xl font-semibold">Kit de afiliado desbloqueado</h1>
+    <p class="mt-3 text-text-soft max-w-2xl">
+      Hooks, emails y guiones probados para promover Portalia y ganar 60% de comisión por venta.
+    </p>
+  </section>
+
+  <section class="container-lg py-8">
+    <div class="glass-strong rounded-2xl p-6 mb-8">
+      <h2 class="font-display text-lg font-semibold">Tu link de afiliado</h2>
+      <p class="mt-2 text-text-soft text-sm">
+        Genera tu link personalizado desde
+        <a href="https://hotmart.com/es/marketplace/productos/portalia/W107728674K" target="_blank" rel="noopener" class="text-aurora-cyan">Hotmart Marketplace → producto Portalia → "Divulgar"</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="container-lg pb-8">
+    <p class="kicker mb-4">10 hooks probados</p>
+    <div class="grid gap-3">
+      {hooks.map(h => (
+        <div class="glass rounded-xl p-4 text-sm text-text-soft">{h}</div>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-lg py-8">
+    <p class="kicker mb-4">Emails listos para adaptar</p>
+    <div class="grid gap-4">
+      {emails.map(e => (
+        <div class="glass rounded-2xl p-6">
+          <p class="text-xs uppercase tracking-widest text-text-mute">Asunto</p>
+          <p class="font-display text-base font-semibold mt-1">{e.asunto}</p>
+          <p class="text-xs uppercase tracking-widest text-text-mute mt-4">Cuerpo</p>
+          <pre class="mt-2 text-sm bg-bg-elevated rounded-lg p-4 whitespace-pre-wrap font-sans">{e.body}</pre>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-lg py-12">
+    <div class="glass-strong rounded-3xl p-8">
+      <h2 class="font-display text-2xl font-semibold">Reglas de oro del afiliado Portalia</h2>
+      <ul class="mt-4 space-y-2 text-text-soft">
+        <li class="flex gap-3"><span class="text-aurora-cyan">✓</span>Nunca miento. Portalia funciona pero no es magia.</li>
+        <li class="flex gap-3"><span class="text-aurora-cyan">✓</span>Menciono la garantía Hotmart 7 días.</li>
+        <li class="flex gap-3"><span class="text-aurora-cyan">✓</span>Nunca uso el testimonio de otros como si fueran míos.</li>
+        <li class="flex gap-3"><span class="text-aurora-cyan">✓</span>No hago spam masivo. Prefiero pocas ventas de calidad.</li>
+        <li class="flex gap-3"><span class="text-aurora-cyan">✓</span>Si alguien pregunta algo técnico, lo mando al auditor gratis (portalia.com.co/auditor) para que decida.</li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
