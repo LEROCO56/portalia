@@ -1,0 +1,74 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Sparkle from '@/components/Sparkle.astro';
+import { createSupabaseServerClient } from '@/lib/supabase';
+
+let sent = false;
+let error: string | null = null;
+
+if (Astro.request.method === 'POST') {
+  try {
+    const form = await Astro.request.formData();
+    const email = String(form.get('email') || '').trim().toLowerCase();
+    if (!email || !email.includes('@')) throw new Error('Email requerido');
+    const supabase = createSupabaseServerClient(Astro.cookies);
+    // Enviar magic link — así se registra + recibe el email de bienvenida.
+    const { error: e } = await supabase.auth.signInWithOtp({
+      email,
+      options: { emailRedirectTo: `${new URL(Astro.request.url).origin}/api/auth/callback?next=/panel` },
+    });
+    if (e) throw e;
+    sent = true;
+  } catch (e: any) {
+    error = e.message || 'Algo falló';
+  }
+}
+---
+<BaseLayout title="Newsletter Portalia · hallazgos AEO semanales" description="Un correo por semana con hallazgos, casos reales y actualizaciones cuando ChatGPT, Claude, Perplexity cambian sus algoritmos. Gratis, opt-out siempre.">
+  <section class="container-md pt-20 pb-16 md:pt-28">
+    <p class="kicker mb-6 flex items-center gap-2">
+      <Sparkle size={14} class="text-aurora-violet2" /> Newsletter
+    </p>
+    <h1 class="font-display text-3xl md:text-5xl font-semibold leading-[1.05] tracking-tight">
+      Un correo por semana con <span class="text-grad-vc">hallazgos AEO</span> reales.
+    </h1>
+    <p class="mt-6 text-lg text-text-soft">
+      Sin humo, sin ventas agresivas. Casos reales de negocios que aplican CITAR, cambios que detectamos en
+      las IAs, plantillas nuevas. Gratis, opt-out en cualquier momento.
+    </p>
+
+    {sent ? (
+      <div class="mt-8 glass-strong rounded-2xl p-6">
+        <p class="font-display text-lg font-semibold">✅ Revisa tu bandeja</p>
+        <p class="mt-2 text-sm text-text-soft">
+          Te acabamos de mandar un correo con el link de acceso. Puede tardar hasta 1 min (revisa también spam).
+          Empezarás a recibir el newsletter la próxima semana.
+        </p>
+      </div>
+    ) : (
+      <form method="POST" class="mt-8 glass rounded-2xl p-6">
+        <label class="block text-xs uppercase tracking-widest text-text-mute mb-2">Tu email</label>
+        <input required type="email" name="email" placeholder="tucorreo@dominio.com"
+          class="w-full bg-bg-elevated border border-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-aurora-violet transition" />
+        {error && <p class="mt-2 text-sm text-red-400">{error}</p>}
+        <button type="submit" class="btn-primary w-full text-base py-3 mt-4 justify-center">
+          Suscribirme (gratis)
+        </button>
+        <p class="mt-3 text-xs text-text-mute text-center">
+          Al suscribirte recibirás también el email de bienvenida con acceso a tu panel Portalia.
+        </p>
+      </form>
+    )}
+  </section>
+
+  <section class="container-md pb-16">
+    <h2 class="font-display text-2xl font-semibold">Qué esperar</h2>
+    <ul class="mt-4 space-y-3 text-text-soft">
+      <li class="flex gap-3"><span class="text-aurora-cyan">✓</span>Un correo cada martes 8:30 a.m. Bogotá.</li>
+      <li class="flex gap-3"><span class="text-aurora-cyan">✓</span>Formato corto: 3 min de lectura.</li>
+      <li class="flex gap-3"><span class="text-aurora-cyan">✓</span>Un hallazgo AEO, un caso real, una plantilla o dato.</li>
+      <li class="flex gap-3"><span class="text-aurora-cyan">✓</span>Nunca más de 2 correos por semana (no vendemos tu email).</li>
+      <li class="flex gap-3"><span class="text-aurora-cyan">✓</span>Opt-out con 1 click en cada email.</li>
+    </ul>
+  </section>
+</BaseLayout>

@@ -1,0 +1,70 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Sparkle from '@/components/Sparkle.astro';
+
+const gratis = [
+  { t: 'Auditor Portal IA', d: 'Diagnóstico gratuito en 30 segundos, sin correo. Puntaje AEO + gaps + wins.', href: '/auditor' },
+  { t: 'Blog completo', d: '11 posts evergreen sobre AEO/GEO en español. Todo el conocimiento gratis.', href: '/blog' },
+  { t: 'Caso Serenity Spa', d: 'Caso real documentado: de invisible a top-3 en 8 semanas.', href: '/casos/serenity' },
+  { t: 'Manifiesto Portalia', d: 'Los principios que nos rigen. Sin humo, transparencia total.', href: '/manifiesto' },
+  { t: 'Comparador honesto', d: 'Portalia vs alternativas — con lo bueno y lo malo de cada opción.', href: '/comparador' },
+  { t: 'Newsletter', d: 'Un correo por semana con hallazgos AEO reales. Sin humo, opt-out siempre.', href: '/newsletter' },
+];
+
+const premium = [
+  { t: 'Generador de Schema JSON-LD', d: 'Interactivo. 7 tipos. Copy & paste en tu <head>.' },
+  { t: 'Generador FAQPage', d: 'Preguntas + respuestas → JSON-LD schema listo.' },
+  { t: 'Simulador cómo te ve una IA', d: 'Marca señales, simulamos si cada IA te menciona.' },
+  { t: 'Calculadora ROI AEO', d: 'Proyección de ingresos incrementales 6-24 meses.' },
+  { t: 'Biblioteca prompts CITAR', d: '8 prompts categorizados para copiar y usar.' },
+  { t: 'Prompts avanzados', d: '6 prompts nivel senior: adversarial, roadmap 90 días, casos.' },
+  { t: 'Checklist AEO 40 puntos', d: '5 dimensiones × 8 items. La misma auditoría profesional.' },
+  { t: '6 arquetipos arquitectura AEO', d: 'E-commerce, SaaS, local, servicios, agencia, medios.' },
+  { t: 'Loop mensual playbook', d: '30 min/mes que sostienen tu ranking.' },
+  { t: 'Marco Transformación Digital', d: '4 fases + checkpoints por fase.' },
+  { t: 'API Sandbox', d: 'Endpoints para integrar con tu sistema.' },
+  { t: 'Kit afiliado desbloqueado', d: '10 hooks + 2 emails + reglas de oro.' },
+];
+---
+<BaseLayout title="Herramientas Portalia · gratis y premium" description="Todas las herramientas Portalia — auditor gratis, generadores de schema, calculadora ROI, simuladores. Gratis y premium.">
+  <section class="container-lg pt-20 pb-6 md:pt-28">
+    <p class="kicker mb-6 flex items-center gap-2">
+      <Sparkle size={14} class="text-aurora-violet2" /> Herramientas
+    </p>
+    <h1 class="font-display text-3xl md:text-5xl font-semibold leading-[1.05] tracking-tight max-w-3xl">
+      Todo el <span class="text-grad-vc">arsenal AEO</span> en un solo lugar.
+    </h1>
+    <p class="mt-6 max-w-2xl text-lg text-text-soft">
+      6 herramientas gratis + 12 herramientas premium. El toolkit más completo para AEO en español.
+    </p>
+  </section>
+
+  <section class="container-lg py-8">
+    <p class="kicker mb-4">Gratis, sin registro</p>
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {gratis.map(g => (
+        <a href={g.href} class="glass rounded-2xl p-6 hover:-translate-y-1 transition">
+          <h3 class="font-display text-lg font-semibold">{g.t}</h3>
+          <p class="mt-2 text-sm text-text-soft">{g.d}</p>
+          <span class="mt-4 text-xs text-aurora-cyan block">Abrir →</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-lg py-12">
+    <p class="kicker mb-4">Premium (con la compra del método)</p>
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {premium.map(p => (
+        <div class="glass rounded-2xl p-6 relative">
+          <div class="absolute top-4 right-4 chip">🔒</div>
+          <h3 class="font-display text-lg font-semibold pr-8">{p.t}</h3>
+          <p class="mt-2 text-sm text-text-soft">{p.d}</p>
+        </div>
+      ))}
+    </div>
+    <div class="mt-8 text-center">
+      <a href="/metodo" class="btn-primary text-base px-7 py-3 inline-flex">Desbloquear todo · COP 39.900</a>
+    </div>
+  </section>
+</BaseLayout>
